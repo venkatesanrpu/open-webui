@@ -1,12 +1,65 @@
 import os
 import json
 from fastapi import APIRouter
+from fastapi.responses import PlainTextResponse
 from pathlib import Path
 from bs4 import BeautifulSoup
 
 router = APIRouter()
 
 SYLLABUS_DIR = os.getenv("SYLLABUS_DIR", "/app/data/syllabus")
+PROMPTS_DIR = os.getenv("PROMPTS_DIR", "/app/data/prompts")
+
+# ── Hardcoded fallbacks (used only if no file exists on disk) ──
+_FALLBACK_PROMPTS = {
+    "ask_agent": (
+        "You are an expert tutor for {SUBJECT}.\n"
+        "Topic: {TOPIC}\nFocus: {CONCEPT}\nContext: {CLARIFICATION}\n\n"
+        "Task: Generate comprehensive study notes for this concept.\n"
+        "Use LaTeX ($...$) for math. Structure with headings."
+    ),
+    "mcq_widget": (
+        "You are an expert MCQ designer for {SUBJECT}.\n"
+        "Topic: {TOPIC}\nFocus: {CONCEPT}\nContext: {CLARIFICATION}\n\n"
+        "Task: Generate exactly {NUM_QUESTIONS} MCQs at {LEVEL} difficulty.\n"
+        "Use LaTeX ($...$) for math.\n"
+        "After each question's 4 options, put the answer and explanation inside a <details> tag.\n"
+        "Separate questions with ---."
+    ),
+}
+
+
+@router.get("/prompts/{function_name}")
+async def get_prompt_template(function_name: str, exam: str = ""):
+    """
+    Returns a prompt template for the given function_name.
+    
+    Resolution order:
+    1. Per-exam override: SYLLABUS_DIR/{exam}/prompts/{function_name}.txt
+    2. Global default:   PROMPTS_DIR/{function_name}.txt
+    3. Hardcoded fallback (minimal)
+    """
+    # 1. Per-exam override
+    if exam:
+        exam_prompt = Path(SYLLABUS_DIR) / exam / "prompts" / f"{function_name}.txt"
+        if exam_prompt.is_file():
+            return PlainTextResponse(exam_prompt.read_text(encoding="utf-8"))
+
+    # 2. Global default
+    global_prompt = Path(PROMPTS_DIR) / f"{function_name}.txt"
+    if global_prompt.is_file():
+        return PlainTextResponse(global_prompt.read_text(encoding="utf-8"))
+
+    # 3. Hardcoded fallback
+    fallback = _FALLBACK_PROMPTS.get(function_name)
+    if fallback:
+        return PlainTextResponse(fallback)
+
+    return PlainTextResponse(
+        f"No prompt template found for '{function_name}'.",
+        status_code=404
+    )
+
 
 def parse_html_file(file_path):
     try:

@@ -1,0 +1,31 @@
+Generate exactly {NUM_QUESTIONS} multiple-choice questions at {LEVEL} difficulty on "{CONCEPT}" in the context of {SUBJECT} — {TOPIC}.
+{CLARIFICATION}
+
+Requirements:
+- Use LaTeX ($...$) for inline and ($$...$$) for display math expressions.
+- Exactly 4 options (A–D) per question. One unambiguously correct, three plausible distractors.
+- IMPORTANT: Distribute the correct answer randomly across A, B, C, and D. Do NOT always place it as option A.
+- Hide the answer and explanation inside a <details> tag after each question.
+- Separate questions with a horizontal rule (---).
+- Start directly with Q1. No intro or conclusion.
+- In the explanation, refer to concepts, not option letters.
+- Calibrate difficulty using Bloom's taxonomy: basic = Remember+Understand, intermediate = Apply+Analyze, advanced = Evaluate+Create.
+
+Format each question exactly as:
+
+**Q1.** Question text
+
+A. Option
+B. Option
+C. Option
+D. Option
+
+<details>
+<summary>✅ Check Answer & Explanation</summary>
+
+**Answer: X**
+
+**Explanation:** Why the correct answer is right and others are wrong.
+</details>
+
+---

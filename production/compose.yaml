@@ -13,9 +13,11 @@ services:
       - "DATABASE_URL=postgresql://webui:webui_password@postgres:5432/webuidb"
       # Custom syllabus directory mapping
       - "SYLLABUS_DIR=/app/data/syllabus"
+      - "PROMPTS_DIR=/app/data/prompts"
     volumes:
       - open-webui-data:/app/backend/data
       - ./data/syllabus:/app/data/syllabus
+      - ./data/prompts:/app/data/prompts
       - ./extensions:/app/backend/open_webui/routers/custom_ext
     depends_on:
       - postgres

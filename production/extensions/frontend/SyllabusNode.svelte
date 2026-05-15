@@ -12,6 +12,29 @@
 			.sort();
 	};
 
+	/**
+	 * Fetches a prompt template from the backend, substitutes variables, and returns the final prompt.
+	 * Resolution: per-exam override → global default → hardcoded fallback (backend handles this).
+	 */
+	const buildPrompt = async (functionName, vars) => {
+		const examParam = vars.EXAM ? `?exam=${encodeURIComponent(vars.EXAM)}` : '';
+		try {
+			const res = await fetch(`/api/ext/syllabus/prompts/${functionName}${examParam}`);
+			if (res.ok) {
+				let template = await res.text();
+				// Substitute all {VAR_NAME} placeholders
+				for (const [key, value] of Object.entries(vars)) {
+					template = template.replaceAll(`{${key}}`, value || '');
+				}
+				return template;
+			}
+		} catch (e) {
+			console.error('[Ext] Failed to fetch prompt template:', e);
+		}
+		// Ultimate fallback: minimal prompt if API is unreachable
+		return `You are an expert tutor for ${vars.SUBJECT || 'this topic'}.\nTopic: ${vars.TOPIC}\nFocus: ${vars.CONCEPT}\nGenerate study material.`;
+	};
+
 	const generateNotes = async (linkData, metadata, linkLabel) => {
 		// 1. "Smart Router" Cache Check
 		if ($user) {
@@ -48,30 +71,26 @@
 			concept: metadata.concept
 		});
 
-        // Construct the prompt using the data-* attributes and metadata
-        let promptText = `You are an expert tutor for ${linkData.subject || 'this topic'}.\n\n`;
-        promptText += `Topic: ${linkData.topic || metadata.lesson}\n`;
-        promptText += `Focus: ${metadata.concept}\n`;
-        if (metadata.clarification) {
-            promptText += `Context: ${metadata.clarification}\n\n`;
-        }
-        
-        // Dynamic Task Generation based on the function attribute
-        if (linkData.function === 'mcq_widget') {
-            const numQuestions = linkData.number || 5;
-            const diffLevel = linkData.level || 'basic';
-            promptText += `Task: Generate exactly ${numQuestions} multiple-choice questions (MCQs) at a ${diffLevel} difficulty level for this concept. Please provide the answer key and explanations at the end.`;
-        } else {
-            promptText += `Task: Generate comprehensive ${linkLabel} for this concept.`;
-        }
+		// 3. Build the prompt from external template
+		const templateVars = {
+			EXAM: linkData.exam || '',
+			SUBJECT: linkData.subject || 'this topic',
+			TOPIC: linkData.topic || metadata.lesson || '',
+			CONCEPT: metadata.concept || '',
+			CLARIFICATION: metadata.clarification || '',
+			LINK_LABEL: linkLabel || '',
+			NUM_QUESTIONS: String(linkData.number || 5),
+			LEVEL: linkData.level || 'basic'
+		};
 
-        const query = encodeURIComponent(promptText);
-        goto(`/?q=${query}`);
-        
-        if ($mobile) {
-            showSidebar.set(false);
-        }
-    };
+		const promptText = await buildPrompt(linkData.function, templateVars);
+		const query = encodeURIComponent(promptText);
+		goto(`/?q=${query}`);
+
+		if ($mobile) {
+			showSidebar.set(false);
+		}
+	};
 
 	// Helper to format folder names nicely
 	const formatName = (name, d) => {
