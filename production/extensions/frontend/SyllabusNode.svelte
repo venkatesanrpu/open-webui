@@ -35,18 +35,44 @@
 		return `You are an expert tutor for ${vars.SUBJECT || 'this topic'}.\nTopic: ${vars.TOPIC}\nFocus: ${vars.CONCEPT}\nGenerate study material.`;
 	};
 
+	// Identity tuple used by the Smart Router cache. Two clicks resolve to the same
+	// chat ONLY when every field below matches. MCQ links share concept + data_function
+	// across difficulty levels, so `level` (and `number`) MUST participate in the key.
+	const norm = (v) => (v == null ? '' : String(v));
+	const cacheKey = (t) =>
+		[
+			norm(t.data_function),
+			norm(t.exam),
+			norm(t.subject),
+			norm(t.topic),
+			norm(t.lesson),
+			norm(t.concept),
+			norm(t.level),
+			norm(t.number)
+		].join('||');
+
 	const generateNotes = async (linkData, metadata, linkLabel) => {
+		// Build the identity for THIS click from data-* attributes + lesson metadata.
+		const clickIdentity = {
+			data_function: linkData.function,
+			exam: linkData.exam || 'General',
+			subject: linkData.subject || 'General',
+			topic: linkData.topic || 'General',
+			lesson: linkData.lesson || 'General',
+			concept: metadata.concept || '',
+			level: linkData.level || '',
+			number: linkData.number || ''
+		};
+		const clickKey = cacheKey(clickIdentity);
+
 		// 1. "Smart Router" Cache Check
 		if ($user) {
 			try {
 				const res = await fetch(`/api/ext/history/tags/${$user.id}`);
 				if (res.ok) {
 					const data = await res.json();
-					const tags = data.tags;
-					// Find existing chat for this exact concept and function
-					const existing = tags.find(
-						(t) => t.concept === metadata.concept && t.data_function === linkData.function
-					);
+					const tags = data.tags || [];
+					const existing = tags.find((t) => cacheKey(t) === clickKey);
 
 					if (existing) {
 						console.log('[Ext] Cache Hit! Re-routing to existing chat:', existing.chat_id);
@@ -63,12 +89,14 @@
 		// 2. Cache Miss - Proceed with Generation
 		// Store metadata so HistoryTracker can tag it when URL changes
 		pendingSyllabusTag.set({
-			function: linkData.function,
-			exam: linkData.exam || 'General',
-			subject: linkData.subject || 'General',
-			topic: linkData.topic || 'General',
-			lesson: linkData.lesson || 'General',
-			concept: metadata.concept
+			function: clickIdentity.data_function,
+			exam: clickIdentity.exam,
+			subject: clickIdentity.subject,
+			topic: clickIdentity.topic,
+			lesson: clickIdentity.lesson,
+			concept: clickIdentity.concept,
+			level: clickIdentity.level,
+			number: clickIdentity.number
 		});
 
 		// 3. Build the prompt from external template

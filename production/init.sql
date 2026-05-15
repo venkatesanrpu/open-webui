@@ -37,13 +37,23 @@ CREATE TABLE IF NOT EXISTS ext_chat_tags (
     topic VARCHAR(255) DEFAULT 'General',
     lesson VARCHAR(255) DEFAULT 'General',
     concept VARCHAR(255) DEFAULT 'General',
+    level VARCHAR(50) DEFAULT '',     -- e.g., 'basic', 'intermediate', 'advanced' (MCQ widget)
+    number VARCHAR(50) DEFAULT '',    -- e.g., '5' (number of MCQs); kept as text for flexibility
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Index for Smart Router lookup (fetching existing chat for a specific concept)
-CREATE INDEX idx_chat_tags_router ON ext_chat_tags(user_id, concept, data_function);
+-- Backfill columns for pre-existing deployments (idempotent; safe on fresh installs too)
+ALTER TABLE ext_chat_tags ADD COLUMN IF NOT EXISTS level VARCHAR(50) DEFAULT '';
+ALTER TABLE ext_chat_tags ADD COLUMN IF NOT EXISTS number VARCHAR(50) DEFAULT '';
+
+-- Index for Smart Router lookup (fetching existing chat for a specific payload identity).
+-- Includes level + number so e.g. MCQ basic/intermediate/advanced for the same concept
+-- are recognised as distinct chats.
+CREATE INDEX IF NOT EXISTS idx_chat_tags_router
+    ON ext_chat_tags(user_id, data_function, concept, level, number);
 -- Index for History UI filtering
-CREATE INDEX idx_chat_tags_history ON ext_chat_tags(user_id, exam, subject, topic, lesson);
+CREATE INDEX IF NOT EXISTS idx_chat_tags_history
+    ON ext_chat_tags(user_id, exam, subject, topic, lesson);
 
 -- 4. Audit & Token Logging
 CREATE TABLE IF NOT EXISTS ext_audit_logs (

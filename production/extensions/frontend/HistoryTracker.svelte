@@ -27,7 +27,9 @@
                     subject: tagData.subject || 'General',
                     topic: tagData.topic || 'General',
                     lesson: tagData.lesson || 'General',
-                    concept: tagData.concept || 'General'
+                    concept: tagData.concept || 'General',
+                    level: tagData.level || '',
+                    number: tagData.number != null ? String(tagData.number) : ''
                 })
             });
 

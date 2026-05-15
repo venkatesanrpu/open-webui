@@ -26,24 +26,36 @@ class TagRequest(BaseModel):
     topic: str = "General"
     lesson: str = "General"
     concept: str = "General"
+    level: str = ""
+    number: str = ""
 
 @router.post("/history/tag")
 async def tag_chat(req: TagRequest):
     if not engine:
         raise HTTPException(status_code=500, detail="Database not configured")
-    
+
     query = text("""
-        INSERT INTO ext_chat_tags (chat_id, user_id, data_function, exam, subject, topic, lesson, concept)
-        VALUES (:chat_id, :user_id, :data_function, :exam, :subject, :topic, :lesson, :concept)
+        INSERT INTO ext_chat_tags (
+            chat_id, user_id, data_function,
+            exam, subject, topic, lesson, concept,
+            level, number
+        )
+        VALUES (
+            :chat_id, :user_id, :data_function,
+            :exam, :subject, :topic, :lesson, :concept,
+            :level, :number
+        )
         ON CONFLICT (chat_id) DO UPDATE SET
             data_function = EXCLUDED.data_function,
             exam = EXCLUDED.exam,
             subject = EXCLUDED.subject,
             topic = EXCLUDED.topic,
             lesson = EXCLUDED.lesson,
-            concept = EXCLUDED.concept
+            concept = EXCLUDED.concept,
+            level = EXCLUDED.level,
+            number = EXCLUDED.number
     """)
-    
+
     try:
         with engine.begin() as conn:
             conn.execute(query, {
@@ -54,7 +66,9 @@ async def tag_chat(req: TagRequest):
                 "subject": req.subject,
                 "topic": req.topic,
                 "lesson": req.lesson,
-                "concept": req.concept
+                "concept": req.concept,
+                "level": req.level or "",
+                "number": req.number or "",
             })
         return {"status": "success"}
     except Exception as e:
@@ -64,9 +78,25 @@ async def tag_chat(req: TagRequest):
 async def get_tags(user_id: str):
     if not engine:
         raise HTTPException(status_code=500, detail="Database not configured")
-        
-    query = text("SELECT chat_id, data_function, exam, subject, topic, lesson, concept, created_at FROM ext_chat_tags WHERE user_id = :user_id")
-    
+
+    # COALESCE so legacy rows (NULL level/number) return '' to the frontend,
+    # making client-side identity comparisons null-safe.
+    query = text("""
+        SELECT
+            chat_id,
+            data_function,
+            exam,
+            subject,
+            topic,
+            lesson,
+            concept,
+            COALESCE(level, '')  AS level,
+            COALESCE(number, '') AS number,
+            created_at
+        FROM ext_chat_tags
+        WHERE user_id = :user_id
+    """)
+
     try:
         with engine.connect() as conn:
             result = conn.execute(query, {"user_id": user_id})
