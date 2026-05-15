@@ -54,10 +54,24 @@
         clearStaleTimer();
     }
 
-    // Successful path: chatId becomes a real id => tag it, then clear.
-    // This must run BEFORE the route guard below to avoid a race when the
-    // route also changes to /c/<id> at the same tick.
-    $: if ($chatId && $chatId !== lastTaggedChatId && $pendingSyllabusTag && $user) {
+    // Successful path: chatId becomes a real id for the NEW chat => tag it,
+    // then clear. This must run BEFORE the route guard below to avoid a race
+    // when the route also changes to /c/<id> at the same tick.
+    //
+    // Origin-chat race guard: when the user clicks from /c/<existing>, $chatId
+    // still holds the existing id for a brief window after pendingSyllabusTag
+    // is set and before SvelteKit navigates to /?q=... and resets it. We must
+    // NOT tag that pre-existing chat. SyllabusNode stamps the pending tag with
+    // the click-time chat id (`originChatId`); skip until $chatId differs from
+    // it. Once Open WebUI persists the new chat, $chatId flips to a fresh id
+    // that cannot equal originChatId, and tagging proceeds.
+    $: if (
+        $chatId &&
+        $chatId !== lastTaggedChatId &&
+        $pendingSyllabusTag &&
+        $user &&
+        $chatId !== ($pendingSyllabusTag.originChatId || '')
+    ) {
         lastTaggedChatId = $chatId;
         tagChat($chatId, $user.id, $pendingSyllabusTag);
         pendingSyllabusTag.set(null);
@@ -67,16 +81,21 @@
     // BEFORE a chat id is assigned, the pending tag is stale. Clearing it
     // here prevents the next unrelated chat from being tagged.
     //
-    // We deliberately only act when chatId is still empty. Once chatId is set,
-    // either the successful path above has already consumed the tag, or the
-    // user navigated mid-tag and the duplicate-tagging guard (lastTaggedChatId)
-    // handles the rest.
+    // We act only when chatId is empty AND pathname is neither '/' (canonical
+    // new-chat page) nor the originPathname (the /c/<existing> we clicked
+    // from — Open WebUI may clear $chatId a tick before the SvelteKit URL
+    // transitions to /, and we must not treat that intermediate state as a
+    // user-initiated navigation away).
+    //
+    // Once chatId becomes a NEW id (different from originChatId), the success
+    // path above consumes the tag and lastTaggedChatId prevents re-tagging.
     $: if (
         $pendingSyllabusTag &&
         !$chatId &&
         $page &&
         $page.url &&
-        $page.url.pathname !== '/'
+        $page.url.pathname !== '/' &&
+        $page.url.pathname !== ($pendingSyllabusTag.originPathname || '')
     ) {
         console.log('[Ext] Pending syllabus tag abandoned (route changed to', $page.url.pathname, '), clearing.');
         pendingSyllabusTag.set(null);

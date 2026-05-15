@@ -1,6 +1,8 @@
 <script>
+	import { get } from 'svelte/store';
 	import { goto } from '$app/navigation';
-	import { showSidebar, mobile, user } from '$lib/stores';
+	import { page } from '$app/stores';
+	import { showSidebar, mobile, user, chatId } from '$lib/stores';
 	import { pendingSyllabusTag } from './syllabusStore.js';
 
 	export let tree = {};
@@ -87,6 +89,21 @@
 		}
 
 		// 2. Cache Miss - Proceed with Generation
+		// Capture the chat id and pathname AT CLICK TIME so HistoryTracker can
+		// distinguish "this is the pre-existing chat I clicked from" (must NOT
+		// be tagged) from "this is the freshly created chat for this generation"
+		// (must be tagged). Without this, when the user clicks from
+		// /c/<existing>, $chatId still holds the existing id for a brief window
+		// after the tag is set and before /?q=... navigation resets it — the
+		// reactive block in HistoryTracker would otherwise POST the metadata
+		// onto the existing chat.
+		const originChatId = get(chatId) || '';
+		const originPathname = get(page)?.url?.pathname || '';
+		const requestId =
+			(typeof crypto !== 'undefined' && crypto.randomUUID)
+				? crypto.randomUUID()
+				: `syl-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+
 		// Store metadata so HistoryTracker can tag it when URL changes
 		pendingSyllabusTag.set({
 			function: clickIdentity.data_function,
@@ -96,7 +113,12 @@
 			lesson: clickIdentity.lesson,
 			concept: clickIdentity.concept,
 			level: clickIdentity.level,
-			number: clickIdentity.number
+			number: clickIdentity.number,
+			// Race-guard fields (consumed only by HistoryTracker):
+			originChatId,
+			originPathname,
+			requestId,
+			createdAt: Date.now()
 		});
 
 		// 3. Build the prompt from external template
