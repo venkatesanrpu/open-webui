@@ -1,0 +1,6 @@
+webuidb=# select * from ext_chat_tags;
+               chat_id                |               user_id                | data_function |  exam   | subject |              topic              |                 lesson                  |               concept               |          created_at           
+--------------------------------------+--------------------------------------+---------------+---------+---------+---------------------------------+-----------------------------------------+-------------------------------------+-------------------------------
+ 7e4147ff-7008-4635-a0d1-26653c27ee29 | e4686666-326b-4d5b-8992-82be846ae1fa | ask_agent     | General | physics | mathematical_methods_of_physics | Tensor Analysis                         | Covariant and contravariant tensors | 2026-05-15 08:50:25.944522+00
+ 17feedad-06ab-47a7-878f-51107642b6a9 | e4686666-326b-4d5b-8992-82be846ae1fa | ask_agent     | General | physics | mathematical_methods_of_physics | Dimensional Analysis and Vector Methods | Dimensional analysis                | 2026-05-15 09:00:51.113318+00
+ 1f96e698-e1e7-4ed7-8aad-e957f0e102e8 | e4686666-326b-4d5b-8992-82be846ae1fa | ask_agent     | General | physics | mathematical_methods_of_physics | Linear Algebra and Matrix Theory        | Cayley-Hamilton theorem             | 2026-05-15 09:08:30.477727+00

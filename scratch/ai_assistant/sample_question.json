@@ -1,0 +1,74 @@
+{
+    "questions": [
+        {
+            "question": "A curve is said to be piecewise smooth if it is",
+            "options": [
+                "continuous everywhere and differentiable everywhere",
+                "continuous everywhere but differentiable only at finitely many points",
+                "composed of finitely many smooth segments joined end-to-end, with possible corners or cusps at the joints",
+                "infinitely differentiable at every point"
+            ],
+            "correct": "C",
+            "explanation": "A piecewise smooth curve is defined as a curve that consists of a finite number of smooth segments connected end-to-end. These segments are individually differentiable, but the curve may have corners, cusps, or sharp turns at the points where the segments join. This definition ensures that while the curve may not be differentiable at every point, it remains well-behaved and tractable for analysis, particularly in applications involving integration or physical modeling. The other options either impose overly strict or incorrect conditions on differentiability or continuity."
+        },
+        {
+            "question": "The Gauss Divergence Theorem requires the region of integration to be",
+            "options": [
+                "simply connected only",
+                "piecewise smooth boundary with no additional constraints",
+                "closed, bounded, and with a piecewise smooth boundary",
+                "infinitely differentiable at every interior point"
+            ],
+            "correct": "C",
+            "explanation": "The Gauss Divergence Theorem, a fundamental result in vector calculus, applies to a closed, bounded region in space whose boundary is piecewise smooth. The region must be closed to ensure the boundary is included, and bounded to avoid issues with infinite integrals. The piecewise smoothness of the boundary ensures that the normal vector is well-defined almost everywhere, which is critical for evaluating the surface integral. Simply connectedness or infinite differentiability of the interior are not necessary conditions for the theorem's applicability."
+        },
+        {
+            "question": "A surface is called piecewise smooth if it can be",
+            "options": [
+                "represented by a single smooth function over its entire domain",
+                "decomposed into finitely many smooth patches joined along piecewise smooth curves",
+                "infinitely differentiable at every point on the surface",
+                "continuous but not necessarily differentiable anywhere"
+            ],
+            "correct": "B",
+            "explanation": "A piecewise smooth surface is one that can be divided into a finite number of smooth patches, where each patch is differentiable and the patches are joined along piecewise smooth curves. This definition allows for edges, corners, or creases where the patches meet, which are common in physical surfaces like polyhedra or mechanical components. The other options either oversimplify the surface's structure or impose incorrect conditions on differentiability."
+        },
+        {
+            "question": "For Stokes' Theorem to be applicable, the surface must satisfy which of the following conditions?",
+            "options": [
+                "The surface must be closed and bounded",
+                "The surface must be orientable and its boundary must be a piecewise smooth simple closed curve",
+                "The surface must be infinitely differentiable at every point",
+                "The surface must be convex and simply connected"
+            ],
+            "correct": "B",
+            "explanation": "Stokes' Theorem relates a surface integral over a surface to a line integral around its boundary. For the theorem to hold, the surface must be orientable (to define a consistent normal vector) and its boundary must be a piecewise smooth simple closed curve. This ensures that the boundary is well-defined and the integrals are computable. The theorem does not require the surface to be closed, bounded, convex, or infinitely differentiable, making the other options incorrect or overly restrictive."
+        },
+        {
+            "question": "Which of the following is NOT a necessary condition for the applicability of the Kelvin-Stokes Theorem?",
+            "options": [
+                "The surface must be orientable",
+                "The boundary of the surface must be a piecewise smooth simple closed curve",
+                "The surface must be simply connected",
+                "The vector field must be continuously differentiable on an open region containing the surface"
+            ],
+            "correct": "C",
+            "explanation": "The Kelvin-Stokes Theorem, a generalization of Stokes' Theorem, requires the surface to be orientable, its boundary to be a piecewise smooth simple closed curve, and the vector field to be continuously differentiable on an open region containing the surface. Simply connectedness of the surface is not a necessary condition for the theorem's applicability. The theorem can be applied to surfaces with holes or non-trivial topology, provided the other conditions are met. The other options list conditions that are indeed required."
+        }
+    ],
+    "metadata": {
+        "level": "basic",
+        "count": 5,
+        "subject": "physics",
+        "topic": "mathematical_methods_of_physics",
+        "lesson": "Dimensional Analysis and Vector Methods",
+        "target_exam": "CSIR GATE UGC-NET",
+        "agent_text": "Region regularity, piecewise smooth surfaces\/curves, and applicability constraints of theorems.",
+        "tags": "",
+        "mainsubject": "physics",
+        "is_dummy": false,
+        "generated_at": 1778314994,
+        "api_duration_ms": 15610,
+        "format_version": "2.0"
+    }
+}

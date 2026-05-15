@@ -1,0 +1,30 @@
+{
+    "providers": {
+        "notes_provider": {
+            "type": "openai_compatible",
+            "endpoint": "https://example.com/v1/chat/completions",
+            "api_key": "replace-me",
+            "api_style": "chat_completions"
+        },
+        "mcq_provider": {
+            "type": "openai_compatible",
+            "endpoint": "https://example.com/v1/responses",
+            "api_key": "replace-me",
+            "api_style": "chat_completions"
+        }
+    },
+    "functions": {
+        "notes_agent": {
+            "module": "notes_agent",
+            "provider": "notes_provider",
+            "model": "mistral-large-3",
+            "stream": true
+        },
+        "mcq_agent": {
+            "module": "mcq_agent",
+            "provider": "mcq_provider",
+            "model": "gpt-4.1",
+            "stream": false
+        }
+    }
+}

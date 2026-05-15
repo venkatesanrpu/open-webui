@@ -1,0 +1,66 @@
+{{!
+    FILE: blocks/ai_assistant/templates/history_widget.mustache
+    PURPOSE: Modal overlay for viewing chat history within the AI Assistant widget
+    FEATURES: Subject/Topic/Lesson filtering + General (unfiltered) category + MCQ formatting with LaTeX
+    DEPENDENCIES: katex (loaded by main.mustache)
+}}
+
+
+<!-- History Modal Overlay -->
+<div id="ai-assistant-history-modal" class="ai-assistant-history-modal" style="display: none;">
+    <div class="ai-assistant-history-modal-content">
+        
+        <!-- Header -->
+        <div class="ai-assistant-history-modal-header">
+            <h3>💬 Chat History</h3>
+            <button id="ai-assistant-history-close" class="ai-assistant-history-close-button" aria-label="Close History">
+                ×
+            </button>
+        </div>
+        
+        <!-- Filter Controls -->
+        <div class="ai-assistant-history-filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="history-subject">Subject</label>
+                    <select id="history-subject" class="filter-select">
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="history-topic">Topic</label>
+                    <select id="history-topic" class="filter-select" disabled>
+                        <option value="">-- Select Topic --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="history-lesson">Lesson</label>
+                    <select id="history-lesson" class="filter-select" disabled>
+                        <option value="">-- Select Lesson --</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="history-load-button" class="history-load-button" disabled>
+                View History
+            </button>
+        </div>
+        
+        <!-- History Content (Accordion) -->
+        <div id="ai-assistant-history-body" class="ai-assistant-history-body">
+            <div class="empty-state">
+                <p>📚 Select a category above to view your conversation history</p>
+            </div>
+        </div>
+        
+        <!-- Pagination (if needed in future) -->
+        <div id="ai-assistant-history-pagination" class="ai-assistant-history-pagination" style="display: none;">
+            <!-- Pagination controls here -->
+        </div>
+        
+    </div>
+</div>
+
+

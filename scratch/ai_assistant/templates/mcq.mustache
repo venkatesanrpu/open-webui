@@ -1,0 +1,65 @@
+{{!
+    FILE: blocks/ai_assistant/templates/mcq_widget.mustache
+    PURPOSE: Flashcard-style MCQ practice modal with LaTeX support
+    FEATURES: Card-by-card display, Show Answer/Question toggle, keyboard navigation, practice again support, KaTeX rendering
+    SECURITY: Includes sesskey validation for AJAX requests, duplicate click prevention
+}}
+
+<!-- MathJax is used instead of KaTeX CSS -->
+
+<!-- MCQ Flashcard Modal -->
+<div id="ai-assistant-mcq-modal" class="ai-assistant-mcq-modal" style="display: none;">
+    <div class="ai-assistant-mcq-modal-content">
+        
+        <!-- Header -->
+        <div class="ai-assistant-mcq-modal-header">
+            <h3 id="ai-assistant-mcq-title">Question 1/10</h3>
+            <button id="ai-assistant-mcq-close" class="ai-assistant-mcq-close-button" aria-label="Close MCQ">
+                ×
+            </button>
+        </div>
+        
+        <!-- Flashcard Container -->
+        <div id="ai-assistant-mcq-card" class="ai-assistant-mcq-card">
+            <div class="mcq-card-content">
+                <!-- Question View -->
+                <div id="mcq-question-view" class="mcq-view">
+                    <div class="mcq-question-text"></div>
+                    <div class="mcq-options"></div>
+                </div>
+                
+                <!-- Answer View -->
+                <div id="mcq-answer-view" class="mcq-view" style="display: none;">
+                    <div class="mcq-correct-answer"></div>
+                    <div class="mcq-explanation"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="ai-assistant-mcq-controls">
+            <button id="mcq-prev-button" class="mcq-nav-button" aria-label="Previous question" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+            
+            <button id="mcq-toggle-button" class="mcq-toggle-button">Show Answer</button>
+            
+            <button id="mcq-next-button" class="mcq-nav-button" aria-label="Next question">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Loading State -->
+        <div id="mcq-loading" class="mcq-loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Generating MCQs...</p>
+        </div>
+        
+    </div>
+</div>
+
+

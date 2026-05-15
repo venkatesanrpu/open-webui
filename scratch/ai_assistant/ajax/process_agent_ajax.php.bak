@@ -1,0 +1,125 @@
+<?php
+/**
+ * Synchronous handler for ask_agent requests.
+ * Generates the response, parses Markdown to HTML, and saves to DB.
+ */
+define('AJAX_SCRIPT', true);
+require_once(__DIR__ . '/../../../config.php');
+require_once($CFG->dirroot . '/local/ai_functions_v2/libagent.php');
+
+global $DB, $USER;
+
+require_login();
+require_sesskey();
+set_time_limit(360);
+ini_set('max_execution_time', 360);
+
+header('Content-Type: application/json');
+
+try {
+    $courseid = required_param('courseid', PARAM_INT);
+    $agentkey = required_param('agent_config_key', PARAM_ALPHANUMEXT);
+    if ($agentkey === '') {
+        $agentkey = required_param('agentconfigkey', PARAM_ALPHANUMEXT);
+    }
+    $usertext = optional_param('agent_text', '', PARAM_RAW);
+    if ($usertext === '') {
+        $usertext = required_param('agenttext', PARAM_RAW);
+    }
+    $target = optional_param('target', 'CSIR/GATE/UGC-NET Exam', PARAM_TEXT);
+    $subject = optional_param('subject', '', PARAM_TEXT);
+    $lesson = optional_param('lesson', '', PARAM_TEXT);
+    $topic = optional_param('topic', '', PARAM_TEXT);
+    $tags = optional_param('tags', '', PARAM_RAW);
+
+    // Verify course enrollment
+    require_login(get_course($courseid), false);
+    $context = context_course::instance($courseid);
+    require_capability('block/ai_assistant:use', $context);
+
+    // Build context block
+    $context_arr = [];
+    $context_arr[] = "**Exam**: {$target}";
+    $context_arr[] = "**Subject**: {$subject}";
+    if (!empty($lesson)) $context_arr[] = "**Lesson**: {$lesson}";
+    if (!empty($topic)) $context_arr[] = "**Topic**: {$topic}";
+    if (!empty($tags)) $context_arr[] = "**Keywords**: {$tags}";
+    
+    $context_string = implode("\n", $context_arr);
+
+    $function = optional_param('function', 'ask_agent', PARAM_ALPHANUMEXT);
+
+    // Load prompt template from file dynamically
+    $prompt_file = $CFG->dirroot . "/blocks/ai_assistant/prompts/{$function}_instruction.txt";
+    if (!file_exists($prompt_file)) {
+        $prompt_file = $CFG->dirroot . '/blocks/ai_assistant/prompts/ask_agent_instruction.txt';
+    }
+    $prompt_template = file_get_contents($prompt_file);
+
+    // Replace placeholders
+    $system_prompt = str_replace(
+        ['{TARGET_EXAM}', '{SUBJECT}', '{TOPIC}', '{LESSON}', '{TAGS}', '{CONTEXT_BLOCK}'],
+        [$target, $subject, $topic, $lesson, $tags, $context_string],
+        $prompt_template
+    );
+
+    $payload = [
+        'system_prompt' => $system_prompt,
+        'user_prompt' => "Generate Study Notes for: {$usertext}",
+        'stream' => false,
+        'options' => [
+            'max_output_tokens' => 4096,
+            'temperature' => 0.2,
+			'top_p' => 0.95,	
+        ]
+    ];
+
+    $endpoint_function = $function;
+    if ($function === 'ask_agent' || $function === 'demo_agent') {
+        $endpoint_function = 'notes_agent';
+    }
+
+    // Call LLM synchronously using V2
+    $starttime = microtime(true);
+    $result = local_ai_functions_v2_call_endpoint($agentkey, $endpoint_function, $payload);
+    $apiduration = intval(round((microtime(true) - $starttime) * 1000));
+    
+    if (empty($result) || !isset($result['content'])) {
+        throw new Exception('Empty response from LLM API');
+    }
+    
+    $raw_response = $result['content'] ?? '';
+    
+    $metadata = $result['metadata'] ?? [];
+    $metadata['api_duration_ms'] = $apiduration;
+
+    // Parse Markdown to HTML
+    require_once($CFG->dirroot . '/blocks/ai_assistant/classes/local/render_helper.php');
+    $html = \block_ai_assistant\local\render_helper::render($raw_response);
+
+    // Save to database
+    $record = new stdClass();
+    $record->userid = $USER->id;
+    $record->courseid = $courseid;
+    $record->usertext = clean_param($usertext, PARAM_RAW);
+    $record->botresponse = $html; // Save parsed HTML directly
+    $record->functioncalled = $function;
+    $record->subject = clean_param($subject, PARAM_TEXT);
+    $record->topic = clean_param($topic, PARAM_TEXT);
+    $record->lesson = clean_param($lesson, PARAM_TEXT);
+    $record->metadata = json_encode($metadata);
+    $record->timecreated = time();
+    $record->timemodified = time();
+
+    $historyid = $DB->insert_record('block_ai_assistant_history', $record);
+
+    echo json_encode([
+        'status' => 'success',
+        'historyid' => $historyid,
+        'html' => $html
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+}

@@ -1,0 +1,172 @@
+{
+  "subject": "Physical Sciences",
+  "subject_key": "physical_sciences",
+  "topics": [
+    {
+      "topic": "Mathematical Methods of Physics",
+      "topic_key": "mathematical_methods_of_physics",
+      "lessons": [
+        { "lesson": "Dimensional Analysis and Vector Methods", "lesson_key": "dimensional_analysis_and_vector_methods" },
+        { "lesson": "Linear Algebra and Matrix Theory", "lesson_key": "linear_algebra_and_matrix_theory" },
+        { "lesson": "Ordinary Differential Equations and Special Functions", "lesson_key": "ordinary_differential_equations_and_special_functions" },
+        { "lesson": "Fourier Analysis and Integral Transforms", "lesson_key": "fourier_analysis_and_integral_transforms" },
+        { "lesson": "Complex Analysis", "lesson_key": "complex_analysis" },
+        { "lesson": "Probability Theory and Statistical Distributions", "lesson_key": "probability_theory_and_statistical_distributions" },
+        { "lesson": "Green's Function Method", "lesson_key": "green_s_function_method" },
+        { "lesson": "Partial Differential Equations", "lesson_key": "partial_differential_equations" },
+        { "lesson": "Numerical and Computational Methods", "lesson_key": "numerical_and_computational_methods" },
+        { "lesson": "Tensor Analysis", "lesson_key": "tensor_analysis" },
+        { "lesson": "Group Theory", "lesson_key": "group_theory" }
+      ]
+    },
+    {
+      "topic": "Classical Mechanics",
+      "topic_key": "classical_mechanics",
+      "lessons": [
+        { "lesson": "Newtonian Mechanics and Dynamical Systems", "lesson_key": "newtonian_mechanics_and_dynamical_systems" },
+        { "lesson": "Central Force Motion", "lesson_key": "central_force_motion" },
+        { "lesson": "Collision and Scattering Theory", "lesson_key": "collision_and_scattering_theory" },
+        { "lesson": "Rigid Body Dynamics", "lesson_key": "rigid_body_dynamics" },
+        { "lesson": "Non-inertial Reference Frames", "lesson_key": "non_inertial_reference_frames" },
+        { "lesson": "Lagrangian Formulation", "lesson_key": "lagrangian_formulation" },
+        { "lesson": "Hamiltonian Formulation and Conservation Laws", "lesson_key": "hamiltonian_formulation_and_conservation_laws" },
+        { "lesson": "Oscillations and Normal Modes", "lesson_key": "oscillations_and_normal_modes" },
+        { "lesson": "Special Theory of Relativity", "lesson_key": "special_theory_of_relativity" },
+        { "lesson": "Dynamical Systems and Phase Space", "lesson_key": "dynamical_systems_and_phase_space" },
+        { "lesson": "Poisson Brackets and Canonical Transformations", "lesson_key": "poisson_brackets_and_canonical_transformations" },
+        { "lesson": "Symmetry and Conservation Laws", "lesson_key": "symmetry_and_conservation_laws" },
+        { "lesson": "Hamilton-Jacobi Theory", "lesson_key": "hamilton_jacobi_theory" }
+      ]
+    },
+    {
+      "topic": "Electromagnetic Theory",
+      "topic_key": "electromagnetic_theory",
+      "lessons": [
+        { "lesson": "Electrostatics", "lesson_key": "electrostatics" },
+        { "lesson": "Magnetostatics", "lesson_key": "magnetostatics" },
+        { "lesson": "Electromagnetic Induction and Potentials", "lesson_key": "electromagnetic_induction_and_potentials" },
+        { "lesson": "Maxwells Equations and Boundary Conditions", "lesson_key": "maxwells_equations_and_boundary_conditions" },
+        { "lesson": "Electromagnetic Waves in Free Space", "lesson_key": "electromagnetic_waves_in_free_space" },
+        { "lesson": "Electromagnetic Fields in Materials", "lesson_key": "electromagnetic_fields_in_materials" },
+        { "lesson": "Wave Propagation and Optics", "lesson_key": "wave_propagation_and_optics" },
+        { "lesson": "Wave Phenomena", "lesson_key": "wave_phenomena" },
+        { "lesson": "Charged Particle Dynamics", "lesson_key": "charged_particle_dynamics" },
+        { "lesson": "Lorentz Invariance", "lesson_key": "lorentz_invariance" },
+        { "lesson": "Dispersion Relations in Plasma", "lesson_key": "dispersion_relations_in_plasma" },
+        { "lesson": "Transmission Lines and Waveguides", "lesson_key": "transmission_lines_and_waveguides" },
+        { "lesson": "Radiation and Retarded Potentials", "lesson_key": "radiation_and_retarded_potentials" }
+      ]
+    },
+    {
+      "topic": "Quantum Mechanics",
+      "topic_key": "quantum_mechanics",
+      "lessons": [
+        { "lesson": "Foundations of Quantum Mechanics", "lesson_key": "foundations_of_quantum_mechanics" },
+        { "lesson": "Exactly Solvable Systems", "lesson_key": "exactly_solvable_systems" },
+        { "lesson": "Quantum Formalism and Operators", "lesson_key": "quantum_formalism_and_operators" },
+        { "lesson": "Angular Momentum and Central Potentials", "lesson_key": "angular_momentum_and_central_potentials" },
+        { "lesson": "Approximation Methods for Stationary States", "lesson_key": "approximation_methods_for_stationary_states" },
+        { "lesson": "Time-Dependent Quantum Phenomena", "lesson_key": "time_dependent_quantum_phenomena" },
+        { "lesson": "Many-Particle Systems", "lesson_key": "many_particle_systems" },
+        { "lesson": "Semi-Classical Approximation Methods", "lesson_key": "semi_classical_approximation_methods" },
+        { "lesson": "Atomic Fine Structure", "lesson_key": "atomic_fine_structure" },
+        { "lesson": "Quantum Scattering Theory", "lesson_key": "quantum_scattering_theory" },
+        { "lesson": "Relativistic Quantum Mechanics", "lesson_key": "relativistic_quantum_mechanics" },
+        { "lesson": "Semi-Classical Radiation Theory", "lesson_key": "semi_classical_radiation_theory" }
+      ]
+    },
+    {
+      "topic": "Thermodynamic and Statistical Physics",
+      "topic_key": "thermodynamic_and_statistical_physics",
+      "lessons": [
+        { "lesson": "Foundations of Classical Thermodynamics", "lesson_key": "foundations_of_classical_thermodynamics" },
+        { "lesson": "Thermodynamic Potentials and Relations", "lesson_key": "thermodynamic_potentials_and_relations" },
+        { "lesson": "Chemical Potential and Phase Equilibria", "lesson_key": "chemical_potential_and_phase_equilibria" },
+        { "lesson": "Statistical Foundations and Phase Space", "lesson_key": "statistical_foundations_and_phase_space" },
+        { "lesson": "Ensemble Theory and Partition Functions", "lesson_key": "ensemble_theory_and_partition_functions" },
+        { "lesson": "Statistical Thermodynamics Connection", "lesson_key": "statistical_thermodynamics_connection" },
+        { "lesson": "Classical and Quantum Statistics", "lesson_key": "classical_and_quantum_statistics" },
+        { "lesson": "Ideal Quantum Gases", "lesson_key": "ideal_quantum_gases" },
+        { "lesson": "Equilibrium and Radiation Physics", "lesson_key": "equilibrium_and_radiation_physics" },
+        { "lesson": "Classification of Phase Transitions", "lesson_key": "classification_of_phase_transitions" },
+        { "lesson": "Magnetic Systems and Critical Behavior", "lesson_key": "magnetic_systems_and_critical_behavior" },
+        { "lesson": "Ising Model", "lesson_key": "ising_model" },
+        { "lesson": "Bose-Einstein Condensation", "lesson_key": "bose_einstein_condensation" },
+        { "lesson": "Random Walk Theory", "lesson_key": "random_walk_theory" },
+        { "lesson": "Diffusion and Brownian Motion", "lesson_key": "diffusion_and_brownian_motion" },
+        { "lesson": "Nonequilibrium Statistical Mechanics", "lesson_key": "nonequilibrium_statistical_mechanics" }
+      ]
+    },
+    {
+      "topic": "Electronics and Experimental Methods",
+      "topic_key": "electronics_and_experimental_methods",
+      "lessons": [
+        { "lesson": "Fundamental Semiconductor Devices", "lesson_key": "fundamental_semiconductor_devices" },
+        { "lesson": "Advanced Semiconductor Devices", "lesson_key": "advanced_semiconductor_devices" },
+        { "lesson": "Opto-electronic Devices", "lesson_key": "opto_electronic_devices" },
+        { "lesson": "Operational Amplifiers", "lesson_key": "operational_amplifiers" },
+        { "lesson": "Digital Electronics", "lesson_key": "digital_electronics" },
+        { "lesson": "Data Conversion Systems", "lesson_key": "data_conversion_systems" },
+        { "lesson": "Microprocessors and Microcontrollers", "lesson_key": "microprocessors_and_microcontrollers" },
+        { "lesson": "Data Analysis and Statistical Methods", "lesson_key": "data_analysis_and_statistical_methods" },
+        { "lesson": "Transducers and Sensors", "lesson_key": "transducers_and_sensors" },
+        { "lesson": "Signal Conditioning Fundamentals", "lesson_key": "signal_conditioning_fundamentals" },
+        { "lesson": "Noise Reduction and Filtering", "lesson_key": "noise_reduction_and_filtering" },
+        { "lesson": "Advanced Signal Processing", "lesson_key": "advanced_signal_processing" },
+        { "lesson": "Measurement and Control Systems", "lesson_key": "measurement_and_control_systems" },
+        { "lesson": "High Frequency Devices", "lesson_key": "high_frequency_devices" }
+      ]
+    },
+    {
+      "topic": "Atomic & Molecular Physics",
+      "topic_key": "atomic_and_molecular_physics",
+      "lessons": [
+        { "lesson": "Quantum States and Electron Spin in Atoms", "lesson_key": "quantum_states_and_electron_spin_in_atoms" },
+        { "lesson": "Atomic Spectra and Multi-Electron Systems", "lesson_key": "atomic_spectra_and_multi_electron_systems" },
+        { "lesson": "Fine Structure and Relativistic Corrections", "lesson_key": "fine_structure_and_relativistic_corrections" },
+        { "lesson": "Hyperfine Structure and Line Broadening", "lesson_key": "hyperfine_structure_and_line_broadening" },
+        { "lesson": "Atoms in External Fields", "lesson_key": "atoms_in_external_fields" },
+        { "lesson": "Magnetic Resonance Techniques", "lesson_key": "magnetic_resonance_techniques" },
+        { "lesson": "Molecular Structure and Approximations", "lesson_key": "molecular_structure_and_approximations" },
+        { "lesson": "Molecular Spectroscopy", "lesson_key": "molecular_spectroscopy" },
+        { "lesson": "Fundamentals of Laser Physics", "lesson_key": "fundamentals_of_laser_physics" },
+        { "lesson": "Laser Operation and Characteristics", "lesson_key": "laser_operation_and_characteristics" }
+      ]
+    },
+    {
+      "topic": "Condensed Matter Physics",
+      "topic_key": "condensed_matter_physics",
+      "lessons": [
+        { "lesson": "Crystal Structure and Symmetry", "lesson_key": "crystal_structure_and_symmetry" },
+        { "lesson": "Structural Characterization", "lesson_key": "structural_characterization" },
+        { "lesson": "Interatomic Bonding", "lesson_key": "interatomic_bonding" },
+        { "lesson": "Lattice Dynamics", "lesson_key": "lattice_dynamics" },
+        { "lesson": "Free Electron Theory", "lesson_key": "free_electron_theory" },
+        { "lesson": "Classical Transport Phenomena", "lesson_key": "classical_transport_phenomena" },
+        { "lesson": "Band Theory of Solids", "lesson_key": "band_theory_of_solids" },
+        { "lesson": "Quantum Transport and Superconductivity", "lesson_key": "quantum_transport_and_superconductivity" },
+        { "lesson": "Structural Imperfections", "lesson_key": "structural_imperfections" },
+        { "lesson": "Ordered Phases and Complex Structures", "lesson_key": "ordered_phases_and_complex_structures" }
+      ]
+    },
+    {
+      "topic": "Nuclear and Particle Physics",
+      "topic_key": "nuclear_and_particle_physics",
+      "lessons": [
+        { "lesson": "Fundamental Nuclear Properties", "lesson_key": "fundamental_nuclear_properties" },
+        { "lesson": "Nuclear Binding and Mass Models", "lesson_key": "nuclear_binding_and_mass_models" },
+        { "lesson": "Nuclear Forces and Interactions", "lesson_key": "nuclear_forces_and_interactions" },
+        { "lesson": "The Deuteron System", "lesson_key": "the_deuteron_system" },
+        { "lesson": "Nuclear Shell Structure", "lesson_key": "nuclear_shell_structure" },
+        { "lesson": "Collective Nuclear Phenomena", "lesson_key": "collective_nuclear_phenomena" },
+        { "lesson": "Radioactive Decay Processes", "lesson_key": "radioactive_decay_processes" },
+        { "lesson": "Nuclear Fission and Fusion", "lesson_key": "nuclear_fission_and_fusion" },
+        { "lesson": "Nuclear Reaction Mechanisms", "lesson_key": "nuclear_reaction_mechanisms" },
+        { "lesson": "Fundamental Forces and Particle Classification", "lesson_key": "fundamental_forces_and_particle_classification" },
+        { "lesson": "Particle Systematics and Quark Model", "lesson_key": "particle_systematics_and_quark_model" },
+        { "lesson": "Symmetries and Conservation Laws", "lesson_key": "symmetries_and_conservation_laws" },
+        { "lesson": "Relativistic Kinematics in Particle Physics", "lesson_key": "relativistic_kinematics_in_particle_physics" }
+      ]
+    }
+  ]
+}

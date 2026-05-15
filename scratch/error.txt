@@ -1,0 +1,546 @@
+=> ERROR [frontend-builder 11/11] RUN npm run build                                                                             24.0s
+------                                                                                                                                 
+ > [frontend-builder 11/11] RUN npm run build:                                                                                         
+0.919                                                                                                                                  
+0.919 > open-webui@0.9.5 build                                                                                                         
+0.919 > npm run pyodide:fetch && vite build
+0.919 
+1.070 
+1.070 > open-webui@0.9.5 pyodide:fetch
+1.070 > node scripts/prepare-pyodide.js
+1.070 
+1.332 Setting up pyodide + micropip
+3.730 Pyodide package not found, proceeding with download. Error: ENOENT: no such file or directory, open 'static/pyodide/package.json'
+3.730     at async open (node:internal/fs/promises:633:25)
+3.730     at async readFile (node:internal/fs/promises:1237:14)
+3.730     at async downloadPackages (file:///app/scripts/prepare-pyodide.js:78:41)
+3.730     at async file:///app/scripts/prepare-pyodide.js:199:1 {
+3.730   errno: -2,
+3.730   code: 'ENOENT',
+3.730   syscall: 'open',
+3.730   path: 'static/pyodide/package.json'
+3.730 }
+3.730 Loading micropip package
+3.731 Loading micropip
+3.732 Didn't find package micropip-0.10.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+3.846 Package micropip-0.10.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+3.971 Loaded micropip
+4.453 Downloading Pyodide packages: [
+4.453   'micropip',   'packaging',
+4.453   'requests',   'beautifulsoup4',
+4.453   'numpy',      'pandas',
+4.453   'matplotlib', 'scikit-learn',
+4.453   'scipy',      'regex',
+4.453   'sympy',      'tiktoken',
+4.453   'seaborn',    'pytz',
+4.453   'black',      'openai',
+4.453   'openpyxl'
+4.453 ]
+4.453 Installing package: micropip
+4.633 Installing package: packaging
+4.648 Loading packaging
+4.648 Didn't find package packaging-24.2-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.663 Package packaging-24.2-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.676 Loaded packaging
+4.677 Installing package: requests
+4.688 Loading certifi, charset-normalizer, idna, requests, urllib3
+4.689 Didn't find package requests-2.32.4-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.691 Didn't find package charset_normalizer-3.4.2-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.693 Didn't find package idna-3.10-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.695 Didn't find package urllib3-2.5.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.696 Didn't find package certifi-2025.7.14-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.704 Package requests-2.32.4-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.733 Package idna-3.10-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.745 Package urllib3-2.5.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.746 Package charset_normalizer-3.4.2-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.747 Package certifi-2025.7.14-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.785 Loaded certifi, charset-normalizer, idna, requests, urllib3
+4.790 Installing package: beautifulsoup4
+4.803 Loading beautifulsoup4, soupsieve, typing-extensions
+4.804 Didn't find package beautifulsoup4-4.13.3-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.805 Didn't find package soupsieve-2.6-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.806 Didn't find package typing_extensions-4.14.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+4.823 Package typing_extensions-4.14.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.824 Package soupsieve-2.6-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.838 Package beautifulsoup4-4.13.3-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+4.850 Loaded beautifulsoup4, soupsieve, typing-extensions
+4.851 Installing package: numpy
+4.864 Loading numpy
+4.864 Didn't find package numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+5.308 Package numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+5.701 Loaded numpy
+5.702 Installing package: pandas
+5.713 numpy already loaded from default channel
+5.714 Loading pandas, python-dateutil, pytz, six
+5.714 Didn't find package pandas-2.3.1-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+5.715 Didn't find package python_dateutil-2.9.0.post0-py2.py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+5.715 Didn't find package six-1.17.0-py2.py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+5.716 Didn't find package pytz-2025.2-py2.py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+5.727 Package six-1.17.0-py2.py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+5.759 Package python_dateutil-2.9.0.post0-py2.py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+5.780 Package pytz-2025.2-py2.py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+6.416 Package pandas-2.3.1-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.335 Loaded pandas, python-dateutil, pytz, six
+7.336 Installing package: matplotlib
+7.349 numpy already loaded from default channel
+7.349 six already loaded from default channel
+7.349 packaging already loaded from default channel
+7.349 python-dateutil already loaded from default channel
+7.349 pytz already loaded from default channel
+7.349 Loading Pillow, contourpy, cycler, fonttools, kiwisolver, matplotlib, pyparsing
+7.349 Didn't find package matplotlib-3.8.4-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.351 Didn't find package contourpy-1.3.1-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.351 Didn't find package cycler-0.12.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.351 Didn't find package fonttools-4.56.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.352 Didn't find package kiwisolver-1.4.8-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.352 Didn't find package pillow-11.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.354 Didn't find package pyparsing-3.2.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+7.365 Package cycler-0.12.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.371 Package kiwisolver-1.4.8-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.417 Package contourpy-1.3.1-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.460 Package pyparsing-3.2.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.671 Package fonttools-4.56.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+7.780 Package pillow-11.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+8.060 Package matplotlib-3.8.4-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+8.427 Loaded Pillow, contourpy, cycler, fonttools, kiwisolver, matplotlib, pyparsing
+8.428 Installing package: scikit-learn
+8.439 numpy already loaded from default channel
+8.439 Loading joblib, libopenblas, scikit-learn, scipy, threadpoolctl
+8.440 Didn't find package scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+8.441 Didn't find package scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+8.441 Didn't find package libopenblas-0.3.26.zip locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+8.441 Didn't find package joblib-1.4.2-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+8.442 Didn't find package threadpoolctl-3.5.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+8.452 Package threadpoolctl-3.5.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+8.476 Package joblib-1.4.2-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+8.679 Package libopenblas-0.3.26.zip loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+9.121 Package scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+9.805 Package scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+15.49 Loaded joblib, libopenblas, scikit-learn, scipy, threadpoolctl
+15.50 Installing package: scipy
+15.51 Installing package: regex
+15.53 Loading regex
+15.53 Didn't find package regex-2024.11.6-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+15.59 Package regex-2024.11.6-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+15.64 Loaded regex
+15.64 Installing package: sympy
+15.65 Loading mpmath, sympy
+15.65 Didn't find package sympy-1.13.3-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+15.65 Didn't find package mpmath-1.3.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+15.73 Package mpmath-1.3.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+16.06 Package sympy-1.13.3-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+16.34 Loaded mpmath, sympy
+16.34 Installing package: tiktoken
+16.35 regex already loaded from default channel
+16.35 requests already loaded from default channel
+16.35 Loading tiktoken
+16.36 Didn't find package tiktoken-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.42 Package tiktoken-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+16.50 Loaded tiktoken
+16.50 Installing package: seaborn
+16.70 Installing package: pytz
+16.71 Installing package: black
+16.94 Loading click, platformdirs
+16.94 Didn't find package click-8.2.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.94 Didn't find package platformdirs-4.3.6-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.96 Package platformdirs-4.3.6-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+16.96 Package click-8.2.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+16.97 Loaded click, platformdirs
+16.98 Installing package: openai
+16.99 typing-extensions already loaded from default channel
+16.99 Loading annotated-types, anyio, distro, httpx, jiter, libopenssl, openai, pydantic, pydantic_core, sniffio, ssl
+16.99 Didn't find package openai-1.68.2-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.99 Didn't find package httpx-0.28.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.99 Didn't find package pydantic-2.10.6-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.99 Didn't find package pydantic_core-2.27.2-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+16.99 Didn't find package annotated_types-0.7.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package distro-1.9.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package anyio-4.9.0-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package ssl-1.0.0-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package libopenssl-1.1.1w.zip locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package sniffio-1.3.1-py3-none-any.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.00 Didn't find package jiter-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl locally, attempting to load from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/
+17.01 Package httpx-0.28.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.05 Package sniffio-1.3.1-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.06 Package distro-1.9.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.08 Package ssl-1.0.0-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.08 Package jiter-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.09 Package anyio-4.9.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.10 Package openai-1.68.2-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.13 Package annotated_types-0.7.0-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.14 Package pydantic-2.10.6-py3-none-any.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.19 Package libopenssl-1.1.1w.zip loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.23 Package pydantic_core-2.27.2-cp313-cp313-pyodide_2025_0_wasm32.whl loaded from https://cdn.jsdelivr.net/pyodide/v0.28.3/full/, caching the wheel in node_modules for future use.
+17.88 Loaded annotated-types, anyio, distro, httpx, jiter, libopenssl, openai, pydantic, pydantic_core, sniffio, ssl
+17.89 Installing package: openpyxl
+18.02 Pyodide packages downloaded, freezing into lock file
+18.17 Copying Pyodide files into static directory
+18.20 Fetching PyPI metadata for: black
+18.23   Downloading: black-26.3.1-py3-none-any.whl
+18.26   Saved: static/pyodide/black-26.3.1-py3-none-any.whl (207542 bytes)
+18.26   Added black==26.3.1 to pyodide-lock.json
+18.26 Fetching PyPI metadata for: pathspec
+18.53   Downloading: pathspec-1.1.1-py3-none-any.whl
+18.54   Saved: static/pyodide/pathspec-1.1.1-py3-none-any.whl (57328 bytes)
+18.54   Added pathspec==1.1.1 to pyodide-lock.json
+18.54 Fetching PyPI metadata for: mypy_extensions
+18.55   Downloading: mypy_extensions-1.1.0-py3-none-any.whl
+18.56   Saved: static/pyodide/mypy_extensions-1.1.0-py3-none-any.whl (4963 bytes)
+18.56   Added mypy_extensions==1.1.0 to pyodide-lock.json
+18.56 Fetching PyPI metadata for: pytokens
+18.57   Downloading: pytokens-0.4.1-py3-none-any.whl
+18.58   Saved: static/pyodide/pytokens-0.4.1-py3-none-any.whl (13729 bytes)
+18.58   Added pytokens==0.4.1 to pyodide-lock.json
+18.58 Updated pyodide-lock.json with PyPI packages
+19.03 ▲ [WARNING] Cannot find base config file "./.svelte-kit/tsconfig.json" [tsconfig.json]
+19.03 
+19.03     tsconfig.json:2:12:
+19.03       2 │   "extends": "./.svelte-kit/tsconfig.json",
+19.03         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+19.03 
+20.47 1:05:48 PM [vite-plugin-svelte] WARNING: The following packages have a svelte field in their package.json but no exports condition for svelte.
+20.47 
+20.47 @sveltejs/svelte-virtual-list@3.0.1
+20.47 
+20.47 Please see https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md#missing-exports-condition for details.
+20.48 vite v5.4.21 building SSR bundle for production...
+20.70 transforming...
+21.34 1:05:49 PM [vite-plugin-svelte] src/routes/auth/+page.svelte:214:1 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+21.34 https://svelte.dev/e/element_invalid_self_closing_tag
+21.34 212:   <div class="w-full h-full absolute top-0 left-0 bg-white dark:bg-black"></div>
+21.34 213: 
+21.34 214:   <div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
+21.34                                                                            ^
+21.34 215: 
+21.34 216:   {#if loaded}
+21.59 1:05:49 PM [vite-plugin-svelte] src/routes/(app)/+layout.svelte:476:1 Unused CSS selector ".loading"
+21.59 https://svelte.dev/e/css_unused_selector
+21.59 474: 
+21.59 475: <style>
+21.59 476:   .loading {
+21.59                ^
+21.59 477:     display: inline-block;
+21.59 478:     clip-path: inset(0 1ch 0 0);
+21.59 1:05:49 PM [vite-plugin-svelte] src/routes/(app)/+layout.svelte:489:1 Unused CSS selector "pre[class*='language-']"
+21.59 https://svelte.dev/e/css_unused_selector
+21.59 487:   }
+21.59 488: 
+21.59 489:   pre[class*='language-'] {
+21.59                               ^
+21.59 490:     position: relative;
+21.59 491:     overflow: auto;
+21.59 1:05:49 PM [vite-plugin-svelte] src/routes/(app)/+layout.svelte:499:1 Unused CSS selector "pre[class*='language-'] button"
+21.59 https://svelte.dev/e/css_unused_selector
+21.59 497:   }
+21.59 498: 
+21.59 499:   pre[class*='language-'] button {
+21.59                                      ^
+21.59 500:     position: absolute;
+21.59 501:     top: 5px;
+21.59 1:05:49 PM [vite-plugin-svelte] src/routes/(app)/+layout.svelte:513:1 Unused CSS selector "pre[class*='language-'] button:hover"
+21.59 https://svelte.dev/e/css_unused_selector
+21.59 511:   }
+21.59 512: 
+21.59 513:   pre[class*='language-'] button:hover {
+21.59                                            ^
+21.59 514:     cursor: pointer;
+21.59 515:     background-color: #bcbabb;
+21.66 1:05:49 PM [vite-plugin-svelte] src/lib/components/NotificationToast.svelte:85:0 Non-interactive element `<div>` should not be assigned mouse or keyboard event listeners
+21.66 https://svelte.dev/e/a11y_no_noninteractive_element_interactions
+21.66 83: </script>
+21.66 84: 
+21.66 85: <div
+21.66         ^
+21.66 86:   role="status"
+21.66 87:   aria-live="polite"
+21.81 1:05:49 PM [vite-plugin-svelte] src/lib/components/admin/Functions.svelte:499:10 Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+21.81 https://svelte.dev/e/a11y_consider_explicit_label
+21.81 497: 
+21.81 498:                   <Tooltip content={$i18n.t('Valves')}>
+21.81 499:                     <button
+21.81                                 ^
+21.81 500:                       class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
+21.81 501:                       type="button"
+22.19 1:05:50 PM [vite-plugin-svelte] src/lib/components/chat/Chat.svelte:2971:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+22.19 https://svelte.dev/e/element_invalid_self_closing_tag
+22.19 2969:     <div in:fade={{ duration: 50 }} class="w-full h-full flex flex-col">
+22.19 2970:       {#if $selectedFolder && $selectedFolder?.meta?.background_image_url}
+22.19 2971:         <div
+22.19                 ^
+22.19 2972:           class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
+22.19 2973:           style="background-image: url({$selectedFolder?.meta?.background_image_url})  "
+22.19 1:05:50 PM [vite-plugin-svelte] src/lib/components/chat/Chat.svelte:2976:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+22.19 https://svelte.dev/e/element_invalid_self_closing_tag
+22.19 2974:         />
+22.19 2975: 
+22.19 2976:         <div
+22.19                 ^
+22.19 2977:           class="absolute top-0 left-0 w-full h-full bg-linear-to-t from-white to-white/85 dark:from-gray-900 dark:to-gray-900/90 z-0"
+22.19 2978:         />
+22.19 1:05:50 PM [vite-plugin-svelte] src/lib/components/chat/Chat.svelte:2980:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+22.19 https://svelte.dev/e/element_invalid_self_closing_tag
+22.19 2978:         />
+22.19 2979:       {:else if $settings?.backgroundImageUrl ?? $config?.license_metadata?.background_image_url ?? null}
+22.19 2980:         <div
+22.19                 ^
+22.19 2981:           class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
+22.19 2982:           style="background-image: url({$settings?.backgroundImageUrl ??
+22.19 1:05:50 PM [vite-plugin-svelte] src/lib/components/chat/Chat.svelte:2986:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+22.19 https://svelte.dev/e/element_invalid_self_closing_tag
+22.19 2984:         />
+22.19 2985: 
+22.19 2986:         <div
+22.19                 ^
+22.19 2987:           class="absolute top-0 left-0 w-full h-full bg-linear-to-t from-white to-white/85 dark:from-gray-900 dark:to-gray-900/90 z-0"
+22.19 2988:         />
+22.27 1:05:50 PM [vite-plugin-svelte] src/lib/components/AutomationModal.svelte:121:3 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.27 https://svelte.dev/e/element_invalid_self_closing_tag
+22.27 119:     <div class="px-5 pb-2">
+22.27 120:       <div class="mb-1 text-xs text-gray-500">{$i18n.t('Instructions')}</div>
+22.27 121:       <textarea
+22.27              ^
+22.27 122:         class="w-full text-sm bg-transparent outline-hidden placeholder:text-gray-300 dark:placeholder:text-gray-700 resize-none min-h-[12rem]"
+22.27 123:         bind:value={prompt}
+22.28 1:05:50 PM [vite-plugin-svelte] src/lib/components/common/ConfirmDialog.svelte:151:8 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.28 https://svelte.dev/e/element_invalid_self_closing_tag
+22.28 149:                 </div>
+22.28 150:               {:else}
+22.28 151:                 <textarea
+22.28                        ^
+22.28 152:                   bind:value={_inputValue}
+22.28 153:                   placeholder={inputPlaceholder ? inputPlaceholder : $i18n.t('Enter your message')}
+22.28 1:05:50 PM [vite-plugin-svelte] src/lib/components/common/ConfirmDialog.svelte:190:1 Unused CSS selector ".modal-content"
+22.28 https://svelte.dev/e/css_unused_selector
+22.28 188: 
+22.28 189: <style>
+22.28 190:   .modal-content {
+22.28                      ^
+22.28 191:     animation: scaleUp 0.1s ease-out forwards;
+22.28 192:   }
+22.35 1:05:50 PM [vite-plugin-svelte] src/lib/components/automations/AutomationEditor.svelte:305:6 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.35 https://svelte.dev/e/element_invalid_self_closing_tag
+22.35 303:             class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4 border border-gray-100/50 dark:border-gray-850/50 h-full"
+22.35 304:           >
+22.35 305:             <textarea
+22.35                    ^
+22.35 306:               class="w-full h-full text-sm bg-transparent outline-hidden resize-none placeholder:text-gray-300 dark:placeholder:text-gray-700"
+22.35 307:               bind:value={prompt}
+22.40 1:05:50 PM [vite-plugin-svelte] src/lib/components/calendar/CalendarSidebar.svelte:111:4 Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+22.40 https://svelte.dev/e/a11y_consider_explicit_label
+22.40 109:       <div class="text-[11px] font-medium">{miniMonthNames[miniMonth]} {miniYear}</div>
+22.40 110:       <div class="flex items-center gap-0.5">
+22.40 111:         <button
+22.40                     ^
+22.40 112:           class="p-0.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+22.40 113:           on:click={() => navigateMini(-1)}
+22.40 1:05:50 PM [vite-plugin-svelte] src/lib/components/calendar/CalendarSidebar.svelte:129:4 Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+22.40 https://svelte.dev/e/a11y_consider_explicit_label
+22.40 127:           >
+22.40 128:         </button>
+22.40 129:         <button
+22.40                     ^
+22.40 130:           class="p-0.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+22.40 131:           on:click={() => navigateMini(1)}
+22.41 1:05:50 PM [vite-plugin-svelte] src/lib/components/calendar/CreateCalendarModal.svelte:99:6 Self-closing HTML tags for non-void elements are ambiguous — use `<button ...></button>` rather than `<button ... />`
+22.41 https://svelte.dev/e/element_invalid_self_closing_tag
+22.41  97:         <div class="flex items-center gap-2 flex-wrap">
+22.41  98:           {#each PRESET_COLORS as c}
+22.41  99:             <button
+22.41                    ^
+22.41 100:               class="size-6 rounded-full transition-all border-2 {color === c
+22.41 101:                 ? 'border-gray-800 dark:border-white scale-110'
+22.44 1:05:50 PM [vite-plugin-svelte] src/lib/components/channel/Channel.svelte:421:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+22.44 https://svelte.dev/e/element_invalid_self_closing_tag
+22.44 419:         id="controls-resizer"
+22.44 420:       >
+22.44 421:         <div
+22.44                ^
+22.44 422:           class=" absolute -left-1.5 -right-1.5 -top-0 -bottom-0 z-20 cursor-col-resize bg-transparent"
+22.44 423:         />
+22.50 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Chat.svelte:374:7 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.50 https://svelte.dev/e/element_invalid_self_closing_tag
+22.50 372:           <div slot="content">
+22.50 373:             <div class="pt-1 px-1.5">
+22.50 374:               <textarea
+22.50                      ^
+22.50 375:                 bind:this={systemTextareaElement}
+22.50 376:                 class="w-full h-full bg-transparent resize-none outline-hidden text-sm"
+22.50 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Chat.svelte:453:6 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.50 https://svelte.dev/e/element_invalid_self_closing_tag
+22.50 451:             <!-- $i18n.t('a user') -->
+22.50 452:             <!-- $i18n.t('an assistant') -->
+22.50 453:             <textarea
+22.50                    ^
+22.50 454:               bind:value={message}
+22.50 455:               class=" w-full h-full bg-transparent resize-none outline-hidden text-sm"
+22.55 1:05:50 PM [vite-plugin-svelte] src/lib/components/layout/Sidebar/UserMenu.svelte:147:10 Self-closing HTML tags for non-void elements are ambiguous — use `<span ...></span>` rather than `<span ... />`
+22.55 https://svelte.dev/e/element_invalid_self_closing_tag
+22.55 145:                 <div>
+22.55 146:                   <span class="relative flex size-2">
+22.55 147:                     <span class="relative inline-flex rounded-full size-2 bg-green-500" />
+22.55                                                                                                ^
+22.55 148:                   </span>
+22.55 149:                 </div>
+22.55 1:05:50 PM [vite-plugin-svelte] src/lib/components/layout/Sidebar/UserMenu.svelte:155:10 Self-closing HTML tags for non-void elements are ambiguous — use `<span ...></span>` rather than `<span ... />`
+22.55 https://svelte.dev/e/element_invalid_self_closing_tag
+22.55 153:                 <div>
+22.55 154:                   <span class="relative flex size-2">
+22.55 155:                     <span class="relative inline-flex rounded-full size-2 bg-gray-500" />
+22.55                                                                                               ^
+22.55 156:                   </span>
+22.55 157:                 </div>
+22.55 1:05:50 PM [vite-plugin-svelte] src/lib/components/layout/Sidebar/UserMenu.svelte:660:9 Self-closing HTML tags for non-void elements are ambiguous — use `<span ...></span>` rather than `<span ... />`
+22.55 https://svelte.dev/e/element_invalid_self_closing_tag
+22.55 658:               <div class=" flex items-center">
+22.55 659:                 <span class="relative flex size-2">
+22.55 660:                   <span class="relative inline-flex rounded-full size-2 bg-green-500" />
+22.55                                                                                              ^
+22.55 661:                 </span>
+22.55 662:               </div>
+22.56 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Completions.svelte:131:6 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.56 https://svelte.dev/e/element_invalid_self_closing_tag
+22.56 129:         <div class=" h-full w-full flex flex-col">
+22.56 130:           <div class="flex-1">
+22.56 131:             <textarea
+22.56                    ^
+22.56 132:               id="text-completion-textarea"
+22.56 133:               bind:this={textCompletionAreaElement}
+22.56 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Completions.svelte:182:1 Unused CSS selector ".scrollbar-hidden::-webkit-scrollbar"
+22.56 https://svelte.dev/e/css_unused_selector
+22.56 180: 
+22.56 181: <style>
+22.56 182:   .scrollbar-hidden::-webkit-scrollbar {
+22.56                                            ^
+22.56 183:     display: none; /* for Chrome, Safari and Opera */
+22.56 184:   }
+22.56 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Completions.svelte:186:1 Unused CSS selector ".scrollbar-hidden"
+22.56 https://svelte.dev/e/css_unused_selector
+22.56 184:   }
+22.56 185: 
+22.56 186:   .scrollbar-hidden {
+22.56                         ^
+22.56 187:     -ms-overflow-style: none; /* IE and Edge */
+22.56 188:     scrollbar-width: none; /* Firefox */
+22.75 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Images.svelte:190:10 Buttons and links should either contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+22.75 https://svelte.dev/e/a11y_consider_explicit_label
+22.75 188:                   </div>
+22.75 189:                   <div class=" absolute -top-1 -right-1">
+22.75 190:                     <button
+22.75                                 ^
+22.75 191:                       class=" bg-white text-black border border-white rounded-full group-hover:visible invisible transition"
+22.75 192:                       type="button"
+22.75 1:05:50 PM [vite-plugin-svelte] src/lib/components/playground/Images.svelte:215:6 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.75 https://svelte.dev/e/element_invalid_self_closing_tag
+22.75 213:           <!-- Prompt Textarea -->
+22.75 214:           <div class="py-0.5">
+22.75 215:             <textarea
+22.75                    ^
+22.75 216:               bind:this={promptTextareaElement}
+22.75 217:               bind:value={prompt}
+22.76 1:05:50 PM [vite-plugin-svelte] src/lib/components/workspace/Knowledge/CreateKnowledgeBase.svelte:100:6 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.76 https://svelte.dev/e/element_invalid_self_closing_tag
+22.76  98: 
+22.76  99:           <div class=" w-full mt-1">
+22.76 100:             <textarea
+22.76                    ^
+22.76 101:               class="w-full resize-none rounded-lg py-2 px-4 text-sm bg-gray-50 dark:text-gray-300 dark:bg-gray-850 outline-hidden"
+22.76 102:               rows="4"
+22.87 1:05:50 PM [vite-plugin-svelte] src/lib/components/workspace/Knowledge/KnowledgeBase.svelte:1113:10 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+22.87 https://svelte.dev/e/element_invalid_self_closing_tag
+22.87 1111: 
+22.87 1112:                   {#key selectedFile.id}
+22.87 1113:                     <textarea
+22.87                             ^
+22.87 1114:                       class="w-full h-full text-sm outline-none resize-none px-3 py-2"
+22.87 1115:                       bind:value={selectedFileContent}
+23.04 1:05:51 PM [vite-plugin-svelte] src/lib/components/workspace/Models/ModelEditor.svelte:909:8 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+23.04 https://svelte.dev/e/element_invalid_self_closing_tag
+23.04 907:             {#if showPreview}
+23.04 908:               <div>
+23.04 909:                 <textarea
+23.04                        ^
+23.04 910:                   class="text-sm w-full bg-transparent outline-hidden resize-none"
+23.04 911:                   rows="10"
+23.11 1:05:51 PM [vite-plugin-svelte] src/lib/components/workspace/Skills/SkillEditor.svelte:240:8 Self-closing HTML tags for non-void elements are ambiguous — use `<textarea ...></textarea>` rather than `<textarea ... />`
+23.11 https://svelte.dev/e/element_invalid_self_closing_tag
+23.11 238:                 </div>
+23.11 239:               {:else}
+23.11 240:                 <textarea
+23.11                        ^
+23.11 241:                   class="w-full flex-1 text-xs bg-transparent outline-hidden resize-none font-mono px-4 py-3"
+23.11 242:                   bind:value={content}
+23.11 1:05:51 PM [vite-plugin-svelte] src/lib/components/workspace/Skills/SkillEditor.svelte:19:12 Component has unused export property 'clone'. If it is for external reference only, please consider using `export const clone`
+23.11 https://svelte.dev/e/export_let_unused
+23.11 17:   export let edit = false;
+23.11 18:   export let skill = null;
+23.11 19:   export let clone = false;
+23.11                       ^
+23.11 20:   export let disabled = false;
+23.11 21: 
+23.17 1:05:51 PM [vite-plugin-svelte] src/lib/components/workspace/Prompts/PromptEditor.svelte:35:12 Component has unused export property 'clone'. If it is for external reference only, please consider using `export const clone`
+23.17 https://svelte.dev/e/export_let_unused
+23.17 33:   export let edit = false;
+23.17 34:   export let prompt = null;
+23.17 35:   export let clone = false;
+23.17                       ^
+23.17 36:   export let disabled = false;
+23.17 37: 
+23.61 1:05:51 PM [vite-plugin-svelte] src/lib/components/chat/Messages.svelte:535:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+23.61 https://svelte.dev/e/element_invalid_self_closing_tag
+23.61 533:           </ul>
+23.61 534:         </section>
+23.61 535:         <div class="pb-18" />
+23.61                                   ^
+23.61 536:         {#if bottomPadding}
+23.61 537:           <div class="  pb-6" />
+23.61 1:05:51 PM [vite-plugin-svelte] src/lib/components/chat/Messages.svelte:537:5 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+23.61 https://svelte.dev/e/element_invalid_self_closing_tag
+23.61 535:         <div class="pb-18" />
+23.61 536:         {#if bottomPadding}
+23.61 537:           <div class="  pb-6" />
+23.61                                      ^
+23.61 538:         {/if}
+23.61 539:       {/key}
+23.61 1:05:51 PM [vite-plugin-svelte] src/lib/components/chat/Messages.svelte:32:12 Component has unused export property 'prompt'. If it is for external reference only, please consider using `export const prompt`
+23.61 https://svelte.dev/e/export_let_unused
+23.61 30:   export let user = $_user;
+23.61 31: 
+23.61 32:   export let prompt;
+23.61                        ^
+23.61 33:   export let history = {};
+23.61 34:   export let selectedModels;
+23.70 ✓ 141 modules transformed.
+23.70 x Build failed in 3.03s
+23.70 error during build:
+23.70 [vite-plugin-svelte] [plugin vite-plugin-svelte] src/lib/components/layout/Sidebar.svelte (1198:4): /app/src/lib/components/layout/Sidebar.svelte:1198:4 `</div>` attempted to close an element that was not open
+23.70 https://svelte.dev/e/element_invalid_closing_tag
+23.70 file: /app/src/lib/components/layout/Sidebar.svelte:1198:4
+23.70 
+23.70  1196 |              <PinnedModelList bind:selectedChatId {shiftKey} />
+23.70  1197 |            </Folder>
+23.70  1198 |          </div><!-- /native-sidebar-content -->
+23.70                  ^
+23.70  1199 |          {/if}
+23.70  1200 |  
+23.70 
+23.70 
+------
+[+] up 0/1
+ ⠙ Image open-webui-production-open-webui Building                                                                                29.8s
+Dockerfile:68
+
+--------------------
+
+  66 |     
+
+  67 |     # Build the frontend with our injected components
+
+  68 | >>> RUN npm run build
+
+  69 |     
+
+  70 |     
+
+--------------------
+
+failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1

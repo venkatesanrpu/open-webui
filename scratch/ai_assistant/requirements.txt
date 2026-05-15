@@ -1,0 +1,48 @@
+Sample payload from Moodle page resource
+<h3>Core Concepts</h3>
+<ol>
+  <li style="white-space: pre;"><i class="fa fa-asterisk"
+      style="color: green;"></i> Topic: Classical Mechanics <i
+      class="fa fa-pen-to-square" style="color: tomato;"></i> Lesson: Lagrangian
+    Mechanics <i class="fa fa-angles-right" style="color: blue;"></i>
+    Clarification: Variational formulation of classical mechanics using
+    generalized coordinates and Lagrange's equations Show: <a class="notes-link"
+      href="#" data-function="ask_agent" data-subject="physics"
+      data-topic="classical_mechanics" data-lesson="Lagrangian Mechanics"
+      data-tags="lagrangian_mechanics"
+      data-agent-text="Variational formulation of classical mechanics using generalized coordinates and Lagrange's equations">Study
+      Notes</a> | <a class="mcq-flashcard-link" href="#"
+      data-function="mcq_widget" data-level="basic" data-number="1"
+      data-subject="physics" data-topic="classical_mechanics"
+      data-lesson="Lagrangian Mechanics" data-tags="lagrangian_mechanics"
+      data-agent-text="Generate Basic MCQ: Variational formulation of classical mechanics using generalized coordinates and Lagrange's equations">MCQ
+      Basic</a> | <a class="mcq-flashcard-link" href="#"
+      data-function="mcq_widget" data-level="intermediate" data-number="1"
+      data-subject="physics" data-topic="classical_mechanics"
+      data-lesson="Lagrangian Mechanics" data-tags="lagrangian_mechanics"
+      data-agent-text="Generate Intermediate MCQ: Variational formulation of classical mechanics using generalized coordinates and Lagrange's equations">MCQ
+      Intermediate</a> | <a class="mcq-flashcard-link" href="#"
+      data-function="mcq_widget" data-level="advanced" data-number="1"
+      data-subject="physics" data-topic="classical_mechanics"
+      data-lesson="Lagrangian Mechanics" data-tags="lagrangian_mechanics"
+      data-agent-text="Generate Advanced MCQ: Variational formulation of classical mechanics using generalized coordinates and Lagrange's equations">MCQ
+      Advanced</a></li>
+</ol>
+
+The templates/main.mustache takes all the weight and acts as a core script. The others tempaltesa/history_widget.mustache and templates/mcq_widget.mustache do the rest.
+
+This is the first development to show MVP. Now I want get these things done in a standard moodle way. 
+How this should function?
+1. All the present functionalities should continue to work - view history, syllabus view, history filters, mcq accordion and related features
+But should be modified:
+1. Make everthing Modular - how?
+a. an intermediate script to listen user click event -> collects payload -> send to local/libagent.php for LLM response
+b. parse the LLM response to correctly escape LaTeX backslashes and others
+c. wrap the parsed LLM with a html wrapper with appropriate Markdown and mathjax libraries - this should be a standalone html output
+d. now write the html code in the database - can be called in to the main.mustache, history.mustache or anywhere
+e. modify the main.mustache as a simple place holder for the html code.
+f. modify the history_mustache accordingly
+
+Phase II. 
+Repeat the same for mcq agent
+click event listner -> payload to correct mcq agent for LLm response > wrap with necessary code to display > store in database table > read
