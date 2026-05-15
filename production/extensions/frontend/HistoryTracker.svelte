@@ -7,6 +7,25 @@
     // Track the last chat ID we tagged to prevent duplicate tagging
     let lastTaggedChatId = '';
 
+    // "Armed" gate for the success path.
+    //
+    // The legitimate Open WebUI new-chat flow always passes through the
+    // canonical empty state: $chatId === '' AND pathname === '/' (the
+    // /?q=... new-chat page). Only after we observe that state for the
+    // CURRENT pending tag do we trust a subsequent non-empty $chatId as the
+    // freshly created chat. Without this, a user click on an unrelated
+    // sidebar chat (/c/<other>) between pendingSyllabusTag.set(...) and
+    // new-chat persistence would land $chatId on <other> — satisfying the
+    // origin-chat guard (since <other> !== originChatId) and incorrectly
+    // tagging that unrelated chat.
+    //
+    // Per-tag scope is enforced by `armedRequestId`: arming is keyed to the
+    // pending tag's requestId, so a fresh pending tag from a later click
+    // resets arming, and a tag that was abandoned/replaced cannot leave
+    // residual arming behind for the next click.
+    let armedForNewChat = false;
+    let armedRequestId = null;
+
     // Stale-tag watchdog state.
     //
     // The pending tag is normally consumed by the reactive block below as soon as
@@ -46,49 +65,91 @@
         }, STALE_TAG_TIMEOUT_MS);
     }
 
-    // (Re)arm the timer whenever a new pending tag appears; cancel it when the
-    // tag is cleared (either by successful tagging or by the route guard).
-    $: if ($pendingSyllabusTag) {
-        armStaleTimer();
-    } else {
-        clearStaleTimer();
+    // (Re)arm the stale timer + reset the new-chat arming whenever the
+    // pending tag changes (new generation, abandoned tag, or successful
+    // tagging). Arming is per-tag and is only granted later, when we
+    // actually observe the canonical new-chat empty state.
+    $: {
+        const pid = $pendingSyllabusTag ? ($pendingSyllabusTag.requestId || '__unset__') : null;
+        if ($pendingSyllabusTag) {
+            armStaleTimer();
+            if (armedRequestId !== pid) {
+                // New pending tag — start un-armed; arming happens in the
+                // observation block below once we see chatId='' && pathname='/'.
+                armedForNewChat = false;
+                armedRequestId = pid;
+            }
+        } else {
+            clearStaleTimer();
+            armedForNewChat = false;
+            armedRequestId = null;
+        }
+    }
+
+    // Arming observer: when a pending tag exists, $chatId is empty, and we
+    // are on the canonical new-chat page ('/'), arm the success block. This
+    // state is on the legitimate path for BOTH:
+    //   - cache miss from '/'           (already on '/' with chatId=='' at click)
+    //   - cache miss from /c/<existing> (reached after goto('/?q=...') clears chatId)
+    // A user navigating to /c/<other> mid-flight goes directly to /c/<other>
+    // and never traverses this state, so arming never fires for that flow.
+    //
+    // Symmetric disarm: if the user later leaves '/' (e.g. clicks a sidebar
+    // chat after arming but before the new chat is created), disarm. This
+    // closes a corner case where chatId updates in the same tick as the
+    // navigation to /c/<other> and both route guards happen to miss — the
+    // pending tag would otherwise persist with armed=true and could falsely
+    // tag a future new chat the user submits from '/'.
+    $: if ($pendingSyllabusTag && $page && $page.url) {
+        const onRoot = $page.url.pathname === '/';
+        if (onRoot && !$chatId && !armedForNewChat) {
+            armedForNewChat = true;
+        } else if (!onRoot && armedForNewChat) {
+            armedForNewChat = false;
+        }
     }
 
     // Successful path: chatId becomes a real id for the NEW chat => tag it,
     // then clear. This must run BEFORE the route guard below to avoid a race
     // when the route also changes to /c/<id> at the same tick.
     //
-    // Origin-chat race guard: when the user clicks from /c/<existing>, $chatId
-    // still holds the existing id for a brief window after pendingSyllabusTag
-    // is set and before SvelteKit navigates to /?q=... and resets it. We must
-    // NOT tag that pre-existing chat. SyllabusNode stamps the pending tag with
-    // the click-time chat id (`originChatId`); skip until $chatId differs from
-    // it. Once Open WebUI persists the new chat, $chatId flips to a fresh id
-    // that cannot equal originChatId, and tagging proceeds.
+    // Guards:
+    //   - originChatId guard: $chatId must differ from the click-time chat id.
+    //     Catches the /c/<existing> intra-tick race where $chatId still holds
+    //     the pre-existing id before goto('/?q=...') resets it.
+    //   - armedForNewChat guard: we must have observed the canonical new-chat
+    //     empty state (chatId='' on '/') for THIS pending tag. Catches the
+    //     case where the user clicks an unrelated sidebar chat /c/<other>
+    //     between pendingSyllabusTag.set(...) and new-chat persistence —
+    //     $chatId would become <other> (≠ originChatId) but arming never
+    //     happened, so we refuse to tag.
+    //   - pathname === '/' at success tick: Open WebUI assigns the new chatId
+    //     while still on '/' (before goto('/c/<new>')), so the legit success
+    //     reactive tick sees pathname='/'. A late /c/<other> click after arming
+    //     would be processed with pathname='/c/<other>', failing this check.
     $: if (
         $chatId &&
         $chatId !== lastTaggedChatId &&
         $pendingSyllabusTag &&
         $user &&
-        $chatId !== ($pendingSyllabusTag.originChatId || '')
+        $chatId !== ($pendingSyllabusTag.originChatId || '') &&
+        armedForNewChat &&
+        $page &&
+        $page.url &&
+        $page.url.pathname === '/'
     ) {
         lastTaggedChatId = $chatId;
         tagChat($chatId, $user.id, $pendingSyllabusTag);
         pendingSyllabusTag.set(null);
     }
 
-    // Route guard: if the user navigates away from the new-chat page ('/')
-    // BEFORE a chat id is assigned, the pending tag is stale. Clearing it
-    // here prevents the next unrelated chat from being tagged.
-    //
-    // We act only when chatId is empty AND pathname is neither '/' (canonical
-    // new-chat page) nor the originPathname (the /c/<existing> we clicked
-    // from — Open WebUI may clear $chatId a tick before the SvelteKit URL
-    // transitions to /, and we must not treat that intermediate state as a
-    // user-initiated navigation away).
-    //
-    // Once chatId becomes a NEW id (different from originChatId), the success
-    // path above consumes the tag and lastTaggedChatId prevents re-tagging.
+    // Route guard A: chatId is empty but pathname has moved to a route that
+    // is neither the canonical new-chat page ('/') nor the originPathname
+    // (the /c/<existing> we clicked from — Open WebUI may clear $chatId a
+    // tick before the SvelteKit URL transitions to '/' on the /?q=... flow,
+    // and we must not treat that intermediate state as a user-initiated
+    // navigation away). Any other pathname means the user abandoned the
+    // generation — clear the tag.
     $: if (
         $pendingSyllabusTag &&
         !$chatId &&
@@ -98,6 +159,29 @@
         $page.url.pathname !== ($pendingSyllabusTag.originPathname || '')
     ) {
         console.log('[Ext] Pending syllabus tag abandoned (route changed to', $page.url.pathname, '), clearing.');
+        pendingSyllabusTag.set(null);
+    }
+
+    // Route guard B: chatId has become a non-empty, non-origin value WHILE
+    // arming never happened (i.e. we never traversed the canonical new-chat
+    // empty state for this pending tag). This means the user navigated
+    // directly to some other existing chat (e.g. /c/<other>) without ever
+    // passing through '/'. Clearing the tag here prevents it from sitting in
+    // the store and falsely tagging a future new chat with stale metadata
+    // (e.g. if the user then submits a new prompt from '/').
+    //
+    // We deliberately do NOT clear when armedForNewChat is true: in that
+    // case the success block above is the right place to handle the
+    // transition (it will either tag the new chat on '/' or be guarded out
+    // by the pathname check, and the route guard for the post-arm /c/<other>
+    // path is route guard A above, which runs while chatId is still empty).
+    $: if (
+        $pendingSyllabusTag &&
+        $chatId &&
+        $chatId !== ($pendingSyllabusTag.originChatId || '') &&
+        !armedForNewChat
+    ) {
+        console.log('[Ext] Pending syllabus tag abandoned (chatId jumped to', $chatId, 'without arming), clearing.');
         pendingSyllabusTag.set(null);
     }
 
