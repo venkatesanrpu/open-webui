@@ -86,9 +86,23 @@
         return name.replace(/_/g, ' ');
     };
 
-    // Format a function name for display
-    const formatFunction = (fn) => {
-        if (fn === 'mcq_widget') return '❓ MCQ';
+    // Title-case a level token (e.g., "basic" -> "Basic"). Empty/nullish -> "".
+    const formatLevel = (lvl) => {
+        if (!lvl) return '';
+        const s = String(lvl).trim();
+        if (!s) return '';
+        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+    };
+
+    // Format a chat row's leading label. MCQ rows prepend the level when present
+    // so users can distinguish basic/intermediate/advanced variants of the same
+    // concept; notes and legacy MCQ rows (no level) keep the original label.
+    const formatChatLabel = (chat) => {
+        const fn = chat.data_function;
+        if (fn === 'mcq_widget') {
+            const lvl = formatLevel(chat.level);
+            return lvl ? `❓ ${lvl} MCQ` : '❓ MCQ';
+        }
         if (fn === 'ask_agent') return '📝 Notes';
         return fn;
     };
@@ -144,7 +158,7 @@
                                                     on:click={() => openChat(chat.chat_id)}
                                                     class="w-full text-left px-1.5 py-0.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-[9px] text-gray-600 dark:text-gray-400 transition flex items-center gap-1"
                                                 >
-                                                    <span class="truncate">{formatFunction(chat.data_function)} {chat.concept}</span>
+                                                    <span class="truncate">{formatChatLabel(chat)} {chat.concept}</span>
                                                 </button>
                                             {/each}
                                         {/if}
