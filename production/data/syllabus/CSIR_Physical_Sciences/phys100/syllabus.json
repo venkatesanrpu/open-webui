@@ -1,4 +1,8 @@
 {
+"exam": "CSIR Physical Sciences",
+"exam_key": "csir_physical_sciences",
+"subjects": [
+{
   "subject": "Physical Sciences",
   "subject_key": "physical_sciences",
   "topics": [
@@ -169,4 +173,6 @@
       ]
     }
   ]
+}
+]
 }
