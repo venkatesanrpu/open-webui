@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS ext_user_access (
     CONSTRAINT unique_active_plan UNIQUE (user_id, plan_id, status)
 );
 
-CREATE INDEX idx_user_access_status ON ext_user_access(user_id, status);
+CREATE INDEX IF NOT EXISTS idx_user_access_status ON ext_user_access(user_id, status);
 
 -- 3. Chat Tags (for Smart Router and History UI filtering)
 CREATE TABLE IF NOT EXISTS ext_chat_tags (
@@ -55,18 +55,48 @@ CREATE INDEX IF NOT EXISTS idx_chat_tags_router
 CREATE INDEX IF NOT EXISTS idx_chat_tags_history
     ON ext_chat_tags(user_id, exam, subject, topic, lesson);
 
--- 4. Audit & Token Logging
+-- 4. Operational Audit Log
+--
+-- Scope: server-side audit / performance trace only. Token counts and cost
+-- accounting were intentionally REMOVED — billing/usage is observed via the
+-- Open WebUI admin panel and the vendor portals (Azure / OpenAI), not from
+-- this overlay. Keep this table to a bare minimum so writes never become a
+-- hot-path cost and the table is cheap to retain.
 CREATE TABLE IF NOT EXISTS ext_audit_logs (
     id SERIAL PRIMARY KEY,
-    user_id VARCHAR(255) NOT NULL,
-    endpoint_type VARCHAR(100) NOT NULL, -- 'notes', 'mcq', 'free_form'
-    model VARCHAR(255) NOT NULL,
-    prompt_tokens INTEGER DEFAULT 0,
-    completion_tokens INTEGER DEFAULT 0,
-    total_cost DECIMAL(10, 6) DEFAULT 0.0,
-    request_duration_ms INTEGER DEFAULT 0,
-    is_cache_hit BOOLEAN DEFAULT FALSE,
+    user_id VARCHAR(255) NOT NULL,           -- 'anonymous' is allowed for unauthenticated paths
+    endpoint_type VARCHAR(100) NOT NULL,     -- 'lookup', 'chat_tagged', 'history_fetched', 'prompt_template_fetched', ...
+    model VARCHAR(255) NOT NULL DEFAULT '',  -- best-effort; '' when not derivable from request
+    request_duration_ms INTEGER NOT NULL DEFAULT 0,
+    -- Minimal correlation fields. Each is OPTIONAL; populate only what the
+    -- caller already knows so the audit row stays a thin trace, not a ledger.
+    request_id VARCHAR(64) DEFAULT NULL,     -- per-request id for cross-system correlation
+    chat_id VARCHAR(255) DEFAULT NULL,       -- present for chat-scoped events (tag, lookup-hit)
+    exam VARCHAR(100) DEFAULT NULL,
+    subject VARCHAR(255) DEFAULT NULL,
+    function VARCHAR(50) DEFAULT NULL,       -- data_function: 'ask_agent', 'mcq_widget', ...
+    status VARCHAR(32) DEFAULT NULL,         -- 'hit' / 'miss' / 'ok' / 'error'
+    meta JSONB DEFAULT NULL,                 -- small free-form correlation blob; NEVER prompt text or PII
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_audit_user ON ext_audit_logs(user_id, created_at);
+-- Idempotent drops for prior deployments that included token / cost / cache columns.
+-- Safe on fresh installs (IF EXISTS no-ops). Run init.sql against an existing DB
+-- to remove the now-deprecated billing columns.
+ALTER TABLE ext_audit_logs DROP COLUMN IF EXISTS prompt_tokens;
+ALTER TABLE ext_audit_logs DROP COLUMN IF EXISTS completion_tokens;
+ALTER TABLE ext_audit_logs DROP COLUMN IF EXISTS total_cost;
+ALTER TABLE ext_audit_logs DROP COLUMN IF EXISTS is_cache_hit;
+
+-- Idempotent adds for prior deployments missing the new correlation columns.
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS request_id VARCHAR(64);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS chat_id VARCHAR(255);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS exam VARCHAR(100);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS subject VARCHAR(255);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS function VARCHAR(50);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS status VARCHAR(32);
+ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS meta JSONB;
+
+CREATE INDEX IF NOT EXISTS idx_audit_user           ON ext_audit_logs(user_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_audit_endpoint_time  ON ext_audit_logs(endpoint_type, created_at);
+CREATE INDEX IF NOT EXISTS idx_audit_request_id     ON ext_audit_logs(request_id);

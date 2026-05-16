@@ -51,7 +51,10 @@ FROM ghcr.io/open-webui/open-webui:0.9.5
 # Overwrite the default compiled frontend with our newly compiled custom frontend
 COPY --chown=0:0 --from=frontend-builder /app/build /app/build
 
-# Copy the custom backend extensions directly into the container's router directory
+# Copy the custom backend extensions directly into the container's router directory.
+# ext_authz is a shared helper (audit + access scaffold) and is imported by both
+# ext_router and ext_syllabus, so it must be present before they are loaded.
+COPY extensions/ext_authz.py /app/backend/open_webui/routers/ext_authz.py
 COPY extensions/ext_router.py /app/backend/open_webui/routers/ext_router.py
 COPY extensions/ext_syllabus.py /app/backend/open_webui/routers/ext_syllabus.py
 
@@ -70,6 +73,8 @@ RUN grep -q 'app.include_router(ext_syllabus.router' /app/backend/open_webui/mai
         || (echo "ERROR: ext_syllabus router include missing from main.py." && exit 1)
 RUN grep -q 'app.include_router(ext_router.router' /app/backend/open_webui/main.py \
         || (echo "ERROR: ext_router router include missing from main.py." && exit 1)
+RUN test -f /app/backend/open_webui/routers/ext_authz.py \
+        || (echo "ERROR: ext_authz.py not copied — audit logging will be a no-op in production." && exit 1)
 
 # Expose the standard port
 EXPOSE 8080

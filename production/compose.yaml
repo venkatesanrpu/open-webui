@@ -7,6 +7,8 @@ services:
       - "8080:8080"
     environment:
       - "OLLAMA_BASE_URL=http://host.docker.internal:11434"
+      # WEBUI_SECRET_KEY must be stable across restarts — rotating it invalidates
+      # every active session AND every persisted OAuth token. Treat as long-lived.
       - "WEBUI_SECRET_KEY=8cc0a89bc88cb121b14ce6f4189f2814496cf9001a91d828264a94746f376bbf"
       - "ALLOW_USER_VALVES=false"
       # Postgres configuration for Open WebUI
@@ -14,6 +16,45 @@ services:
       # Custom syllabus directory mapping
       - "SYLLABUS_DIR=/app/data/syllabus"
       - "PROMPTS_DIR=/app/data/prompts"
+      #
+      # ── OAuth / OIDC scaffolding ──────────────────────────────────────────
+      #
+      # All values below are pulled from the shell env at compose-up time via
+      # ${VAR:-} so that an unset variable leaves the container env empty and
+      # Open WebUI falls back to local username/password login.
+      #
+      # Required for any OAuth flow — the externally reachable base URL.
+      # Open WebUI builds the redirect_uri from this. NO trailing slash.
+      - "WEBUI_URL=${WEBUI_URL:-}"
+      # When true, first-time OAuth callers are auto-registered. Leave unset
+      # (default false) to require an admin to invite users before they can
+      # complete the OAuth handshake.
+      - "ENABLE_OAUTH_SIGNUP=${ENABLE_OAUTH_SIGNUP:-}"
+      # If a local password account already exists with the OAuth email, link
+      # the accounts instead of erroring. Use with care — only enable when you
+      # control the OAuth IdP and trust its email-verification guarantees.
+      - "OAUTH_MERGE_ACCOUNTS_BY_EMAIL=${OAUTH_MERGE_ACCOUNTS_BY_EMAIL:-}"
+      # Persisted-config caveat: when true, OAuth settings written via the
+      # admin UI are stored in the DB and survive restarts; env values then
+      # only act as initial defaults. Keep false during bring-up so env wins.
+      - "ENABLE_OAUTH_PERSISTENT_CONFIG=${ENABLE_OAUTH_PERSISTENT_CONFIG:-false}"
+      #
+      # Google provider (native). Callback: <WEBUI_URL>/oauth/google/callback
+      - "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}"
+      - "GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}"
+      # Optional extra authorize-endpoint params (e.g. "prompt=select_account").
+      - "GOOGLE_OAUTH_AUTHORIZE_PARAMS=${GOOGLE_OAUTH_AUTHORIZE_PARAMS:-}"
+      #
+      # Generic OIDC provider (one only). Callback: <WEBUI_URL>/oauth/oidc/callback
+      # OPENID_PROVIDER_URL is also reused by the Google provider for RP-initiated
+      # logout discovery; for Google this is typically
+      #   https://accounts.google.com/.well-known/openid-configuration
+      - "OPENID_PROVIDER_URL=${OPENID_PROVIDER_URL:-}"
+      - "OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID:-}"
+      - "OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:-}"
+      - "OAUTH_PROVIDER_NAME=${OAUTH_PROVIDER_NAME:-}"
+      - "OAUTH_SCOPES=${OAUTH_SCOPES:-openid email profile}"
+      - "OPENID_REDIRECT_URI=${OPENID_REDIRECT_URI:-}"
     volumes:
       - open-webui-data:/app/backend/data
       - ./data/syllabus:/app/data/syllabus

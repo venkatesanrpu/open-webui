@@ -1,4 +1,5 @@
 import os
+import time
 from fastapi import APIRouter, HTTPException, Depends, Query
 from pydantic import BaseModel
 from sqlalchemy import create_engine, text
@@ -13,6 +14,16 @@ try:  # pragma: no cover - import shape varies by upstream version
     from open_webui.utils.auth import get_verified_user as _get_verified_user
 except Exception:  # pragma: no cover
     _get_verified_user = None
+
+# Audit helper. Import is best-effort so the router still works on a partial
+# overlay (e.g. local smoke test without the ext_authz module installed).
+try:
+    from open_webui.routers import ext_authz  # type: ignore
+except Exception:  # pragma: no cover
+    try:
+        import ext_authz  # type: ignore
+    except Exception:
+        ext_authz = None  # type: ignore
 
 
 def _user_dep():
@@ -41,6 +52,16 @@ def _resolve_user_id(verified_user, fallback: str = "") -> str:
         if uid:
             return str(uid)
     return fallback or ""
+
+
+def _audit(**kwargs) -> None:
+    """Thin guard around ext_authz.log_event so missing-module is a no-op."""
+    if ext_authz is None:
+        return
+    try:
+        ext_authz.log_event(**kwargs)
+    except Exception:  # pragma: no cover - never raise into request path
+        pass
 
 
 router = APIRouter()
@@ -74,6 +95,7 @@ class TagRequest(BaseModel):
 
 @router.post("/history/tag")
 async def tag_chat(req: TagRequest, verified_user=_user_dep()):
+    started = time.monotonic()
     if not engine:
         raise HTTPException(status_code=500, detail="Database not configured")
 
@@ -117,12 +139,33 @@ async def tag_chat(req: TagRequest, verified_user=_user_dep()):
                 "level": req.level or "",
                 "number": req.number or "",
             })
+        _audit(
+            user_id=user_id,
+            endpoint_type="chat_tagged",
+            request_duration_ms=int((time.monotonic() - started) * 1000),
+            chat_id=req.chat_id,
+            exam=req.exam,
+            subject=req.subject,
+            function=req.data_function,
+            status="ok",
+        )
         return {"status": "success"}
     except Exception as e:
+        _audit(
+            user_id=user_id,
+            endpoint_type="chat_tagged",
+            request_duration_ms=int((time.monotonic() - started) * 1000),
+            chat_id=req.chat_id,
+            exam=req.exam,
+            subject=req.subject,
+            function=req.data_function,
+            status="error",
+        )
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/history/tags/{user_id}")
 async def get_tags(user_id: str, verified_user=_user_dep()):
+    started = time.monotonic()
     if not engine:
         raise HTTPException(status_code=500, detail="Database not configured")
 
@@ -155,8 +198,21 @@ async def get_tags(user_id: str, verified_user=_user_dep()):
         with engine.connect() as conn:
             result = conn.execute(query, {"user_id": resolved_user_id})
             tags = [dict(row._mapping) for row in result]
+            _audit(
+                user_id=resolved_user_id,
+                endpoint_type="history_fetched",
+                request_duration_ms=int((time.monotonic() - started) * 1000),
+                status="ok",
+                meta={"row_count": len(tags)},
+            )
             return {"tags": tags}
     except Exception as e:
+        _audit(
+            user_id=resolved_user_id,
+            endpoint_type="history_fetched",
+            request_duration_ms=int((time.monotonic() - started) * 1000),
+            status="error",
+        )
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -182,6 +238,7 @@ async def lookup_chat(
 
     `function` is accepted as an alias for `data_function` for client flexibility.
     """
+    started = time.monotonic()
     if not engine:
         raise HTTPException(status_code=500, detail="Database not configured")
 
@@ -222,6 +279,26 @@ async def lookup_chat(
                 "level": level or "",
                 "number": number or "",
             }).fetchone()
-            return {"chat_id": row[0] if row else None}
+            hit_chat_id = row[0] if row else None
+            _audit(
+                user_id=resolved_user_id,
+                endpoint_type="lookup",
+                request_duration_ms=int((time.monotonic() - started) * 1000),
+                chat_id=hit_chat_id,
+                exam=exam,
+                subject=subject,
+                function=fn,
+                status="hit" if hit_chat_id else "miss",
+            )
+            return {"chat_id": hit_chat_id}
     except Exception as e:
+        _audit(
+            user_id=resolved_user_id,
+            endpoint_type="lookup",
+            request_duration_ms=int((time.monotonic() - started) * 1000),
+            exam=exam,
+            subject=subject,
+            function=fn,
+            status="error",
+        )
         raise HTTPException(status_code=500, detail=str(e))

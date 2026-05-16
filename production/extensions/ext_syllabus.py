@@ -1,11 +1,33 @@
 import os
 import re
 import json
+import time
 import logging
 from fastapi import APIRouter, HTTPException, Response
 from fastapi.responses import PlainTextResponse, JSONResponse
 from pathlib import Path
 from bs4 import BeautifulSoup
+
+# Audit helper. Import is best-effort so the router still works on partial
+# overlays (smoke tests, dev shells without the full backend on PYTHONPATH).
+try:
+    from open_webui.routers import ext_authz  # type: ignore
+except Exception:  # pragma: no cover
+    try:
+        import ext_authz  # type: ignore
+    except Exception:
+        ext_authz = None  # type: ignore
+
+
+def _audit(**kwargs) -> None:
+    """Thin guard: missing-module or failure must never break the route."""
+    if ext_authz is None:
+        return
+    try:
+        ext_authz.log_event(**kwargs)
+    except Exception:  # pragma: no cover
+        pass
+
 
 router = APIRouter()
 log = logging.getLogger("ext_syllabus")
@@ -84,10 +106,24 @@ async def get_prompt_template(function_name: str, exam: str = ""):
     the resolved path is asserted to stay under its respective base directory
     to prevent path traversal (e.g. `../../etc/passwd`).
     """
+    started = time.monotonic()
     if not _is_safe_id(function_name):
         raise HTTPException(status_code=400, detail="Invalid function_name")
 
     headers = {"Cache-Control": _SYLLABUS_CACHE_CONTROL}
+
+    def _emit(status: str) -> None:
+        # This route is intentionally unauthenticated (static-ish content), so
+        # user_id is recorded as 'anonymous' to satisfy the NOT NULL constraint.
+        # We log resolution status only — never prompt body, never PII.
+        _audit(
+            user_id="anonymous",
+            endpoint_type="prompt_template_fetched",
+            request_duration_ms=int((time.monotonic() - started) * 1000),
+            exam=exam or None,
+            function=function_name,
+            status=status,
+        )
 
     # 1. Per-exam override
     if exam:
@@ -97,6 +133,7 @@ async def get_prompt_template(function_name: str, exam: str = ""):
             Path(SYLLABUS_DIR), exam, "prompts", f"{function_name}.txt"
         )
         if exam_prompt and exam_prompt.is_file():
+            _emit("hit_exam")
             return PlainTextResponse(
                 exam_prompt.read_text(encoding="utf-8"), headers=headers
             )
@@ -104,6 +141,7 @@ async def get_prompt_template(function_name: str, exam: str = ""):
     # 2. Global default
     global_prompt = _resolve_within(Path(PROMPTS_DIR), f"{function_name}.txt")
     if global_prompt and global_prompt.is_file():
+        _emit("hit_global")
         return PlainTextResponse(
             global_prompt.read_text(encoding="utf-8"), headers=headers
         )
@@ -111,8 +149,10 @@ async def get_prompt_template(function_name: str, exam: str = ""):
     # 3. Hardcoded fallback
     fallback = _FALLBACK_PROMPTS.get(function_name)
     if fallback:
+        _emit("fallback")
         return PlainTextResponse(fallback, headers=headers)
 
+    _emit("missing")
     return PlainTextResponse(
         f"No prompt template found for '{function_name}'.",
         status_code=404,
