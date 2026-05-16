@@ -28,13 +28,36 @@
         try {
             const metaRes = await fetch('/api/ext/syllabus/meta');
             if (metaRes.ok) {
-                syllabusMeta = await metaRes.json();
+                const raw = await metaRes.json();
+                syllabusMeta = Array.isArray(raw) ? raw.flatMap(normalizeSyllabus) : [];
             }
         } catch (e) {
             console.error('[Ext] Failed to load syllabus meta', e);
         } finally {
             metaLoaded = true;
         }
+    }
+
+    // Normalize legacy (flat: subject/topics at root) and current
+    // (nested: exam + subjects:[{subject, topics}]) syllabus shapes into a
+    // single flat array of { exam, exam_key, subject, topics, _exam_folder }
+    // rows that the existing template can render without further branching.
+    function normalizeSyllabus(s) {
+        if (!s || typeof s !== 'object') return [];
+        const examLabel = s.exam || s._exam_folder || '';
+        const examKey = s.exam_key || '';
+        const folder = s._exam_folder || examLabel;
+        const subjects = Array.isArray(s.subjects) && s.subjects.length
+            ? s.subjects
+            : [{ subject: s.subject, subject_key: s.subject_key, topics: s.topics || [] }];
+        return subjects.map(sub => ({
+            exam: examLabel,
+            exam_key: examKey,
+            _exam_folder: folder,
+            subject: sub.subject,
+            subject_key: sub.subject_key,
+            topics: sub.topics || []
+        }));
     }
 
     async function loadTags() {
@@ -118,7 +141,7 @@
         {#each syllabusMeta as syllabus}
             <details class="group/exam ml-1 mt-1">
                 <summary class="text-[11px] font-bold text-gray-700 dark:text-gray-300 cursor-pointer hover:text-purple-600 dark:hover:text-purple-400 py-0.5 uppercase tracking-wide">
-                    {formatFolderName(syllabus._exam_folder || syllabus.exam || 'Exam')}
+                    {formatFolderName(syllabus.exam || syllabus._exam_folder || 'Exam')}
                 </summary>
 
                 <!-- Subject -->
