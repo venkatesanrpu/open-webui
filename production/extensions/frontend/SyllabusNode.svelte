@@ -24,9 +24,13 @@
 			const res = await fetch(`/api/ext/syllabus/prompts/${functionName}${examParam}`);
 			if (res.ok) {
 				let template = await res.text();
-				// Substitute all {VAR_NAME} placeholders
+				// Substitute all {VAR_NAME} placeholders.
+				// `value == null ? '' : String(value)` preserves 0, false, etc. — a
+				// plain `value || ''` would erase the literal `0` and any other
+				// falsy-but-meaningful value an author might encode in data-*.
 				for (const [key, value] of Object.entries(vars)) {
-					template = template.replaceAll(`{${key}}`, value || '');
+					const replacement = value == null ? '' : String(value);
+					template = template.replaceAll(`{${key}}`, replacement);
 				}
 				return template;
 			}
@@ -67,24 +71,55 @@
 		};
 		const clickKey = cacheKey(clickIdentity);
 
-		// 1. "Smart Router" Cache Check
+		// 1. "Smart Router" Cache Check.
+		// Prefer the server-side lookup (single-row response, server-derived
+		// user id) and fall back to the legacy /tags/{user_id} scan if the
+		// new endpoint is unavailable (e.g. older overlay during a rolling
+		// upgrade). Preserves Basic/Intermediate/Advanced separation because
+		// `level` + `number` participate in the identity tuple.
 		if ($user) {
+			let resolvedChatId = null;
+			let lookupOk = false;
 			try {
-				const res = await fetch(`/api/ext/history/tags/${$user.id}`);
+				const params = new URLSearchParams({
+					data_function: clickIdentity.data_function,
+					exam: clickIdentity.exam,
+					subject: clickIdentity.subject,
+					topic: clickIdentity.topic,
+					lesson: clickIdentity.lesson,
+					concept: clickIdentity.concept,
+					level: clickIdentity.level,
+					number: clickIdentity.number
+				});
+				const res = await fetch(`/api/ext/history/lookup?${params.toString()}`);
 				if (res.ok) {
+					lookupOk = true;
 					const data = await res.json();
-					const tags = data.tags || [];
-					const existing = tags.find((t) => cacheKey(t) === clickKey);
-
-					if (existing) {
-						console.log('[Ext] Cache Hit! Re-routing to existing chat:', existing.chat_id);
-						goto(`/c/${existing.chat_id}`);
-						if ($mobile) showSidebar.set(false);
-						return; // Stop here, no new generation
-					}
+					resolvedChatId = data && data.chat_id ? data.chat_id : null;
 				}
 			} catch (e) {
-				console.error('Cache lookup failed', e);
+				console.error('[Ext] Lookup endpoint failed, falling back to /tags', e);
+			}
+
+			if (!lookupOk) {
+				try {
+					const res = await fetch(`/api/ext/history/tags/${$user.id}`);
+					if (res.ok) {
+						const data = await res.json();
+						const tags = data.tags || [];
+						const existing = tags.find((t) => cacheKey(t) === clickKey);
+						if (existing) resolvedChatId = existing.chat_id;
+					}
+				} catch (e) {
+					console.error('Cache lookup failed', e);
+				}
+			}
+
+			if (resolvedChatId) {
+				console.log('[Ext] Cache Hit! Re-routing to existing chat:', resolvedChatId);
+				goto(`/c/${resolvedChatId}`);
+				if ($mobile) showSidebar.set(false);
+				return; // Stop here, no new generation
 			}
 		}
 

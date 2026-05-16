@@ -7,20 +7,24 @@
     let syllabusMeta = [];
     let taggedChats = [];
     let loading = true;
+    let metaLoaded = false;
 
     onMount(async () => {
-        await loadData();
+        await loadMeta();
+        await loadTags();
+        loading = false;
     });
 
-    // Reload when chats update (e.g., after a new chat is created)
-    $: if ($chats && $user) {
-        loadData();
+    // Reload TAGS only when chats update (e.g., after a new chat is created).
+    // Syllabus meta is static on disk; refetching it on every $chats change
+    // is wasted I/O and re-triggers full re-render of nested <details> trees.
+    // Meta is loaded once on mount; an explicit reloadMeta() entry point is
+    // exported for callers that need to invalidate it.
+    $: if ($chats && $user && metaLoaded) {
+        loadTags();
     }
 
-    async function loadData() {
-        if (!$user) return;
-
-        // 1. Fetch the permanent syllabus structure
+    async function loadMeta() {
         try {
             const metaRes = await fetch('/api/ext/syllabus/meta');
             if (metaRes.ok) {
@@ -28,9 +32,13 @@
             }
         } catch (e) {
             console.error('[Ext] Failed to load syllabus meta', e);
+        } finally {
+            metaLoaded = true;
         }
+    }
 
-        // 2. Fetch the user's tagged chats
+    async function loadTags() {
+        if (!$user) return;
         try {
             const tagRes = await fetch(`/api/ext/history/tags/${$user.id}`);
             if (tagRes.ok) {
@@ -40,8 +48,14 @@
         } catch (e) {
             console.error('[Ext] Failed to load tags', e);
         }
+    }
 
-        loading = false;
+    // Exposed for future "force refresh meta" affordances; intentionally
+    // unused right now so meta truly loads once per session.
+    // eslint-disable-next-line no-unused-vars
+    export async function reloadMeta() {
+        metaLoaded = false;
+        await loadMeta();
     }
 
     // Match using lesson_key from syllabus.json against lesson field in ext_chat_tags

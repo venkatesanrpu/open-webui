@@ -31,6 +31,15 @@ c = c.replace(\
 fs.writeFileSync('src/lib/components/layout/Sidebar.svelte', c);\
 "
 
+# Verification gate: fail loud if the injection silently no-op'd (e.g. an
+# Open WebUI upstream rename broke the Folder selector). Pinned to v0.9.5 by
+# the clone above; if you bump the upstream version and the build fails here,
+# update the sed/Node patterns above instead of bypassing this check.
+RUN grep -q 'import ExtensionAnchor from "\$lib/components/custom_ext/Anchor.svelte"' src/lib/components/layout/Sidebar.svelte \
+        || (echo "ERROR: ExtensionAnchor import missing from Sidebar.svelte — upstream layout likely changed." && exit 1)
+RUN grep -q '<ExtensionAnchor />' src/lib/components/layout/Sidebar.svelte \
+        || (echo "ERROR: <ExtensionAnchor /> tag not injected into Sidebar.svelte." && exit 1)
+
 # Build the frontend with our injected components
 RUN npm run build
 
@@ -51,6 +60,16 @@ RUN sed -i '/app.include_router(utils.router/a \
 from open_webui.routers import ext_syllabus, ext_router\n\
 app.include_router(ext_syllabus.router, prefix="/api/ext/syllabus", tags=["ext"])\n\
 app.include_router(ext_router.router, prefix="/api/ext", tags=["ext"])' /app/backend/open_webui/main.py
+
+# Verification gate: fail loud if the router include sed didn't take. Same
+# rationale as the Sidebar.svelte check above — an upstream rename of
+# `utils.router` would silently skip the append.
+RUN grep -q 'from open_webui.routers import ext_syllabus, ext_router' /app/backend/open_webui/main.py \
+        || (echo "ERROR: ext router import not injected into main.py — upstream may have moved utils.router." && exit 1)
+RUN grep -q 'app.include_router(ext_syllabus.router' /app/backend/open_webui/main.py \
+        || (echo "ERROR: ext_syllabus router include missing from main.py." && exit 1)
+RUN grep -q 'app.include_router(ext_router.router' /app/backend/open_webui/main.py \
+        || (echo "ERROR: ext_router router include missing from main.py." && exit 1)
 
 # Expose the standard port
 EXPOSE 8080

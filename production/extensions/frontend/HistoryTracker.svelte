@@ -38,10 +38,30 @@
     //      (i.e. the syllabus chat has not been persisted yet), any pathname
     //      that is not '/' means the user has navigated away — clear the tag.
     //   2. Timeout: if neither persistence nor a route change happens within
-    //      STALE_TAG_TIMEOUT_MS (5 minutes — comfortably longer than a long
-    //      LLM generation, but short enough to prevent cross-session leakage),
-    //      clear the tag.
-    const STALE_TAG_TIMEOUT_MS = 5 * 60 * 1000;
+    //      STALE_TAG_TIMEOUT_MS (5 minutes default — comfortably longer than a
+    //      long LLM generation, but short enough to prevent cross-session
+    //      leakage), clear the tag.
+    //
+    // The timeout can be overridden at build time via the Vite public env
+    // variable `VITE_EXT_STALE_TAG_TIMEOUT_MS` (read at module init). Operators
+    // who don't set it get the 5-minute default — no Docker/compose change
+    // required.
+    const DEFAULT_STALE_TAG_TIMEOUT_MS = 5 * 60 * 1000;
+    function resolveStaleTagTimeoutMs() {
+        try {
+            const raw = import.meta?.env?.VITE_EXT_STALE_TAG_TIMEOUT_MS;
+            if (raw != null && raw !== '') {
+                const parsed = Number(raw);
+                if (Number.isFinite(parsed) && parsed > 0) {
+                    return parsed;
+                }
+            }
+        } catch (_) {
+            // import.meta.env is not always present in test/SSR contexts.
+        }
+        return DEFAULT_STALE_TAG_TIMEOUT_MS;
+    }
+    export const STALE_TAG_TIMEOUT_MS = resolveStaleTagTimeoutMs();
     let staleTimer = null;
 
     function clearStaleTimer() {
@@ -185,7 +205,24 @@
         pendingSyllabusTag.set(null);
     }
 
-    onDestroy(clearStaleTimer);
+    // LOW-12: Clear any pending syllabus tag when the user logs out (the
+    // store flips $user to a falsy value). Without this, a tag armed by user
+    // A could in principle outlive their session in the same browser tab and
+    // be applied to a chat created after user B signs in. With server-side
+    // user derivation in place (HIGH-1) the chat would still be tagged to
+    // user B on the server, but the metadata would be wrong — clearing here
+    // avoids that mis-attribution entirely.
+    $: if (!$user && $pendingSyllabusTag) {
+        console.log('[Ext] User logged out — clearing pending syllabus tag.');
+        pendingSyllabusTag.set(null);
+    }
+
+    onDestroy(() => {
+        clearStaleTimer();
+        // Best-effort cleanup: a long-lived pending tag should not survive
+        // component teardown (page navigation away from the app, hot reload).
+        pendingSyllabusTag.set(null);
+    });
 
     async function tagChat(cid, userId, tagData) {
         try {
