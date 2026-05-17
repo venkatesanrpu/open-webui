@@ -1,0 +1,2470 @@
+{
+  "exam": "CSIR Chemical Sciences",
+  "exam_key": "csir_chemical_sciences",
+  "subjects": [
+    {
+      "subject": "Inorganic Chemistry",
+      "subject_key": "inorganic_chemistry",
+      "topics": [
+        {
+          "topic": "Chemical Periodicity",
+          "topic_key": "chemical_periodicity",
+          "lessons": [
+            {
+              "lesson": "Periodic Table Structure",
+              "lesson_key": "periodic_table_structure"
+            },
+            {
+              "lesson": "Effective Nuclear Charge",
+              "lesson_key": "effective_nuclear_charge"
+            },
+            {
+              "lesson": "Atomic Radius",
+              "lesson_key": "atomic_radius"
+            },
+            {
+              "lesson": "Ionization Energy",
+              "lesson_key": "ionization_energy"
+            },
+            {
+              "lesson": "Electron Affinity",
+              "lesson_key": "electron_affinity"
+            },
+            {
+              "lesson": "Electronegativity",
+              "lesson_key": "electronegativity"
+            },
+            {
+              "lesson": "Shielding Effect",
+              "lesson_key": "shielding_effect"
+            },
+            {
+              "lesson": "Slater's Rules",
+              "lesson_key": "slaters_rules"
+            },
+            {
+              "lesson": "Lanthanide Contraction",
+              "lesson_key": "lanthanide_contraction"
+            },
+            {
+              "lesson": "Actinide Contraction",
+              "lesson_key": "actinide_contraction"
+            },
+            {
+              "lesson": "Diagonal Relationships",
+              "lesson_key": "diagonal_relationships"
+            },
+            {
+              "lesson": "Inert Pair Effect",
+              "lesson_key": "inert_pair_effect"
+            },
+            {
+              "lesson": "Anomalous Properties",
+              "lesson_key": "anomalous_properties"
+            },
+            {
+              "lesson": "Metallic and Non-metallic Character",
+              "lesson_key": "metallic_and_non_metallic_character"
+            },
+            {
+              "lesson": "Oxidation States",
+              "lesson_key": "oxidation_states"
+            },
+            {
+              "lesson": "Penetration Effect",
+              "lesson_key": "penetration_effect"
+            }
+          ]
+        },
+        {
+          "topic": "Structure And Bonding",
+          "topic_key": "structure_and_bonding",
+          "lessons": [
+            {
+              "lesson": "Chemical Bonding Fundamentals",
+              "lesson_key": "chemical_bonding_fundamentals"
+            },
+            {
+              "lesson": "Valence Bond Theory",
+              "lesson_key": "valence_bond_theory"
+            },
+            {
+              "lesson": "Molecular Orbital Theory",
+              "lesson_key": "molecular_orbital_theory"
+            },
+            {
+              "lesson": "VSEPR Theory",
+              "lesson_key": "vsepr_theory"
+            },
+            {
+              "lesson": "Molecular Geometry and Shapes",
+              "lesson_key": "molecular_geometry_and_shapes"
+            },
+            {
+              "lesson": "Hybridization",
+              "lesson_key": "hybridization"
+            },
+            {
+              "lesson": "Lewis Structures",
+              "lesson_key": "lewis_structures"
+            },
+            {
+              "lesson": "Bond Parameters",
+              "lesson_key": "bond_parameters"
+            },
+            {
+              "lesson": "Molecular Polarity",
+              "lesson_key": "molecular_polarity"
+            },
+            {
+              "lesson": "Isoelectronic Species",
+              "lesson_key": "isoelectronic_species"
+            },
+            {
+              "lesson": "Bent's Rule",
+              "lesson_key": "bents_rule"
+            },
+            {
+              "lesson": "Walsh Diagrams",
+              "lesson_key": "walsh_diagrams"
+            },
+            {
+              "lesson": "Three-Center Bonding",
+              "lesson_key": "three_center_bonding"
+            }
+          ]
+        },
+        {
+          "topic": "Concepts Of Acids And Bases",
+          "topic_key": "concepts_of_acids_and_bases",
+          "lessons": [
+            {
+              "lesson": "Arrhenius theory of acids and bases",
+              "lesson_key": "arrhenius_theory_of_acids_and_bases"
+            },
+            {
+              "lesson": "Brønsted-Lowry theory",
+              "lesson_key": "brnsted_lowry_theory"
+            },
+            {
+              "lesson": "Lewis theory of acids and bases",
+              "lesson_key": "lewis_theory_of_acids_and_bases"
+            },
+            {
+              "lesson": "Hard-Soft Acid-Base (HSAB) principle",
+              "lesson_key": "hard_soft_acid_base_hsab_principle"
+            },
+            {
+              "lesson": "Non-aqueous solvent systems",
+              "lesson_key": "non_aqueous_solvent_systems"
+            },
+            {
+              "lesson": "Solvent leveling and differentiating effects",
+              "lesson_key": "solvent_leveling_and_differentiating_effects"
+            },
+            {
+              "lesson": "Donor number and acceptor number",
+              "lesson_key": "donor_number_and_acceptor_number"
+            },
+            {
+              "lesson": "Pearson's HSAB theory",
+              "lesson_key": "pearsons_hsab_theory"
+            },
+            {
+              "lesson": "Coordination chemistry",
+              "lesson_key": "coordination_chemistry"
+            },
+            {
+              "lesson": "Electronegativity and polarizability",
+              "lesson_key": "electronegativity_and_polarizability"
+            },
+            {
+              "lesson": "Protic and aprotic solvents",
+              "lesson_key": "protic_and_aprotic_solvents"
+            },
+            {
+              "lesson": "Acid-base reactions in ionic liquids",
+              "lesson_key": "acid_base_reactions_in_ionic_liquids"
+            }
+          ]
+        },
+        {
+          "topic": "Main Group Elements And Their Compounds",
+          "topic_key": "main_group_elements_and_their_compounds",
+          "lessons": [
+            {
+              "lesson": "Allotropy in main group elements",
+              "lesson_key": "allotropy_in_main_group_elements"
+            },
+            {
+              "lesson": "Synthesis methods for main group compounds",
+              "lesson_key": "synthesis_methods_for_main_group_compounds"
+            },
+            {
+              "lesson": "Structure and bonding in main group compounds",
+              "lesson_key": "structure_and_bonding_in_main_group_compounds"
+            },
+            {
+              "lesson": "Industrial importance of main group compounds",
+              "lesson_key": "industrial_importance_of_main_group_compounds"
+            },
+            {
+              "lesson": "Periodic trends in main group elements",
+              "lesson_key": "periodic_trends_in_main_group_elements"
+            },
+            {
+              "lesson": "Reactivity patterns and chemical properties",
+              "lesson_key": "reactivity_patterns_and_chemical_properties"
+            },
+            {
+              "lesson": "Extraction and purification techniques",
+              "lesson_key": "extraction_and_purification_techniques"
+            },
+            {
+              "lesson": "Environmental and safety considerations",
+              "lesson_key": "environmental_and_safety_considerations"
+            }
+          ]
+        },
+        {
+          "topic": "Transition Elements And Coordination Compounds",
+          "topic_key": "transition_elements_and_coordination_compounds",
+          "lessons": [
+            {
+              "lesson": "Electronic Configuration of Transition Elements",
+              "lesson_key": "electronic_configuration_of_transition_elements"
+            },
+            {
+              "lesson": "Coordination Compounds",
+              "lesson_key": "coordination_compounds"
+            },
+            {
+              "lesson": "Bonding Theories",
+              "lesson_key": "bonding_theories"
+            },
+            {
+              "lesson": "Spectral Properties",
+              "lesson_key": "spectral_properties"
+            },
+            {
+              "lesson": "Magnetic Properties",
+              "lesson_key": "magnetic_properties"
+            },
+            {
+              "lesson": "Reaction Mechanisms",
+              "lesson_key": "reaction_mechanisms"
+            },
+            {
+              "lesson": "Ligand Classification",
+              "lesson_key": "ligand_classification"
+            },
+            {
+              "lesson": "Isomerism in Coordination Compounds",
+              "lesson_key": "isomerism_in_coordination_compounds"
+            },
+            {
+              "lesson": "Jahn-Teller Distortion",
+              "lesson_key": "jahn_teller_distortion"
+            },
+            {
+              "lesson": "Nephelauxetic Effect",
+              "lesson_key": "nephelauxetic_effect"
+            },
+            {
+              "lesson": "Tanabe-Sugano Diagrams",
+              "lesson_key": "tanabe_sugano_diagrams"
+            },
+            {
+              "lesson": "Activation Mechanisms",
+              "lesson_key": "activation_mechanisms"
+            },
+            {
+              "lesson": "Marcus Theory",
+              "lesson_key": "marcus_theory"
+            },
+            {
+              "lesson": "Magnetochemistry Techniques",
+              "lesson_key": "magnetochemistry_techniques"
+            }
+          ]
+        },
+        {
+          "topic": "Lanthanides And Actinides",
+          "topic_key": "lanthanides_and_actinides",
+          "lessons": [
+            {
+              "lesson": "Inner transition elements",
+              "lesson_key": "inner_transition_elements"
+            },
+            {
+              "lesson": "Spectral properties",
+              "lesson_key": "spectral_properties"
+            },
+            {
+              "lesson": "Magnetic properties",
+              "lesson_key": "magnetic_properties"
+            },
+            {
+              "lesson": "Redox chemistry",
+              "lesson_key": "redox_chemistry"
+            },
+            {
+              "lesson": "Analytical applications",
+              "lesson_key": "analytical_applications"
+            },
+            {
+              "lesson": "Lanthanide contraction",
+              "lesson_key": "lanthanide_contraction"
+            },
+            {
+              "lesson": "Crystal field theory for f-orbitals",
+              "lesson_key": "crystal_field_theory_for_f_orbitals"
+            },
+            {
+              "lesson": "Russell-Saunders coupling",
+              "lesson_key": "russell_saunders_coupling"
+            },
+            {
+              "lesson": "Nephelauxetic effect",
+              "lesson_key": "nephelauxetic_effect"
+            },
+            {
+              "lesson": "Coordination chemistry",
+              "lesson_key": "coordination_chemistry"
+            },
+            {
+              "lesson": "Radioactivity",
+              "lesson_key": "radioactivity"
+            },
+            {
+              "lesson": "Organo-lanthanide and organo-actinide compounds",
+              "lesson_key": "organo_lanthanide_and_organo_actinide_compounds"
+            }
+          ]
+        },
+        {
+          "topic": "Organometallic Compounds",
+          "topic_key": "organometallic_compounds",
+          "lessons": [
+            {
+              "lesson": "Metal-carbon bond formation",
+              "lesson_key": "metal_carbon_bond_formation"
+            },
+            {
+              "lesson": "18-electron rule",
+              "lesson_key": "18_electron_rule"
+            },
+            {
+              "lesson": "Oxidative addition and reductive elimination",
+              "lesson_key": "oxidative_addition_and_reductive_elimination"
+            },
+            {
+              "lesson": "Migratory insertion reactions",
+              "lesson_key": "migratory_insertion_reactions"
+            },
+            {
+              "lesson": "Homogeneous catalytic cycles",
+              "lesson_key": "homogeneous_catalytic_cycles"
+            },
+            {
+              "lesson": "η-notation and hapticity",
+              "lesson_key": "notation_and_hapticity"
+            },
+            {
+              "lesson": "Metal carbonyls and carbonyl complexes",
+              "lesson_key": "metal_carbonyls_and_carbonyl_complexes"
+            },
+            {
+              "lesson": "Metal-alkyl and metal-aryl complexes",
+              "lesson_key": "metal_alkyl_and_metal_aryl_complexes"
+            },
+            {
+              "lesson": "Metal-alkene and metal-alkyne complexes",
+              "lesson_key": "metal_alkene_and_metal_alkyne_complexes"
+            },
+            {
+              "lesson": "Cyclopentadienyl and arene complexes",
+              "lesson_key": "cyclopentadienyl_and_arene_complexes"
+            },
+            {
+              "lesson": "Molecular orbital theory in coordination complexes",
+              "lesson_key": "molecular_orbital_theory_in_coordination_complexes"
+            },
+            {
+              "lesson": "Crystal field and ligand field theory",
+              "lesson_key": "crystal_field_and_ligand_field_theory"
+            },
+            {
+              "lesson": "Spectroscopic characterization methods",
+              "lesson_key": "spectroscopic_characterization_methods"
+            },
+            {
+              "lesson": "Steric and electronic effects of ligands",
+              "lesson_key": "steric_and_electronic_effects_of_ligands"
+            },
+            {
+              "lesson": "Tolman cone angle and electronic parameters",
+              "lesson_key": "tolman_cone_angle_and_electronic_parameters"
+            },
+            {
+              "lesson": "Coordination number and geometry",
+              "lesson_key": "coordination_number_and_geometry"
+            },
+            {
+              "lesson": "Reaction kinetics and thermodynamics",
+              "lesson_key": "reaction_kinetics_and_thermodynamics"
+            },
+            {
+              "lesson": "Industrial catalytic processes",
+              "lesson_key": "industrial_catalytic_processes"
+            }
+          ]
+        },
+        {
+          "topic": "Cages And Metal Clusters",
+          "topic_key": "cages_and_metal_clusters",
+          "lessons": [
+            {
+              "lesson": "Borane cages",
+              "lesson_key": "borane_cages"
+            },
+            {
+              "lesson": "Wade-Mingos rules",
+              "lesson_key": "wade_mingos_rules"
+            },
+            {
+              "lesson": "Metal carbonyl clusters",
+              "lesson_key": "metal_carbonyl_clusters"
+            },
+            {
+              "lesson": "Metal-metal bonding",
+              "lesson_key": "metal_metal_bonding"
+            },
+            {
+              "lesson": "Carboranes",
+              "lesson_key": "carboranes"
+            },
+            {
+              "lesson": "Zintl ions",
+              "lesson_key": "zintl_ions"
+            },
+            {
+              "lesson": "Polyhedral skeletal electron pair theory",
+              "lesson_key": "polyhedral_skeletal_electron_pair_theory"
+            },
+            {
+              "lesson": "Cluster valence electrons",
+              "lesson_key": "cluster_valence_electrons"
+            },
+            {
+              "lesson": "Isolobal analogy",
+              "lesson_key": "isolobal_analogy"
+            },
+            {
+              "lesson": "Interstitial atoms",
+              "lesson_key": "interstitial_atoms"
+            },
+            {
+              "lesson": "Condensed clusters",
+              "lesson_key": "condensed_clusters"
+            },
+            {
+              "lesson": "High nuclearity clusters",
+              "lesson_key": "high_nuclearity_clusters"
+            }
+          ]
+        },
+        {
+          "topic": "Analytical Chemistry",
+          "topic_key": "analytical_chemistry",
+          "lessons": [
+            {
+              "lesson": "Separation Techniques",
+              "lesson_key": "separation_techniques"
+            },
+            {
+              "lesson": "Spectroscopic Methods",
+              "lesson_key": "spectroscopic_methods"
+            },
+            {
+              "lesson": "Electroanalytical Methods",
+              "lesson_key": "electroanalytical_methods"
+            },
+            {
+              "lesson": "Thermoanalytical Methods",
+              "lesson_key": "thermoanalytical_methods"
+            },
+            {
+              "lesson": "Sample Preparation",
+              "lesson_key": "sample_preparation"
+            },
+            {
+              "lesson": "Calibration and Standardization",
+              "lesson_key": "calibration_and_standardization"
+            },
+            {
+              "lesson": "Quality Assurance",
+              "lesson_key": "quality_assurance"
+            },
+            {
+              "lesson": "Data Analysis and Interpretation",
+              "lesson_key": "data_analysis_and_interpretation"
+            }
+          ]
+        },
+        {
+          "topic": "Bioinorganic Chemistry",
+          "topic_key": "bioinorganic_chemistry",
+          "lessons": [
+            {
+              "lesson": "Photosystems",
+              "lesson_key": "photosystems"
+            },
+            {
+              "lesson": "Porphyrins",
+              "lesson_key": "porphyrins"
+            },
+            {
+              "lesson": "Metalloenzymes",
+              "lesson_key": "metalloenzymes"
+            },
+            {
+              "lesson": "Oxygen transport proteins",
+              "lesson_key": "oxygen_transport_proteins"
+            },
+            {
+              "lesson": "Electron-transfer reactions",
+              "lesson_key": "electron_transfer_reactions"
+            },
+            {
+              "lesson": "Nitrogen fixation",
+              "lesson_key": "nitrogen_fixation"
+            },
+            {
+              "lesson": "Metal complexes in medicine",
+              "lesson_key": "metal_complexes_in_medicine"
+            },
+            {
+              "lesson": "Coordination chemistry fundamentals",
+              "lesson_key": "coordination_chemistry_fundamentals"
+            },
+            {
+              "lesson": "Ligand field theory",
+              "lesson_key": "ligand_field_theory"
+            },
+            {
+              "lesson": "Redox potentials and Marcus theory",
+              "lesson_key": "redox_potentials_and_marcus_theory"
+            },
+            {
+              "lesson": "Spectroscopic techniques",
+              "lesson_key": "spectroscopic_techniques"
+            },
+            {
+              "lesson": "Metal ion homeostasis",
+              "lesson_key": "metal_ion_homeostasis"
+            },
+            {
+              "lesson": "Bioinorganic reaction mechanisms",
+              "lesson_key": "bioinorganic_reaction_mechanisms"
+            }
+          ]
+        },
+        {
+          "topic": "Characterisation Of Inorganic Compounds",
+          "topic_key": "characterisation_of_inorganic_compounds",
+          "lessons": [
+            {
+              "lesson": "Vibrational Spectroscopy Principles",
+              "lesson_key": "vibrational_spectroscopy_principles"
+            },
+            {
+              "lesson": "Electronic Spectroscopy",
+              "lesson_key": "electronic_spectroscopy"
+            },
+            {
+              "lesson": "Magnetic Resonance Techniques",
+              "lesson_key": "magnetic_resonance_techniques"
+            },
+            {
+              "lesson": "Nuclear Techniques",
+              "lesson_key": "nuclear_techniques"
+            },
+            {
+              "lesson": "Electron Spectroscopy Methods",
+              "lesson_key": "electron_spectroscopy_methods"
+            },
+            {
+              "lesson": "Microscopic Characterization",
+              "lesson_key": "microscopic_characterization"
+            },
+            {
+              "lesson": "Instrumentation and Sample Preparation",
+              "lesson_key": "instrumentation_and_sample_preparation"
+            },
+            {
+              "lesson": "Data Interpretation and Structural Elucidation",
+              "lesson_key": "data_interpretation_and_structural_elucidation"
+            },
+            {
+              "lesson": "Electromagnetic Radiation-Matter Interactions",
+              "lesson_key": "electromagnetic_radiation_matter_interactions"
+            },
+            {
+              "lesson": "Quantum Mechanical Foundation",
+              "lesson_key": "quantum_mechanical_foundation"
+            },
+            {
+              "lesson": "Molecular Symmetry and Group Theory",
+              "lesson_key": "molecular_symmetry_and_group_theory"
+            },
+            {
+              "lesson": "Coordination Chemistry Principles",
+              "lesson_key": "coordination_chemistry_principles"
+            },
+            {
+              "lesson": "Solid State Properties",
+              "lesson_key": "solid_state_properties"
+            },
+            {
+              "lesson": "Surface Chemistry",
+              "lesson_key": "surface_chemistry"
+            },
+            {
+              "lesson": "Magnetic Properties of Complexes",
+              "lesson_key": "magnetic_properties_of_complexes"
+            }
+          ]
+        },
+        {
+          "topic": "Nuclear Chemistry",
+          "topic_key": "nuclear_chemistry",
+          "lessons": [
+            {
+              "lesson": "Nuclear reactions",
+              "lesson_key": "nuclear_reactions"
+            },
+            {
+              "lesson": "Nuclear fission",
+              "lesson_key": "nuclear_fission"
+            },
+            {
+              "lesson": "Nuclear fusion",
+              "lesson_key": "nuclear_fusion"
+            },
+            {
+              "lesson": "Radio-analytical techniques",
+              "lesson_key": "radio_analytical_techniques"
+            },
+            {
+              "lesson": "Activation analysis",
+              "lesson_key": "activation_analysis"
+            },
+            {
+              "lesson": "Nuclear stability",
+              "lesson_key": "nuclear_stability"
+            },
+            {
+              "lesson": "Radioactive decay",
+              "lesson_key": "radioactive_decay"
+            },
+            {
+              "lesson": "Nuclear models",
+              "lesson_key": "nuclear_models"
+            },
+            {
+              "lesson": "Radiation detection",
+              "lesson_key": "radiation_detection"
+            },
+            {
+              "lesson": "Nuclear energy applications",
+              "lesson_key": "nuclear_energy_applications"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Oganic Chemistry",
+      "subject_key": "organic_chemistry",
+      "topics": [
+        {
+          "topic": "IUPAC Nomenclature Of Organic Molecules",
+          "topic_key": "iupac_nomenclature_of_organic_molecules",
+          "lessons": [
+            {
+              "lesson": "IUPAC nomenclature fundamentals",
+              "lesson_key": "iupac_nomenclature_fundamentals"
+            },
+            {
+              "lesson": "Regioisomers",
+              "lesson_key": "regioisomers"
+            },
+            {
+              "lesson": "Stereoisomers",
+              "lesson_key": "stereoisomers"
+            },
+            {
+              "lesson": "Constitutional isomers",
+              "lesson_key": "constitutional_isomers"
+            },
+            {
+              "lesson": "Configurational isomers",
+              "lesson_key": "configurational_isomers"
+            },
+            {
+              "lesson": "Cahn-Ingold-Prelog priority rules",
+              "lesson_key": "cahn_ingold_prelog_priority_rules"
+            },
+            {
+              "lesson": "E/Z nomenclature",
+              "lesson_key": "ez_nomenclature"
+            }
+          ]
+        },
+        {
+          "topic": "Principles Of Stereochemistry",
+          "topic_key": "principles_of_stereochemistry",
+          "lessons": [
+            {
+              "lesson": "Configurational isomerism",
+              "lesson_key": "configurational_isomerism"
+            },
+            {
+              "lesson": "Conformational isomerism",
+              "lesson_key": "conformational_isomerism"
+            },
+            {
+              "lesson": "Stereogenicity",
+              "lesson_key": "stereogenicity"
+            },
+            {
+              "lesson": "Stereoselectivity",
+              "lesson_key": "stereoselectivity"
+            },
+            {
+              "lesson": "Enantioselectivity",
+              "lesson_key": "enantioselectivity"
+            },
+            {
+              "lesson": "Diastereoselectivity",
+              "lesson_key": "diastereoselectivity"
+            },
+            {
+              "lesson": "Asymmetric induction",
+              "lesson_key": "asymmetric_induction"
+            },
+            {
+              "lesson": "Chirality and optical activity",
+              "lesson_key": "chirality_and_optical_activity"
+            },
+            {
+              "lesson": "R/S nomenclature",
+              "lesson_key": "rs_nomenclature"
+            },
+            {
+              "lesson": "E/Z nomenclature",
+              "lesson_key": "ez_nomenclature"
+            },
+            {
+              "lesson": "Fischer projections",
+              "lesson_key": "fischer_projections"
+            },
+            {
+              "lesson": "Newman projections",
+              "lesson_key": "newman_projections"
+            },
+            {
+              "lesson": "Enantiomeric excess",
+              "lesson_key": "enantiomeric_excess"
+            },
+            {
+              "lesson": "Diastereomeric ratio",
+              "lesson_key": "diastereomeric_ratio"
+            },
+            {
+              "lesson": "Prochirality",
+              "lesson_key": "prochirality"
+            }
+          ]
+        },
+        {
+          "topic": "Aromaticity",
+          "topic_key": "aromaticity",
+          "lessons": [
+            {
+              "lesson": "Hückel's Rule and Aromaticity Criteria",
+              "lesson_key": "hckels_rule_and_aromaticity_criteria"
+            },
+            {
+              "lesson": "Benzenoid Aromatic Compounds",
+              "lesson_key": "benzenoid_aromatic_compounds"
+            },
+            {
+              "lesson": "Non-benzenoid Aromatic Compounds",
+              "lesson_key": "non_benzenoid_aromatic_compounds"
+            },
+            {
+              "lesson": "Antiaromaticity and Non-aromaticity",
+              "lesson_key": "antiaromaticity_and_non_aromaticity"
+            },
+            {
+              "lesson": "Generation Methods",
+              "lesson_key": "generation_methods"
+            },
+            {
+              "lesson": "Reactions of Aromatic Systems",
+              "lesson_key": "reactions_of_aromatic_systems"
+            },
+            {
+              "lesson": "Molecular Orbital Theory",
+              "lesson_key": "molecular_orbital_theory"
+            },
+            {
+              "lesson": "Resonance and Delocalization Energy",
+              "lesson_key": "resonance_and_delocalization_energy"
+            },
+            {
+              "lesson": "Heterocyclic Aromatic Compounds",
+              "lesson_key": "heterocyclic_aromatic_compounds"
+            },
+            {
+              "lesson": "Aromatic Transition States",
+              "lesson_key": "aromatic_transition_states"
+            },
+            {
+              "lesson": "NMR Spectroscopy of Aromatic Compounds",
+              "lesson_key": "nmr_spectroscopy_of_aromatic_compounds"
+            }
+          ]
+        },
+        {
+          "topic": "Organic Reactive Intermediates",
+          "topic_key": "organic_reactive_intermediates",
+          "lessons": [
+            {
+              "lesson": "Carbocations",
+              "lesson_key": "carbocations"
+            },
+            {
+              "lesson": "Carbanions",
+              "lesson_key": "carbanions"
+            },
+            {
+              "lesson": "Free radicals",
+              "lesson_key": "free_radicals"
+            },
+            {
+              "lesson": "Carbenes",
+              "lesson_key": "carbenes"
+            },
+            {
+              "lesson": "Benzynes",
+              "lesson_key": "benzynes"
+            },
+            {
+              "lesson": "Nitrenes",
+              "lesson_key": "nitrenes"
+            },
+            {
+              "lesson": "Hyperconjugation and resonance",
+              "lesson_key": "hyperconjugation_and_resonance"
+            },
+            {
+              "lesson": "Inductive and mesomeric effects",
+              "lesson_key": "inductive_and_mesomeric_effects"
+            },
+            {
+              "lesson": "Rearrangement reactions",
+              "lesson_key": "rearrangement_reactions"
+            },
+            {
+              "lesson": "Stereochemistry of intermediates",
+              "lesson_key": "stereochemistry_of_intermediates"
+            },
+            {
+              "lesson": "Orbital hybridization theory",
+              "lesson_key": "orbital_hybridization_theory"
+            },
+            {
+              "lesson": "Solvent effects",
+              "lesson_key": "solvent_effects"
+            },
+            {
+              "lesson": "Spectroscopic detection methods",
+              "lesson_key": "spectroscopic_detection_methods"
+            },
+            {
+              "lesson": "Neighboring group participation",
+              "lesson_key": "neighboring_group_participation"
+            }
+          ]
+        },
+        {
+          "topic": "Organic Reaction Mechanisms",
+          "topic_key": "organic_reaction_mechanisms",
+          "lessons": [
+            {
+              "lesson": "Nucleophilic Substitution Mechanisms",
+              "lesson_key": "nucleophilic_substitution_mechanisms"
+            },
+            {
+              "lesson": "Elimination Reaction Mechanisms",
+              "lesson_key": "elimination_reaction_mechanisms"
+            },
+            {
+              "lesson": "Electrophilic Addition Mechanisms",
+              "lesson_key": "electrophilic_addition_mechanisms"
+            },
+            {
+              "lesson": "Nucleophilic Addition Mechanisms",
+              "lesson_key": "nucleophilic_addition_mechanisms"
+            },
+            {
+              "lesson": "Radical Reaction Mechanisms",
+              "lesson_key": "radical_reaction_mechanisms"
+            },
+            {
+              "lesson": "Reaction Intermediate Identification",
+              "lesson_key": "reaction_intermediate_identification"
+            },
+            {
+              "lesson": "Determination of Reaction Pathways",
+              "lesson_key": "determination_of_reaction_pathways"
+            },
+            {
+              "lesson": "Stereochemistry in Organic Reactions",
+              "lesson_key": "stereochemistry_in_organic_reactions"
+            },
+            {
+              "lesson": "Carbocation Stability and Rearrangements",
+              "lesson_key": "carbocation_stability_and_rearrangements"
+            },
+            {
+              "lesson": "Nucleophilicity and Basicity",
+              "lesson_key": "nucleophilicity_and_basicity"
+            },
+            {
+              "lesson": "Leaving Group Ability",
+              "lesson_key": "leaving_group_ability"
+            },
+            {
+              "lesson": "Reaction Kinetics and Rate Laws",
+              "lesson_key": "reaction_kinetics_and_rate_laws"
+            },
+            {
+              "lesson": "Thermodynamic vs Kinetic Control",
+              "lesson_key": "thermodynamic_vs_kinetic_control"
+            },
+            {
+              "lesson": "Hammond Postulate and Transition State Theory",
+              "lesson_key": "hammond_postulate_and_transition_state_theory"
+            },
+            {
+              "lesson": "Solvent Effects on Reaction Mechanisms",
+              "lesson_key": "solvent_effects_on_reaction_mechanisms"
+            },
+            {
+              "lesson": "Regioselectivity and Chemoselectivity",
+              "lesson_key": "regioselectivity_and_chemoselectivity"
+            },
+            {
+              "lesson": "Isotopic Labeling and Crossover Experiments",
+              "lesson_key": "isotopic_labeling_and_crossover_experiments"
+            },
+            {
+              "lesson": "Curtin Hammett Principle",
+              "lesson_key": "curtin_hammett_principle"
+            },
+            {
+              "lesson": "Linear Free Energy Relationships",
+              "lesson_key": "linear_free_energy_relationships"
+            }
+          ]
+        },
+        {
+          "topic": "Common Named Reactions And Rearrangements",
+          "topic_key": "common_named_reactions_and_rearrangements",
+          "lessons": [
+            {
+              "lesson": "Named reactions",
+              "lesson_key": "named_reactions"
+            },
+            {
+              "lesson": "Rearrangement reactions",
+              "lesson_key": "rearrangement_reactions"
+            },
+            {
+              "lesson": "Synthetic applications",
+              "lesson_key": "synthetic_applications"
+            },
+            {
+              "lesson": "Reaction mechanisms",
+              "lesson_key": "reaction_mechanisms"
+            },
+            {
+              "lesson": "Stereochemical outcomes",
+              "lesson_key": "stereochemical_outcomes"
+            },
+            {
+              "lesson": "Retrosynthetic analysis",
+              "lesson_key": "retrosynthetic_analysis"
+            },
+            {
+              "lesson": "Functional group interconversions",
+              "lesson_key": "functional_group_interconversions"
+            },
+            {
+              "lesson": "Protecting group strategies",
+              "lesson_key": "protecting_group_strategies"
+            }
+          ]
+        },
+        {
+          "topic": "Organic Transformations And Reagents",
+          "topic_key": "organic_transformations_and_reagents",
+          "lessons": [
+            {
+              "lesson": "Functional Group Interconversions",
+              "lesson_key": "functional_group_interconversions"
+            },
+            {
+              "lesson": "Oxidation Reactions",
+              "lesson_key": "oxidation_reactions"
+            },
+            {
+              "lesson": "Reduction Reactions",
+              "lesson_key": "reduction_reactions"
+            },
+            {
+              "lesson": "Organic Reagents",
+              "lesson_key": "organic_reagents"
+            },
+            {
+              "lesson": "Inorganic Reagents",
+              "lesson_key": "inorganic_reagents"
+            },
+            {
+              "lesson": "Organometallic Catalysts",
+              "lesson_key": "organometallic_catalysts"
+            },
+            {
+              "lesson": "Chemoselectivity",
+              "lesson_key": "chemoselectivity"
+            },
+            {
+              "lesson": "Regioselectivity",
+              "lesson_key": "regioselectivity"
+            },
+            {
+              "lesson": "Stereoselectivity",
+              "lesson_key": "stereoselectivity"
+            },
+            {
+              "lesson": "Enzymatic Catalysis",
+              "lesson_key": "enzymatic_catalysis"
+            },
+            {
+              "lesson": "Protecting Group Strategies",
+              "lesson_key": "protecting_group_strategies"
+            },
+            {
+              "lesson": "Retrosynthetic Analysis",
+              "lesson_key": "retrosynthetic_analysis"
+            },
+            {
+              "lesson": "Green Chemistry Principles",
+              "lesson_key": "green_chemistry_principles"
+            },
+            {
+              "lesson": "Reaction Mechanisms",
+              "lesson_key": "reaction_mechanisms"
+            },
+            {
+              "lesson": "Asymmetric Synthesis",
+              "lesson_key": "asymmetric_synthesis"
+            }
+          ]
+        },
+        {
+          "topic": "Concepts In Organic Synthesis",
+          "topic_key": "concepts_in_organic_synthesis",
+          "lessons": [
+            {
+              "lesson": "Retrosynthesis",
+              "lesson_key": "retrosynthesis"
+            },
+            {
+              "lesson": "Disconnection",
+              "lesson_key": "disconnection"
+            },
+            {
+              "lesson": "Synthons",
+              "lesson_key": "synthons"
+            },
+            {
+              "lesson": "Synthetic equivalents",
+              "lesson_key": "synthetic_equivalents"
+            },
+            {
+              "lesson": "Linear synthesis",
+              "lesson_key": "linear_synthesis"
+            },
+            {
+              "lesson": "Convergent synthesis",
+              "lesson_key": "convergent_synthesis"
+            },
+            {
+              "lesson": "Umpolung",
+              "lesson_key": "umpolung"
+            },
+            {
+              "lesson": "Protecting groups",
+              "lesson_key": "protecting_groups"
+            },
+            {
+              "lesson": "Functional group interconversions",
+              "lesson_key": "functional_group_interconversions"
+            },
+            {
+              "lesson": "Chemoselectivity",
+              "lesson_key": "chemoselectivity"
+            },
+            {
+              "lesson": "Regioselectivity",
+              "lesson_key": "regioselectivity"
+            },
+            {
+              "lesson": "Stereoselectivity",
+              "lesson_key": "stereoselectivity"
+            },
+            {
+              "lesson": "Strategic bond analysis",
+              "lesson_key": "strategic_bond_analysis"
+            },
+            {
+              "lesson": "C-C bond forming reactions",
+              "lesson_key": "c_c_bond_forming_reactions"
+            },
+            {
+              "lesson": "Reaction mechanisms",
+              "lesson_key": "reaction_mechanisms"
+            },
+            {
+              "lesson": "Reagent selection criteria",
+              "lesson_key": "reagent_selection_criteria"
+            }
+          ]
+        },
+        {
+          "topic": "Asymmetric Synthesis",
+          "topic_key": "asymmetric_synthesis",
+          "lessons": [
+            {
+              "lesson": "Asymmetric synthesis",
+              "lesson_key": "asymmetric_synthesis"
+            },
+            {
+              "lesson": "Chiral auxiliaries",
+              "lesson_key": "chiral_auxiliaries"
+            },
+            {
+              "lesson": "Substrate-controlled asymmetric induction",
+              "lesson_key": "substrate_controlled_asymmetric_induction"
+            },
+            {
+              "lesson": "Reagent-controlled asymmetric induction",
+              "lesson_key": "reagent_controlled_asymmetric_induction"
+            },
+            {
+              "lesson": "Catalyst-controlled asymmetric induction",
+              "lesson_key": "catalyst_controlled_asymmetric_induction"
+            },
+            {
+              "lesson": "Enantiomeric excess determination",
+              "lesson_key": "enantiomeric_excess_determination"
+            },
+            {
+              "lesson": "Diastereomeric excess determination",
+              "lesson_key": "diastereomeric_excess_determination"
+            },
+            {
+              "lesson": "Enantio-discrimination",
+              "lesson_key": "enantio_discrimination"
+            },
+            {
+              "lesson": "Resolution methods",
+              "lesson_key": "resolution_methods"
+            },
+            {
+              "lesson": "Stereochemistry fundamentals",
+              "lesson_key": "stereochemistry_fundamentals"
+            },
+            {
+              "lesson": "Chirality and optical activity",
+              "lesson_key": "chirality_and_optical_activity"
+            },
+            {
+              "lesson": "Prochirality and enantiotopic groups",
+              "lesson_key": "prochirality_and_enantiotopic_groups"
+            },
+            {
+              "lesson": "Stereoselective and stereospecific reactions",
+              "lesson_key": "stereoselective_and_stereospecific_reactions"
+            },
+            {
+              "lesson": "Chiral pool synthesis",
+              "lesson_key": "chiral_pool_synthesis"
+            },
+            {
+              "lesson": "Organocatalysis",
+              "lesson_key": "organocatalysis"
+            },
+            {
+              "lesson": "Transition metal catalyzed asymmetric reactions",
+              "lesson_key": "transition_metal_catalyzed_asymmetric_reactions"
+            },
+            {
+              "lesson": "Chiral chromatography",
+              "lesson_key": "chiral_chromatography"
+            },
+            {
+              "lesson": "Circular dichroism spectroscopy",
+              "lesson_key": "circular_dichroism_spectroscopy"
+            }
+          ]
+        },
+        {
+          "topic": "Pericyclic Reactions",
+          "topic_key": "pericyclic_reactions",
+          "lessons": [
+            {
+              "lesson": "Woodward-Hoffmann rules",
+              "lesson_key": "woodward_hoffmann_rules"
+            },
+            {
+              "lesson": "Frontier Molecular Orbital theory",
+              "lesson_key": "frontier_molecular_orbital_theory"
+            },
+            {
+              "lesson": "Electrocyclic reactions",
+              "lesson_key": "electrocyclic_reactions"
+            },
+            {
+              "lesson": "Cycloaddition reactions",
+              "lesson_key": "cycloaddition_reactions"
+            },
+            {
+              "lesson": "Sigmatropic rearrangements",
+              "lesson_key": "sigmatropic_rearrangements"
+            },
+            {
+              "lesson": "Aromatic transition states",
+              "lesson_key": "aromatic_transition_states"
+            },
+            {
+              "lesson": "Selection rules for pericyclic reactions",
+              "lesson_key": "selection_rules_for_pericyclic_reactions"
+            },
+            {
+              "lesson": "Stereochemistry of pericyclic reactions",
+              "lesson_key": "stereochemistry_of_pericyclic_reactions"
+            },
+            {
+              "lesson": "Molecular orbital theory fundamentals",
+              "lesson_key": "molecular_orbital_theory_fundamentals"
+            },
+            {
+              "lesson": "Conjugated systems and resonance",
+              "lesson_key": "conjugated_systems_and_resonance"
+            },
+            {
+              "lesson": "Reaction coordinate diagrams",
+              "lesson_key": "reaction_coordinate_diagrams"
+            },
+            {
+              "lesson": "Photochemistry principles",
+              "lesson_key": "photochemistry_principles"
+            },
+            {
+              "lesson": "Retrosynthetic analysis",
+              "lesson_key": "retrosynthetic_analysis"
+            },
+            {
+              "lesson": "Named pericyclic reactions",
+              "lesson_key": "named_pericyclic_reactions"
+            },
+            {
+              "lesson": "Orbital correlation diagrams",
+              "lesson_key": "orbital_correlation_diagrams"
+            },
+            {
+              "lesson": "Torquoselectivity",
+              "lesson_key": "torquoselectivity"
+            }
+          ]
+        },
+        {
+          "topic": "Synthesis And Reactivity Of Common Heterocyclic Compounds",
+          "topic_key": "synthesis_and_reactivity_of_common_heterocyclic_compounds",
+          "lessons": [
+            {
+              "lesson": "Five-membered heterocycles with one heteroatom",
+              "lesson_key": "five_membered_heterocycles_with_one_heteroatom"
+            },
+            {
+              "lesson": "Five-membered heterocycles with two heteroatoms",
+              "lesson_key": "five_membered_heterocycles_with_two_heteroatoms"
+            },
+            {
+              "lesson": "Six-membered heterocycles with one nitrogen",
+              "lesson_key": "six_membered_heterocycles_with_one_nitrogen"
+            },
+            {
+              "lesson": "Six-membered heterocycles with two nitrogens",
+              "lesson_key": "six_membered_heterocycles_with_two_nitrogens"
+            },
+            {
+              "lesson": "Electrophilic aromatic substitution in heterocycles",
+              "lesson_key": "electrophilic_aromatic_substitution_in_heterocycles"
+            },
+            {
+              "lesson": "Nucleophilic substitution in heterocycles",
+              "lesson_key": "nucleophilic_substitution_in_heterocycles"
+            },
+            {
+              "lesson": "Named reactions for heterocycle synthesis",
+              "lesson_key": "named_reactions_for_heterocycle_synthesis"
+            },
+            {
+              "lesson": "Aromaticity and Hückel's rule",
+              "lesson_key": "aromaticity_and_hckels_rule"
+            },
+            {
+              "lesson": "Acid-base properties of heterocycles",
+              "lesson_key": "acid_base_properties_of_heterocycles"
+            },
+            {
+              "lesson": "Tautomerism in heterocycles",
+              "lesson_key": "tautomerism_in_heterocycles"
+            },
+            {
+              "lesson": "Molecular orbital theory",
+              "lesson_key": "molecular_orbital_theory"
+            },
+            {
+              "lesson": "Protecting group chemistry",
+              "lesson_key": "protecting_group_chemistry"
+            },
+            {
+              "lesson": "Medicinal importance of heterocycles",
+              "lesson_key": "medicinal_importance_of_heterocycles"
+            }
+          ]
+        },
+        {
+          "topic": "Chemistry Of Natural Products",
+          "topic_key": "chemistry_of_natural_products",
+          "lessons": [
+            {
+              "lesson": "Carbohydrates",
+              "lesson_key": "carbohydrates"
+            },
+            {
+              "lesson": "Proteins and Peptides",
+              "lesson_key": "proteins_and_peptides"
+            },
+            {
+              "lesson": "Fatty Acids",
+              "lesson_key": "fatty_acids"
+            },
+            {
+              "lesson": "Nucleic Acids",
+              "lesson_key": "nucleic_acids"
+            },
+            {
+              "lesson": "Terpenes",
+              "lesson_key": "terpenes"
+            },
+            {
+              "lesson": "Steroids",
+              "lesson_key": "steroids"
+            },
+            {
+              "lesson": "Alkaloids",
+              "lesson_key": "alkaloids"
+            },
+            {
+              "lesson": "Biogenesis of Terpenoids",
+              "lesson_key": "biogenesis_of_terpenoids"
+            },
+            {
+              "lesson": "Biogenesis of Alkaloids",
+              "lesson_key": "biogenesis_of_alkaloids"
+            },
+            {
+              "lesson": "Stereochemistry of Natural Products",
+              "lesson_key": "stereochemistry_of_natural_products"
+            },
+            {
+              "lesson": "Spectroscopic Characterization",
+              "lesson_key": "spectroscopic_characterization"
+            },
+            {
+              "lesson": "Glycosidic Bond Formation",
+              "lesson_key": "glycosidic_bond_formation"
+            },
+            {
+              "lesson": "Lipid Chemistry",
+              "lesson_key": "lipid_chemistry"
+            },
+            {
+              "lesson": "Enzyme Catalysis in Biosynthesis",
+              "lesson_key": "enzyme_catalysis_in_biosynthesis"
+            },
+            {
+              "lesson": "Secondary Metabolites",
+              "lesson_key": "secondary_metabolites"
+            },
+            {
+              "lesson": "Extraction and Isolation Techniques",
+              "lesson_key": "extraction_and_isolation_techniques"
+            },
+            {
+              "lesson": "Chemical Synthesis of Natural Products",
+              "lesson_key": "chemical_synthesis_of_natural_products"
+            },
+            {
+              "lesson": "Isoprenoid Chemistry",
+              "lesson_key": "isoprenoid_chemistry"
+            },
+            {
+              "lesson": "Ring Systems in Natural Products",
+              "lesson_key": "ring_systems_in_natural_products"
+            }
+          ]
+        },
+        {
+          "topic": "Structure Determination Of Organic Compounds",
+          "topic_key": "structure_determination_of_organic_compounds",
+          "lessons": [
+            {
+              "lesson": "Infrared (IR) Spectroscopy",
+              "lesson_key": "infrared_ir_spectroscopy"
+            },
+            {
+              "lesson": "Ultraviolet-Visible (UV-Vis) Spectroscopy",
+              "lesson_key": "ultraviolet_visible_uv_vis_spectroscopy"
+            },
+            {
+              "lesson": "Proton Nuclear Magnetic Resonance (1H NMR)",
+              "lesson_key": "proton_nuclear_magnetic_resonance_1h_nmr"
+            },
+            {
+              "lesson": "Carbon-13 Nuclear Magnetic Resonance (13C NMR)",
+              "lesson_key": "carbon_13_nuclear_magnetic_resonance_13c_nmr"
+            },
+            {
+              "lesson": "Mass Spectrometry (MS)",
+              "lesson_key": "mass_spectrometry_ms"
+            },
+            {
+              "lesson": "Integrated Structure Elucidation",
+              "lesson_key": "integrated_structure_elucidation"
+            },
+            {
+              "lesson": "Molecular Vibrations and Selection Rules",
+              "lesson_key": "molecular_vibrations_and_selection_rules"
+            },
+            {
+              "lesson": "Electronic Transitions and Conjugation",
+              "lesson_key": "electronic_transitions_and_conjugation"
+            },
+            {
+              "lesson": "Chemical Shift and Shielding Effects",
+              "lesson_key": "chemical_shift_and_shielding_effects"
+            },
+            {
+              "lesson": "Spin-Spin Coupling and Multiplicity",
+              "lesson_key": "spin_spin_coupling_and_multiplicity"
+            },
+            {
+              "lesson": "Fragmentation Mechanisms",
+              "lesson_key": "fragmentation_mechanisms"
+            },
+            {
+              "lesson": "Isotope Patterns",
+              "lesson_key": "isotope_patterns"
+            },
+            {
+              "lesson": "Advanced NMR Techniques",
+              "lesson_key": "advanced_nmr_techniques"
+            },
+            {
+              "lesson": "Sample Preparation and Instrumentation",
+              "lesson_key": "sample_preparation_and_instrumentation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Physical Chemistry",
+      "subject_key": "physical_chemistry",
+      "topics": [
+        {
+          "topic": "Basic Principles Of Quantum Mechanics",
+          "topic_key": "basic_principles_of_quantum_mechanics",
+          "lessons": [
+            {
+              "lesson": "Postulates of quantum mechanics",
+              "lesson_key": "postulates_of_quantum_mechanics"
+            },
+            {
+              "lesson": "Operator algebra",
+              "lesson_key": "operator_algebra"
+            },
+            {
+              "lesson": "Particle-in-a-box",
+              "lesson_key": "particle_in_a_box"
+            },
+            {
+              "lesson": "Quantum harmonic oscillator",
+              "lesson_key": "quantum_harmonic_oscillator"
+            },
+            {
+              "lesson": "Hydrogen atom",
+              "lesson_key": "hydrogen_atom"
+            },
+            {
+              "lesson": "Atomic orbitals",
+              "lesson_key": "atomic_orbitals"
+            },
+            {
+              "lesson": "Orbital angular momentum",
+              "lesson_key": "orbital_angular_momentum"
+            },
+            {
+              "lesson": "Spin angular momentum",
+              "lesson_key": "spin_angular_momentum"
+            },
+            {
+              "lesson": "Quantum tunneling",
+              "lesson_key": "quantum_tunneling"
+            },
+            {
+              "lesson": "Wave-particle duality",
+              "lesson_key": "wave_particle_duality"
+            },
+            {
+              "lesson": "Eigenvalue problems",
+              "lesson_key": "eigenvalue_problems"
+            },
+            {
+              "lesson": "Hermitian operators",
+              "lesson_key": "hermitian_operators"
+            },
+            {
+              "lesson": "Commutation relations",
+              "lesson_key": "commutation_relations"
+            },
+            {
+              "lesson": "Uncertainty principle",
+              "lesson_key": "uncertainty_principle"
+            },
+            {
+              "lesson": "Degeneracy",
+              "lesson_key": "degeneracy"
+            },
+            {
+              "lesson": "Quantum numbers",
+              "lesson_key": "quantum_numbers"
+            },
+            {
+              "lesson": "Radial and angular wavefunctions",
+              "lesson_key": "radial_and_angular_wavefunctions"
+            },
+            {
+              "lesson": "Normalization and orthogonality",
+              "lesson_key": "normalization_and_orthogonality"
+            },
+            {
+              "lesson": "Probability density",
+              "lesson_key": "probability_density"
+            },
+            {
+              "lesson": "Zero-point energy",
+              "lesson_key": "zero_point_energy"
+            },
+            {
+              "lesson": "Transmission and reflection coefficients",
+              "lesson_key": "transmission_and_reflection_coefficients"
+            }
+          ]
+        },
+        {
+          "topic": "Approximate Methods Of Quantum Mechanics",
+          "topic_key": "approximate_methods_of_quantum_mechanics",
+          "lessons": [
+            {
+              "lesson": "Variational principle",
+              "lesson_key": "variational_principle"
+            },
+            {
+              "lesson": "First-order perturbation theory",
+              "lesson_key": "first_order_perturbation_theory"
+            },
+            {
+              "lesson": "Second-order perturbation theory",
+              "lesson_key": "second_order_perturbation_theory"
+            },
+            {
+              "lesson": "Degenerate perturbation theory",
+              "lesson_key": "degenerate_perturbation_theory"
+            },
+            {
+              "lesson": "Applications to quantum systems",
+              "lesson_key": "applications_to_quantum_systems"
+            },
+            {
+              "lesson": "Exact vs approximate solutions",
+              "lesson_key": "exact_vs_approximate_solutions"
+            },
+            {
+              "lesson": "Trial wavefunctions",
+              "lesson_key": "trial_wavefunctions"
+            },
+            {
+              "lesson": "Hermitian operators and orthogonality",
+              "lesson_key": "hermitian_operators_and_orthogonality"
+            },
+            {
+              "lesson": "Rayleigh-Ritz linear variation method",
+              "lesson_key": "rayleigh_ritz_linear_variation_method"
+            },
+            {
+              "lesson": "Stark effect",
+              "lesson_key": "stark_effect"
+            },
+            {
+              "lesson": "Zeeman effect",
+              "lesson_key": "zeeman_effect"
+            },
+            {
+              "lesson": "WKB approximation",
+              "lesson_key": "wkb_approximation"
+            },
+            {
+              "lesson": "Born-Oppenheimer approximation",
+              "lesson_key": "born_oppenheimer_approximation"
+            }
+          ]
+        },
+        {
+          "topic": "Atomic Structure And Spectroscopy",
+          "topic_key": "atomic_structure_and_spectroscopy",
+          "lessons": [
+            {
+              "lesson": "Atomic structure",
+              "lesson_key": "atomic_structure"
+            },
+            {
+              "lesson": "Atomic spectroscopy",
+              "lesson_key": "atomic_spectroscopy"
+            },
+            {
+              "lesson": "Term symbols",
+              "lesson_key": "term_symbols"
+            },
+            {
+              "lesson": "Many-electron systems",
+              "lesson_key": "many_electron_systems"
+            },
+            {
+              "lesson": "Antisymmetry principle",
+              "lesson_key": "antisymmetry_principle"
+            },
+            {
+              "lesson": "Quantum mechanical foundations",
+              "lesson_key": "quantum_mechanical_foundations"
+            },
+            {
+              "lesson": "Angular momentum theory",
+              "lesson_key": "angular_momentum_theory"
+            },
+            {
+              "lesson": "Hydrogen atom solutions",
+              "lesson_key": "hydrogen_atom_solutions"
+            },
+            {
+              "lesson": "Perturbation theory",
+              "lesson_key": "perturbation_theory"
+            },
+            {
+              "lesson": "Spin-orbit coupling",
+              "lesson_key": "spin_orbit_coupling"
+            },
+            {
+              "lesson": "Hund's rules",
+              "lesson_key": "hunds_rules"
+            },
+            {
+              "lesson": "Multi-electron approximations",
+              "lesson_key": "multi_electron_approximations"
+            }
+          ]
+        },
+        {
+          "topic": "Chemical Bonding",
+          "topic_key": "chemical_bonding",
+          "lessons": [
+            {
+              "lesson": "Chemical bonding in diatomic molecules",
+              "lesson_key": "chemical_bonding_in_diatomic_molecules"
+            },
+            {
+              "lesson": "Molecular Orbital theory",
+              "lesson_key": "molecular_orbital_theory"
+            },
+            {
+              "lesson": "Valence Bond theory",
+              "lesson_key": "valence_bond_theory"
+            },
+            {
+              "lesson": "Huckel Molecular Orbital theory",
+              "lesson_key": "huckel_molecular_orbital_theory"
+            },
+            {
+              "lesson": "Atomic orbital theory",
+              "lesson_key": "atomic_orbital_theory"
+            },
+            {
+              "lesson": "LCAO approximation",
+              "lesson_key": "lcao_approximation"
+            },
+            {
+              "lesson": "Hybridization",
+              "lesson_key": "hybridization"
+            },
+            {
+              "lesson": "Resonance theory",
+              "lesson_key": "resonance_theory"
+            },
+            {
+              "lesson": "Conjugated systems",
+              "lesson_key": "conjugated_systems"
+            },
+            {
+              "lesson": "Aromaticity",
+              "lesson_key": "aromaticity"
+            },
+            {
+              "lesson": "Bond order and bond energy",
+              "lesson_key": "bond_order_and_bond_energy"
+            },
+            {
+              "lesson": "Electron configuration in molecules",
+              "lesson_key": "electron_configuration_in_molecules"
+            },
+            {
+              "lesson": "Symmetry in molecular orbitals",
+              "lesson_key": "symmetry_in_molecular_orbitals"
+            },
+            {
+              "lesson": "Secular equations and determinants",
+              "lesson_key": "secular_equations_and_determinants"
+            }
+          ]
+        },
+        {
+          "topic": "Chemical Applications Of Group Theory",
+          "topic_key": "chemical_applications_of_group_theory",
+          "lessons": [
+            {
+              "lesson": "Symmetry elements",
+              "lesson_key": "symmetry_elements"
+            },
+            {
+              "lesson": "Symmetry operations",
+              "lesson_key": "symmetry_operations"
+            },
+            {
+              "lesson": "Point groups",
+              "lesson_key": "point_groups"
+            },
+            {
+              "lesson": "Character tables",
+              "lesson_key": "character_tables"
+            },
+            {
+              "lesson": "Selection rules",
+              "lesson_key": "selection_rules"
+            },
+            {
+              "lesson": "Group theory applications",
+              "lesson_key": "group_theory_applications"
+            },
+            {
+              "lesson": "Matrix representations",
+              "lesson_key": "matrix_representations"
+            },
+            {
+              "lesson": "Reducible and irreducible representations",
+              "lesson_key": "reducible_and_irreducible_representations"
+            },
+            {
+              "lesson": "Great orthogonality theorem",
+              "lesson_key": "great_orthogonality_theorem"
+            },
+            {
+              "lesson": "Direct products",
+              "lesson_key": "direct_products"
+            },
+            {
+              "lesson": "Symmetry-adapted linear combinations (SALCs)",
+              "lesson_key": "symmetry_adapted_linear_combinations_salcs"
+            },
+            {
+              "lesson": "Vibrational modes analysis",
+              "lesson_key": "vibrational_modes_analysis"
+            },
+            {
+              "lesson": "Electronic transitions",
+              "lesson_key": "electronic_transitions"
+            },
+            {
+              "lesson": "Hybrid orbital symmetry",
+              "lesson_key": "hybrid_orbital_symmetry"
+            },
+            {
+              "lesson": "Crystal field theory",
+              "lesson_key": "crystal_field_theory"
+            }
+          ]
+        },
+        {
+          "topic": "Molecular Spectroscopy",
+          "topic_key": "molecular_spectroscopy",
+          "lessons": [
+            {
+              "lesson": "Rotational spectroscopy",
+              "lesson_key": "rotational_spectroscopy"
+            },
+            {
+              "lesson": "Vibrational spectroscopy",
+              "lesson_key": "vibrational_spectroscopy"
+            },
+            {
+              "lesson": "Electronic spectroscopy",
+              "lesson_key": "electronic_spectroscopy"
+            },
+            {
+              "lesson": "IR spectroscopy",
+              "lesson_key": "ir_spectroscopy"
+            },
+            {
+              "lesson": "Raman spectroscopy",
+              "lesson_key": "raman_spectroscopy"
+            },
+            {
+              "lesson": "Selection rules",
+              "lesson_key": "selection_rules"
+            },
+            {
+              "lesson": "Magnetic resonance spectroscopy",
+              "lesson_key": "magnetic_resonance_spectroscopy"
+            },
+            {
+              "lesson": "Rigid rotor model",
+              "lesson_key": "rigid_rotor_model"
+            },
+            {
+              "lesson": "Harmonic oscillator model",
+              "lesson_key": "harmonic_oscillator_model"
+            },
+            {
+              "lesson": "Anharmonicity",
+              "lesson_key": "anharmonicity"
+            },
+            {
+              "lesson": "Molecular orbital theory",
+              "lesson_key": "molecular_orbital_theory"
+            },
+            {
+              "lesson": "Dipole moment",
+              "lesson_key": "dipole_moment"
+            },
+            {
+              "lesson": "Polarizability",
+              "lesson_key": "polarizability"
+            },
+            {
+              "lesson": "Franck-Condon principle",
+              "lesson_key": "franck_condon_principle"
+            },
+            {
+              "lesson": "Born-Oppenheimer approximation",
+              "lesson_key": "born_oppenheimer_approximation"
+            },
+            {
+              "lesson": "Nuclear spin",
+              "lesson_key": "nuclear_spin"
+            },
+            {
+              "lesson": "Electron spin",
+              "lesson_key": "electron_spin"
+            },
+            {
+              "lesson": "Chemical shift",
+              "lesson_key": "chemical_shift"
+            },
+            {
+              "lesson": "Spin-spin coupling",
+              "lesson_key": "spin_spin_coupling"
+            }
+          ]
+        },
+        {
+          "topic": "Equilibrium Chemical Thermodynamics",
+          "topic_key": "equilibrium_chemical_thermodynamics",
+          "lessons": [
+            {
+              "lesson": "Laws of thermodynamics",
+              "lesson_key": "laws_of_thermodynamics"
+            },
+            {
+              "lesson": "State functions and path functions",
+              "lesson_key": "state_functions_and_path_functions"
+            },
+            {
+              "lesson": "Maxwell relations",
+              "lesson_key": "maxwell_relations"
+            },
+            {
+              "lesson": "Spontaneity and equilibrium criteria",
+              "lesson_key": "spontaneity_and_equilibrium_criteria"
+            },
+            {
+              "lesson": "Temperature and pressure dependence",
+              "lesson_key": "temperature_and_pressure_dependence"
+            },
+            {
+              "lesson": "Le Chatelier principle",
+              "lesson_key": "le_chatelier_principle"
+            },
+            {
+              "lesson": "Phase transitions",
+              "lesson_key": "phase_transitions"
+            },
+            {
+              "lesson": "Phase equilibria and phase rule",
+              "lesson_key": "phase_equilibria_and_phase_rule"
+            },
+            {
+              "lesson": "Thermodynamics of ideal gases",
+              "lesson_key": "thermodynamics_of_ideal_gases"
+            },
+            {
+              "lesson": "Thermodynamics of non-ideal gases",
+              "lesson_key": "thermodynamics_of_non_ideal_gases"
+            },
+            {
+              "lesson": "Thermodynamics of ideal solutions",
+              "lesson_key": "thermodynamics_of_ideal_solutions"
+            },
+            {
+              "lesson": "Thermodynamics of non-ideal solutions",
+              "lesson_key": "thermodynamics_of_non_ideal_solutions"
+            },
+            {
+              "lesson": "Exact and inexact differentials",
+              "lesson_key": "exact_and_inexact_differentials"
+            },
+            {
+              "lesson": "Thermodynamic potentials",
+              "lesson_key": "thermodynamic_potentials"
+            },
+            {
+              "lesson": "Chemical potential",
+              "lesson_key": "chemical_potential"
+            },
+            {
+              "lesson": "Partial molar properties",
+              "lesson_key": "partial_molar_properties"
+            },
+            {
+              "lesson": "Gibbs-Duhem equation",
+              "lesson_key": "gibbs_duhem_equation"
+            },
+            {
+              "lesson": "Joule-Thomson effect",
+              "lesson_key": "joule_thomson_effect"
+            },
+            {
+              "lesson": "Carnot cycle",
+              "lesson_key": "carnot_cycle"
+            },
+            {
+              "lesson": "Clausius-Clapeyron equation",
+              "lesson_key": "clausius_clapeyron_equation"
+            },
+            {
+              "lesson": "Activity and fugacity concepts",
+              "lesson_key": "activity_and_fugacity_concepts"
+            },
+            {
+              "lesson": "Equations of state",
+              "lesson_key": "equations_of_state"
+            },
+            {
+              "lesson": "Statistical thermodynamics foundations",
+              "lesson_key": "statistical_thermodynamics_foundations"
+            },
+            {
+              "lesson": "Thermochemistry",
+              "lesson_key": "thermochemistry"
+            }
+          ]
+        },
+        {
+          "topic": "Statistical Thermodynamics",
+          "topic_key": "statistical_thermodynamics",
+          "lessons": [
+            {
+              "lesson": "Boltzmann Distribution",
+              "lesson_key": "boltzmann_distribution"
+            },
+            {
+              "lesson": "Partition Functions",
+              "lesson_key": "partition_functions"
+            },
+            {
+              "lesson": "Thermodynamic Properties from Statistical Mechanics",
+              "lesson_key": "thermodynamic_properties_from_statistical_mechanics"
+            },
+            {
+              "lesson": "Kinetic Theory of Gases",
+              "lesson_key": "kinetic_theory_of_gases"
+            },
+            {
+              "lesson": "Model Systems Calculations",
+              "lesson_key": "model_systems_calculations"
+            },
+            {
+              "lesson": "Ensemble Theory",
+              "lesson_key": "ensemble_theory"
+            },
+            {
+              "lesson": "Maxwell-Boltzmann Velocity Distribution",
+              "lesson_key": "maxwell_boltzmann_velocity_distribution"
+            },
+            {
+              "lesson": "Quantum Statistical Mechanics",
+              "lesson_key": "quantum_statistical_mechanics"
+            },
+            {
+              "lesson": "Configurational Entropy and Microstates",
+              "lesson_key": "configurational_entropy_and_microstates"
+            },
+            {
+              "lesson": "Classical vs Quantum Partition Functions",
+              "lesson_key": "classical_vs_quantum_partition_functions"
+            }
+          ]
+        },
+        {
+          "topic": "Electrochemistry",
+          "topic_key": "electrochemistry",
+          "lessons": [
+            {
+              "lesson": "Electrochemical Cells",
+              "lesson_key": "electrochemical_cells"
+            },
+            {
+              "lesson": "Nernst Equation",
+              "lesson_key": "nernst_equation"
+            },
+            {
+              "lesson": "Electrolytic Conductance",
+              "lesson_key": "electrolytic_conductance"
+            },
+            {
+              "lesson": "Kohlrausch's Law",
+              "lesson_key": "kohlrauschs_law"
+            },
+            {
+              "lesson": "Ionic Equilibria",
+              "lesson_key": "ionic_equilibria"
+            },
+            {
+              "lesson": "Conductometric Titrations",
+              "lesson_key": "conductometric_titrations"
+            },
+            {
+              "lesson": "Potentiometric Titrations",
+              "lesson_key": "potentiometric_titrations"
+            },
+            {
+              "lesson": "Redox Systems",
+              "lesson_key": "redox_systems"
+            },
+            {
+              "lesson": "Debye-Huckel Theory",
+              "lesson_key": "debye_huckel_theory"
+            },
+            {
+              "lesson": "Activity and Activity Coefficients",
+              "lesson_key": "activity_and_activity_coefficients"
+            },
+            {
+              "lesson": "Transport Numbers",
+              "lesson_key": "transport_numbers"
+            },
+            {
+              "lesson": "Liquid Junction Potential",
+              "lesson_key": "liquid_junction_potential"
+            },
+            {
+              "lesson": "pH and Buffer Systems",
+              "lesson_key": "ph_and_buffer_systems"
+            },
+            {
+              "lesson": "Reference Electrodes",
+              "lesson_key": "reference_electrodes"
+            },
+            {
+              "lesson": "Indicator Electrodes",
+              "lesson_key": "indicator_electrodes"
+            },
+            {
+              "lesson": "Faraday's Laws",
+              "lesson_key": "faradays_laws"
+            }
+          ]
+        },
+        {
+          "topic": "Chemical Kinetics",
+          "topic_key": "chemical_kinetics",
+          "lessons": [
+            {
+              "lesson": "Rate laws and reaction order",
+              "lesson_key": "rate_laws_and_reaction_order"
+            },
+            {
+              "lesson": "Temperature dependence of rate constants",
+              "lesson_key": "temperature_dependence_of_rate_constants"
+            },
+            {
+              "lesson": "Complex reaction mechanisms",
+              "lesson_key": "complex_reaction_mechanisms"
+            },
+            {
+              "lesson": "Steady state approximation",
+              "lesson_key": "steady_state_approximation"
+            },
+            {
+              "lesson": "Collision theory",
+              "lesson_key": "collision_theory"
+            },
+            {
+              "lesson": "Transition state theory",
+              "lesson_key": "transition_state_theory"
+            },
+            {
+              "lesson": "Unimolecular reactions",
+              "lesson_key": "unimolecular_reactions"
+            },
+            {
+              "lesson": "Enzyme kinetics",
+              "lesson_key": "enzyme_kinetics"
+            },
+            {
+              "lesson": "Salt effects on reaction rates",
+              "lesson_key": "salt_effects_on_reaction_rates"
+            },
+            {
+              "lesson": "Homogeneous catalysis",
+              "lesson_key": "homogeneous_catalysis"
+            },
+            {
+              "lesson": "Photochemical reactions",
+              "lesson_key": "photochemical_reactions"
+            },
+            {
+              "lesson": "Integrated rate equations",
+              "lesson_key": "integrated_rate_equations"
+            },
+            {
+              "lesson": "Half-life and reaction lifetime",
+              "lesson_key": "half_life_and_reaction_lifetime"
+            },
+            {
+              "lesson": "Pseudo-order reactions",
+              "lesson_key": "pseudo_order_reactions"
+            },
+            {
+              "lesson": "Chain reactions",
+              "lesson_key": "chain_reactions"
+            },
+            {
+              "lesson": "Explosive reactions",
+              "lesson_key": "explosive_reactions"
+            },
+            {
+              "lesson": "Pre-equilibrium approximation",
+              "lesson_key": "pre_equilibrium_approximation"
+            },
+            {
+              "lesson": "Reaction coordinate diagrams",
+              "lesson_key": "reaction_coordinate_diagrams"
+            },
+            {
+              "lesson": "Kinetic and thermodynamic control",
+              "lesson_key": "kinetic_and_thermodynamic_control"
+            },
+            {
+              "lesson": "Isotope effects",
+              "lesson_key": "isotope_effects"
+            },
+            {
+              "lesson": "Debye-Hückel theory",
+              "lesson_key": "debye_hckel_theory"
+            },
+            {
+              "lesson": "Brønsted catalysis law",
+              "lesson_key": "brnsted_catalysis_law"
+            },
+            {
+              "lesson": "Photosensitization",
+              "lesson_key": "photosensitization"
+            },
+            {
+              "lesson": "Fluorescence and phosphorescence",
+              "lesson_key": "fluorescence_and_phosphorescence"
+            }
+          ]
+        },
+        {
+          "topic": "Colloids And Surfaces",
+          "topic_key": "colloids_and_surfaces",
+          "lessons": [
+            {
+              "lesson": "Colloidal Systems",
+              "lesson_key": "colloidal_systems"
+            },
+            {
+              "lesson": "Stability of Colloids",
+              "lesson_key": "stability_of_colloids"
+            },
+            {
+              "lesson": "Properties of Colloids",
+              "lesson_key": "properties_of_colloids"
+            },
+            {
+              "lesson": "Adsorption Isotherms",
+              "lesson_key": "adsorption_isotherms"
+            },
+            {
+              "lesson": "Surface Area Determination",
+              "lesson_key": "surface_area_determination"
+            },
+            {
+              "lesson": "Heterogeneous Catalysis",
+              "lesson_key": "heterogeneous_catalysis"
+            },
+            {
+              "lesson": "Surface Tension and Surface Energy",
+              "lesson_key": "surface_tension_and_surface_energy"
+            },
+            {
+              "lesson": "Zeta Potential",
+              "lesson_key": "zeta_potential"
+            },
+            {
+              "lesson": "Coagulation and Flocculation",
+              "lesson_key": "coagulation_and_flocculation"
+            },
+            {
+              "lesson": "Surfactants and Micelles",
+              "lesson_key": "surfactants_and_micelles"
+            },
+            {
+              "lesson": "Adsorption Kinetics",
+              "lesson_key": "adsorption_kinetics"
+            },
+            {
+              "lesson": "Catalytic Poisoning and Promoters",
+              "lesson_key": "catalytic_poisoning_and_promoters"
+            }
+          ]
+        },
+        {
+          "topic": "Solid State",
+          "topic_key": "solid_state",
+          "lessons": [
+            {
+              "lesson": "Crystal structures",
+              "lesson_key": "crystal_structures"
+            },
+            {
+              "lesson": "Bragg's law",
+              "lesson_key": "braggs_law"
+            },
+            {
+              "lesson": "Point groups in crystals",
+              "lesson_key": "point_groups_in_crystals"
+            },
+            {
+              "lesson": "Band structure of solids",
+              "lesson_key": "band_structure_of_solids"
+            },
+            {
+              "lesson": "Imperfections in solids",
+              "lesson_key": "imperfections_in_solids"
+            },
+            {
+              "lesson": "Unit cells and Bravais lattices",
+              "lesson_key": "unit_cells_and_bravais_lattices"
+            },
+            {
+              "lesson": "Miller indices",
+              "lesson_key": "miller_indices"
+            },
+            {
+              "lesson": "X-ray diffraction techniques",
+              "lesson_key": "x_ray_diffraction_techniques"
+            },
+            {
+              "lesson": "Space groups",
+              "lesson_key": "space_groups"
+            },
+            {
+              "lesson": "Reciprocal lattice",
+              "lesson_key": "reciprocal_lattice"
+            },
+            {
+              "lesson": "Fermi level and band gaps",
+              "lesson_key": "fermi_level_and_band_gaps"
+            },
+            {
+              "lesson": "Bloch's theorem",
+              "lesson_key": "blochs_theorem"
+            },
+            {
+              "lesson": "Defect chemistry",
+              "lesson_key": "defect_chemistry"
+            }
+          ]
+        },
+        {
+          "topic": "Polymer Chemistry",
+          "topic_key": "polymer_chemistry",
+          "lessons": [
+            {
+              "lesson": "Number-average molar mass",
+              "lesson_key": "number_average_molar_mass"
+            },
+            {
+              "lesson": "Weight-average molar mass",
+              "lesson_key": "weight_average_molar_mass"
+            },
+            {
+              "lesson": "Polydispersity index",
+              "lesson_key": "polydispersity_index"
+            },
+            {
+              "lesson": "Chain-growth polymerization kinetics",
+              "lesson_key": "chain_growth_polymerization_kinetics"
+            },
+            {
+              "lesson": "Step-growth polymerization kinetics",
+              "lesson_key": "step_growth_polymerization_kinetics"
+            },
+            {
+              "lesson": "Degree of polymerization",
+              "lesson_key": "degree_of_polymerization"
+            },
+            {
+              "lesson": "Molar mass distribution functions",
+              "lesson_key": "molar_mass_distribution_functions"
+            },
+            {
+              "lesson": "Viscosity-average molar mass",
+              "lesson_key": "viscosity_average_molar_mass"
+            },
+            {
+              "lesson": "Free radical polymerization",
+              "lesson_key": "free_radical_polymerization"
+            },
+            {
+              "lesson": "Ionic polymerization",
+              "lesson_key": "ionic_polymerization"
+            },
+            {
+              "lesson": "Living polymerization",
+              "lesson_key": "living_polymerization"
+            },
+            {
+              "lesson": "Copolymerization kinetics",
+              "lesson_key": "copolymerization_kinetics"
+            },
+            {
+              "lesson": "Gel permeation chromatography",
+              "lesson_key": "gel_permeation_chromatography"
+            },
+            {
+              "lesson": "Carothers equation",
+              "lesson_key": "carothers_equation"
+            }
+          ]
+        },
+        {
+          "topic": "Data Analysis",
+          "topic_key": "data_analysis",
+          "lessons": [
+            {
+              "lesson": "Mean and Standard Deviation",
+              "lesson_key": "mean_and_standard_deviation"
+            },
+            {
+              "lesson": "Absolute and Relative Errors",
+              "lesson_key": "absolute_and_relative_errors"
+            },
+            {
+              "lesson": "Linear Regression",
+              "lesson_key": "linear_regression"
+            },
+            {
+              "lesson": "Covariance and Correlation Coefficient",
+              "lesson_key": "covariance_and_correlation_coefficient"
+            },
+            {
+              "lesson": "Normal Distribution",
+              "lesson_key": "normal_distribution"
+            },
+            {
+              "lesson": "Least Squares Method",
+              "lesson_key": "least_squares_method"
+            },
+            {
+              "lesson": "Confidence Intervals",
+              "lesson_key": "confidence_intervals"
+            },
+            {
+              "lesson": "Residual Analysis",
+              "lesson_key": "residual_analysis"
+            },
+            {
+              "lesson": "Propagation of Errors",
+              "lesson_key": "propagation_of_errors"
+            },
+            {
+              "lesson": "Hypothesis Testing",
+              "lesson_key": "hypothesis_testing"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-05-17T00:00:00Z",
+  "content_version": "2026.05",
+  "folders": {
+    "chem100": "CSIR_Chemical_Sciences/CHEM100",
+    "phys100": "CSIR_Physical_Sciences/phys100"
+  }
+}
