@@ -40,34 +40,6 @@ RUN grep -q 'import ExtensionAnchor from "\$lib/components/custom_ext/Anchor.sve
 RUN grep -q '<ExtensionAnchor />' src/lib/components/layout/Sidebar.svelte \
         || (echo "ERROR: <ExtensionAnchor /> tag not injected into Sidebar.svelte." && exit 1)
 
-# INJECTION LOGIC: Wire BreadcrumbBar + LessonCardPanel into the native Chat pane
-# Step 1: Add import statements immediately after the existing Navbar import
-RUN sed -i '/import Navbar from/a import BreadcrumbBar from "\$lib/components/custom_ext/BreadcrumbBar.svelte";' \
-        src/lib/components/chat/Chat.svelte
-RUN sed -i '/import BreadcrumbBar from/a import LessonCardPanel from "\$lib/components/custom_ext/LessonCardPanel.svelte";' \
-        src/lib/components/chat/Chat.svelte
-
-# Step 2: Inject <BreadcrumbBar /> and <LessonCardPanel /> immediately before <div id="chat-pane"
-RUN node -e "\
-const fs = require('fs');\
-let c = fs.readFileSync('src/lib/components/chat/Chat.svelte', 'utf8');\
-c = c.replace(\
-  '<div id=\"chat-pane\"',\
-  '<BreadcrumbBar />\\n\\t\\t\\t<LessonCardPanel />\\n\\t\\t\\t<div id=\"chat-pane\"'\
-);\
-fs.writeFileSync('src/lib/components/chat/Chat.svelte', c);\
-"
-
-# Verification gates for Chat.svelte injections — same rationale as Sidebar gates above.
-RUN grep -q 'import BreadcrumbBar from' src/lib/components/chat/Chat.svelte \
-        || (echo "ERROR: BreadcrumbBar import missing from Chat.svelte — upstream layout likely changed." && exit 1)
-RUN grep -q 'import LessonCardPanel from' src/lib/components/chat/Chat.svelte \
-        || (echo "ERROR: LessonCardPanel import missing from Chat.svelte." && exit 1)
-RUN grep -q '<BreadcrumbBar />' src/lib/components/chat/Chat.svelte \
-        || (echo "ERROR: <BreadcrumbBar /> not injected into Chat.svelte." && exit 1)
-RUN grep -q '<LessonCardPanel />' src/lib/components/chat/Chat.svelte \
-        || (echo "ERROR: <LessonCardPanel /> not injected into Chat.svelte." && exit 1)
-
 # Build the frontend with our injected components
 RUN npm run build
 

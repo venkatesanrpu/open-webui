@@ -87,10 +87,7 @@
 -->
 
 {#if $selectedTopic && $selectedTopic.files && $selectedTopic.files.length > 0}
-<div class="ext-lesson-panel w-full
-            border-b border-gray-200 dark:border-gray-700
-            bg-white dark:bg-gray-900
-            max-h-72 overflow-y-auto">
+<div class="border-t border-gray-200 dark:border-gray-700">
 
     <!-- Panel header: breadcrumb path + close button -->
     <div class="flex items-center justify-between px-3 py-1.5

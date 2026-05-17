@@ -25,3 +25,9 @@ export const selectedTopic = writable(null);
 // Never cleared during the session — entitlements don't change mid-session.
 // Shape: { [folder_key]: 'allowed' | 'blocked' | 'expired' }
 export const entitlements = writable({});
+
+// ── Study panel visibility ────────────────────────────────────────────────────
+// true  = Study Materials modal is open
+// false = closed
+// Set to false by generateNotes() before navigating to a chat.
+export const studyPanelOpen = writable(false);

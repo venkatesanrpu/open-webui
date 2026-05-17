@@ -1,0 +1,55 @@
+services:
+  open-webui:
+    build: .
+    container_name: open-webui
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - "OLLAMA_BASE_URL=http://host.docker.internal:11434"
+      - "WEBUI_SECRET_KEY=8cc0a89bc88cb121b14ce6f4189f2814496cf9001a91d828264a94746f376bbf"
+      - "ALLOW_USER_VALVES=false"
+      # Postgres configuration for Open WebUI
+      - "DATABASE_URL=postgresql://webui:webui_password@postgres:5432/webuidb"
+      # Custom syllabus directory mapping
+      - "SYLLABUS_DIR=/app/data/syllabus"
+      - "PROMPTS_DIR=/app/data/prompts"
+    volumes:
+      - open-webui-data:/app/backend/data
+      - ./data/syllabus:/app/data/syllabus
+      - ./data/prompts:/app/data/prompts
+      - ./extensions:/app/backend/open_webui/routers/custom_ext
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: open-webui-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=webui
+      - POSTGRES_PASSWORD=webui_password
+      - POSTGRES_DB=webuidb
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: open-webui-caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - open-webui
+
+volumes:
+  open-webui-data:
+  pg-data:
+  caddy_data:
+  caddy_config:

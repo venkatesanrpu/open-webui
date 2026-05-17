@@ -1,0 +1,10 @@
+Generate comprehensive study notes on "{CONCEPT}" in the context of {SUBJECT} — {TOPIC}.
+{CLARIFICATION}
+
+Requirements:
+- Structure with clear headings and subheadings.
+- Use LaTeX ($...$) for inline and ($$...$$) for display math expressions.
+- Include definitions, theorems, key derivations, and worked examples where relevant.
+- Highlight important formulas and results.
+- Connect the concept to related topics and applications.
+- Use clear, precise academic language suitable for postgraduate CSIR/GATE/UGC-NET preparation.

@@ -294,6 +294,38 @@ async def check_access(
             ).fetchone()
 
         if not row:
+            # No entitlement row found. Check whether this folder_key is explicitly
+            # gated behind a paid plan. Content NOT in any paid plan is open by
+            # default — this implements the plug-and-play principle: adding new
+            # content makes it immediately accessible without DB changes.
+            try:
+                paid_row = conn.execute(
+                    text("""
+                        SELECT 1 FROM ext_plans
+                        WHERE always_active = false
+                        AND folder_keys::jsonb ? :fk
+                        LIMIT 1
+                    """),
+                    {"fk": folder_key},
+                ).fetchone()
+            except Exception as chk_exc:
+                log.warning(
+                    "ext_entitlements: paid-plan check failed for %s: %s",
+                    folder_key, chk_exc,
+                )
+                paid_row = None
+
+            if not paid_row:
+                # Not in any paid plan → open/trial content, always allowed.
+                _audit(
+                    user_id=resolved_uid,
+                    endpoint_type="access_check",
+                    request_duration_ms=int((time.monotonic() - started) * 1000),
+                    function=folder_key,
+                    status="allowed_open",
+                )
+                return {"result": "allowed", "plan_key": None}
+
             _audit(
                 user_id=resolved_uid,
                 endpoint_type="access_check",

@@ -14,7 +14,7 @@ import { get } from 'svelte/store';
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import { showSidebar, mobile, user, chatId } from '$lib/stores';
-import { pendingSyllabusTag } from './syllabusStore.js';
+import { pendingSyllabusTag, studyPanelOpen } from './syllabusStore.js';
 
 // ── Cache key helpers ─────────────────────────────────────────────────────────
 
@@ -96,6 +96,9 @@ export async function buildPrompt(functionName, vars) {
  * @param {string} linkLabel  display label of the button that was clicked
  */
 export async function generateNotes(linkData, metadata, linkLabel) {
+    // Close the Study Materials modal before navigating to the chat.
+    studyPanelOpen.set(false);
+
     const $user     = get(user);
     const $chatId   = get(chatId);
     const $page     = get(page);

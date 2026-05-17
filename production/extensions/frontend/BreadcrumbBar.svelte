@@ -197,11 +197,9 @@
 -->
 
 {#if treeLoaded}
-<div class="ext-breadcrumb-bar w-full flex items-center gap-1 px-3 py-1.5
-            bg-gray-50 dark:bg-gray-850
-            border-b border-gray-200 dark:border-gray-700
+<div class="flex items-center gap-1 px-4 py-2.5 flex-wrap
             text-[11px] text-gray-700 dark:text-gray-300
-            flex-wrap">
+            border-b border-gray-100 dark:border-gray-800">
 
     <!-- Cascading dropdowns — one per tree level -->
     {#each levels as level, i}
@@ -214,7 +212,7 @@
             class="ext-bc-select bg-transparent border-none outline-none
                    text-[11px] text-gray-700 dark:text-gray-300
                    cursor-pointer hover:text-blue-600 dark:hover:text-blue-400
-                   py-0 px-0.5 max-w-[160px] truncate"
+                   py-0 px-0.5 max-w-[200px]"
             value={selections[i] ?? ''}
             on:change={(e) => onSelect(i, e)}
         >
@@ -253,9 +251,7 @@
 </div>
 
 {:else if loadError}
-<!-- Silent failure — a broken breadcrumb must not disrupt the native chat UI -->
-<div class="w-full px-3 py-1 text-[10px] text-red-400 dark:text-red-500
-            bg-red-50 dark:bg-red-900/20 border-b border-red-100 dark:border-red-800">
+<div class="px-4 py-2 text-[10px] text-red-400 dark:text-red-500">
     Study Materials navigation unavailable — check backend connectivity.
 </div>
 {/if}

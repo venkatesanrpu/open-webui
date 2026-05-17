@@ -1,0 +1,6 @@
+# Replace learn.yourdomain.com with your actual domain
+lms.examcatalyst.ai {
+    reverse_proxy open-webui:8080
+}
+
+# Optional: Redirect HTTP to HTTPS is handled automatically by Caddy for configured domains.
