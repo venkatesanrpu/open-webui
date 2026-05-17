@@ -100,3 +100,76 @@ ALTER TABLE ext_audit_logs ADD COLUMN IF NOT EXISTS meta JSONB;
 CREATE INDEX IF NOT EXISTS idx_audit_user           ON ext_audit_logs(user_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_audit_endpoint_time  ON ext_audit_logs(endpoint_type, created_at);
 CREATE INDEX IF NOT EXISTS idx_audit_request_id     ON ext_audit_logs(request_id);
+
+-- ══════════════════════════════════════════════════════════════════════════════
+-- ENTITLEMENT SYSTEM (Phase 2 additions — idempotent on fresh and existing DBs)
+-- ══════════════════════════════════════════════════════════════════════════════
+
+-- 5. Evolve ext_plans to support the folder_key entitlement model.
+--
+--    plan_key   — stable slug used by entitlement lookups (e.g. 'trial', 'csir_chem_full').
+--                 Replaces ad-hoc lookups by exam+subject+folder_name.
+--    always_active — when true the backend auto-provisions 'unlocked' for every user
+--                    on their first entitlement call. Used for the free Trial plan.
+--    folder_keys   — JSONB array of folder_key strings this plan grants access to.
+--                    Decoupled from physical paths; folder renames only require
+--                    updating metadata.json, never this table.
+ALTER TABLE ext_plans ADD COLUMN IF NOT EXISTS plan_key      VARCHAR(100);
+ALTER TABLE ext_plans ADD COLUMN IF NOT EXISTS always_active BOOLEAN DEFAULT false;
+ALTER TABLE ext_plans ADD COLUMN IF NOT EXISTS folder_keys   JSONB   DEFAULT '[]';
+
+-- Backfill plan_key for any pre-existing rows (idempotent via WHERE guard).
+UPDATE ext_plans
+SET plan_key = lower(regexp_replace(name, '[^a-zA-Z0-9]+', '_', 'g'))
+WHERE plan_key IS NULL OR plan_key = '';
+
+-- Unique constraint on plan_key (deferred so backfill above runs first).
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'uq_ext_plans_plan_key'
+    ) THEN
+        ALTER TABLE ext_plans ADD CONSTRAINT uq_ext_plans_plan_key UNIQUE (plan_key);
+    END IF;
+END $$;
+
+-- 6. User entitlements — keyed on (user_id, folder_key).
+--
+--    state values:
+--      'unlocked' — active paid access (or always_active trial)
+--      'expired'  — subscription lapsed; history still visible, new generation blocked
+--      'locked'   — no purchase made
+--
+--    expires_at NULL means the entitlement never expires (used for always_active plans).
+CREATE TABLE IF NOT EXISTS ext_user_entitlements (
+    id           SERIAL PRIMARY KEY,
+    user_id      VARCHAR(255) NOT NULL,
+    exam_key     VARCHAR(100) NOT NULL DEFAULT '',
+    subject_key  VARCHAR(255) NOT NULL DEFAULT '',
+    folder_key   VARCHAR(100) NOT NULL,
+    plan_key     VARCHAR(100) NOT NULL,
+    state        VARCHAR(20)  NOT NULL DEFAULT 'locked'
+                     CHECK (state IN ('unlocked', 'expired', 'locked')),
+    activated_at TIMESTAMP WITH TIME ZONE,
+    expires_at   TIMESTAMP WITH TIME ZONE,
+    created_at   TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_user_folder_entitlement UNIQUE (user_id, folder_key)
+);
+
+CREATE INDEX IF NOT EXISTS idx_entitlements_user_state
+    ON ext_user_entitlements(user_id, state);
+CREATE INDEX IF NOT EXISTS idx_entitlements_folder_state
+    ON ext_user_entitlements(folder_key, state);
+
+-- 7. Seed the Trial plan (always_active — auto-provisioned for every user).
+--    folder_keys is intentionally empty here; populate it after creating
+--    the Trial course folder and running scripts/generate_manifest.py.
+--    Example: UPDATE ext_plans SET folder_keys = '["trial_pack"]' WHERE plan_key = 'trial';
+INSERT INTO ext_plans (plan_key, name, price, exam, subject, folder_name,
+                       validity_days, notes_model, mcq_model,
+                       always_active, folder_keys)
+VALUES ('trial', 'Trial Plan', 0.00, 'Trial', 'General', 'trial',
+        36500, 'phi-4', 'phi-4',
+        true, '[]')
+ON CONFLICT (plan_key) DO NOTHING;

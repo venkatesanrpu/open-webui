@@ -1,31 +1,49 @@
+"""
+ext_syllabus.py — Syllabus content delivery for the CSIR AI platform.
+
+Routes (all mounted under /api/ext/syllabus by main.py injection):
+  GET /prompts/{function_name}  — prompt template with per-exam override support
+  GET /index                    — full recursive syllabus tree (all folders)
+  GET /trial-index              — tree filtered to always_active plan folders (no auth)
+  GET /meta                     — all syllabus.json files (for CategorizedHistory)
+
+The /index response now includes a '_meta' key at every node that has a
+metadata.json file (course-level folders).  The frontend reads _meta.folder_key
+to resolve entitlement checks without making an additional API call.
+
+The /trial-index endpoint is intentionally unauthenticated — Trial content is
+visible to all visitors.  It reads content_manifest.json + ext_plans to determine
+which folder_keys are always_active, then returns only those subtrees.
+"""
+
+import json
+import logging
 import os
 import re
-import json
 import time
-import logging
-from fastapi import APIRouter, HTTPException, Response
-from fastapi.responses import PlainTextResponse, JSONResponse
 from pathlib import Path
-from bs4 import BeautifulSoup
 
-# Audit helper. Import is best-effort so the router still works on partial
-# overlays (smoke tests, dev shells without the full backend on PYTHONPATH).
+from bs4 import BeautifulSoup
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse, PlainTextResponse
+from sqlalchemy import create_engine, text
+
+# ── Audit helper (best-effort) ────────────────────────────────────────────────
 try:
-    from open_webui.routers import ext_authz  # type: ignore
-except Exception:  # pragma: no cover
+    from open_webui.routers import ext_authz
+except Exception:
     try:
-        import ext_authz  # type: ignore
+        import ext_authz
     except Exception:
-        ext_authz = None  # type: ignore
+        ext_authz = None
 
 
 def _audit(**kwargs) -> None:
-    """Thin guard: missing-module or failure must never break the route."""
     if ext_authz is None:
         return
     try:
         ext_authz.log_event(**kwargs)
-    except Exception:  # pragma: no cover
+    except Exception:
         pass
 
 
@@ -33,50 +51,24 @@ router = APIRouter()
 log = logging.getLogger("ext_syllabus")
 
 SYLLABUS_DIR = os.getenv("SYLLABUS_DIR", "/app/data/syllabus")
-PROMPTS_DIR = os.getenv("PROMPTS_DIR", "/app/data/prompts")
+PROMPTS_DIR  = os.getenv("PROMPTS_DIR",  "/app/data/prompts")
 
-# Identifiers that participate in filesystem path construction must be
-# whitespace-free, dot-free, slash-free and contain no parent-directory
-# components. The pattern below mirrors valid existing identifiers such as
-# `csir_physical_sciences` and `ask_agent` while rejecting any traversal
-# attempt (`..`, `/`, NUL bytes, etc.).
 _SAFE_ID = re.compile(r"^[A-Za-z0-9_]+$")
-
-# Modest cache window for static-ish syllabus assets. Short enough that
-# authoring iterations are visible quickly; long enough to spare the disk on
-# bulk sidebar renders. Public is safe — content is not user-scoped.
 _SYLLABUS_CACHE_CONTROL = "public, max-age=60"
 
+# ── Database setup (needed by trial-index to query always_active plans) ───────
+_DATABASE_URL = os.getenv("DATABASE_URL", "")
+if _DATABASE_URL.startswith("postgres://"):
+    _DATABASE_URL = _DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-def _is_safe_id(name: str) -> bool:
-    return bool(name) and bool(_SAFE_ID.match(name))
-
-
-def _resolve_within(base: Path, *parts: str) -> Path | None:
-    """
-    Resolve ``base/<parts...>`` and return the resolved path only if it stays
-    under ``base`` after symlink/`..` normalization. Returns None otherwise.
-    """
+_db_engine = None
+if _DATABASE_URL:
     try:
-        base_resolved = base.resolve()
-        candidate = (base / Path(*parts)).resolve()
-    except Exception:
-        return None
-    try:
-        candidate.relative_to(base_resolved)
-    except ValueError:
-        return None
-    return candidate
+        _db_engine = create_engine(_DATABASE_URL, pool_pre_ping=True)
+    except Exception as exc:
+        log.error("ext_syllabus: failed to create DB engine: %s", exc)
 
-
-# ── Hardcoded fallbacks ──
-#
-# These are minimal "template missing" messages, NOT rich prompt clones. The
-# review flagged the prior rich fallbacks as a drift hazard: if the on-disk
-# template is edited but the fallback is not, the two diverge silently and a
-# missing-file scenario produces a different model behavior than the intended
-# template. Keeping fallbacks deliberately minimal makes the missing-template
-# state diagnosable in the chat output instead of disguising it.
+# ── Hardcoded minimal fallbacks ───────────────────────────────────────────────
 _FALLBACK_PROMPTS = {
     "ask_agent": (
         "Prompt template 'ask_agent' is unavailable on the server.\n"
@@ -92,19 +84,258 @@ _FALLBACK_PROMPTS = {
 }
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# Content integrity validation
+# ══════════════════════════════════════════════════════════════════════════════
+
+_content_validated = False
+
+
+def _validate_content_integrity() -> None:
+    """
+    Validates content_manifest.json against the physical syllabus tree.
+
+    Called once per process (guarded by _content_validated flag) from the
+    first request to /index or /trial-index.
+
+    Soft-fail policy:
+      - Missing manifest  → WARNING  (operators may not have run generate_manifest.py yet)
+      - Missing paths     → ERROR    (content is referenced but absent)
+      - Duplicate keys    → ERROR    (would cause entitlement ambiguity)
+      - metadata mismatch → ERROR    (folder_key in manifest ≠ metadata.json)
+    The server continues running in all cases; errors are surfaced through logs,
+    not HTTP 500s, so a partially broken content tree does not bring the whole
+    app down.
+    """
+    global _content_validated
+    if _content_validated:
+        return
+    _content_validated = True
+
+    base = Path(SYLLABUS_DIR)
+    manifest_path = base / "content_manifest.json"
+
+    if not manifest_path.is_file():
+        log.warning(
+            "[ext_syllabus] content_manifest.json not found at %s — "
+            "run scripts/generate_manifest.py to create it.",
+            SYLLABUS_DIR,
+        )
+        return
+
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        log.error("[ext_syllabus] content_manifest.json is invalid JSON: %s", exc)
+        return
+
+    seen_keys: set[str] = set()
+    errors: list[str] = []
+
+    for folder_key, rel_path in manifest.get("folders", {}).items():
+        if folder_key in seen_keys:
+            errors.append(f"duplicate folder_key '{folder_key}'")
+        seen_keys.add(folder_key)
+
+        full_path = base / rel_path
+        if not full_path.is_dir():
+            errors.append(f"physical path missing for '{folder_key}': {rel_path}")
+            continue
+
+        meta_file = full_path / "metadata.json"
+        if not meta_file.is_file():
+            errors.append(f"metadata.json missing in {rel_path}")
+        else:
+            try:
+                meta_data = json.loads(meta_file.read_text(encoding="utf-8"))
+                actual_key = meta_data.get("folder_key", "")
+                if actual_key != folder_key:
+                    errors.append(
+                        f"folder_key mismatch: manifest='{folder_key}' "
+                        f"but metadata.json says '{actual_key}' in {rel_path}"
+                    )
+            except Exception as exc:
+                errors.append(f"metadata.json invalid in {rel_path}: {exc}")
+
+    if errors:
+        for err in errors:
+            log.error("[ext_syllabus] Content integrity error: %s", err)
+    else:
+        log.info(
+            "[ext_syllabus] Content integrity OK: %d folder(s) validated.",
+            len(seen_keys),
+        )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Path helpers
+# ══════════════════════════════════════════════════════════════════════════════
+
+def _is_safe_id(name: str) -> bool:
+    return bool(name) and bool(_SAFE_ID.match(name))
+
+
+def _resolve_within(base: Path, *parts: str) -> "Path | None":
+    """
+    Resolve base/<parts> and return the path only if it stays under base
+    after symlink/.. normalisation (path-traversal guard).
+    """
+    try:
+        base_resolved = base.resolve()
+        candidate = (base / Path(*parts)).resolve()
+    except Exception:
+        return None
+    try:
+        candidate.relative_to(base_resolved)
+    except ValueError:
+        return None
+    return candidate
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# HTML file parser
+# ══════════════════════════════════════════════════════════════════════════════
+
+def parse_html_file(file_path: str) -> dict:
+    """
+    Extracts <a data-*> anchor metadata from a lesson HTML file.
+    Returns { filename, metadata, links } or { filename, error }.
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8") as fh:
+            content = fh.read()
+    except Exception as exc:
+        return {"filename": os.path.basename(file_path), "error": str(exc)}
+
+    soup = BeautifulSoup(content, "html.parser")
+    links: list[dict] = []
+    metadata: dict = {}
+
+    for idx, a in enumerate(soup.find_all("a")):
+        data_attrs = {
+            k.replace("data-", ""): v
+            for k, v in a.attrs.items()
+            if k.startswith("data-")
+        }
+
+        if not metadata and data_attrs:
+            metadata = {
+                "lesson":       data_attrs.get("lesson", ""),
+                "concept":      data_attrs.get("core", ""),
+                "clarification": data_attrs.get("agent-text", ""),
+            }
+        elif metadata and data_attrs:
+            for src_key, meta_key in (
+                ("lesson", "lesson"),
+                ("core", "concept"),
+                ("agent-text", "clarification"),
+            ):
+                if src_key in data_attrs and data_attrs[src_key] != metadata.get(meta_key, ""):
+                    log.warning(
+                        "[ext_syllabus] %s: anchor #%d data-%s=%r disagrees with "
+                        "first-link metadata %r",
+                        os.path.basename(file_path), idx, src_key,
+                        data_attrs[src_key], metadata.get(meta_key, ""),
+                    )
+
+        if data_attrs.get("function") == "mcq_widget":
+            missing = [k for k in ("level", "number") if not data_attrs.get(k)]
+            if missing:
+                log.warning(
+                    "[ext_syllabus] %s: anchor #%d mcq_widget missing data-%s",
+                    os.path.basename(file_path), idx, ", data-".join(missing),
+                )
+
+        links.append({"label": a.text.strip(), "data": data_attrs})
+
+    return {"filename": os.path.basename(file_path), "metadata": metadata, "links": links}
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Tree builder — module-level so both /index and /trial-index can share it
+# ══════════════════════════════════════════════════════════════════════════════
+
+def build_tree(current_path: str) -> dict:
+    """
+    Recursively scan current_path and return a nested dict tree:
+      {
+        "_meta":  { ...metadata.json contents... },   ← present when metadata.json exists
+        "folder1": { <subtree> },
+        "folder2": { <subtree> },
+        "_files": [ { filename, metadata, links }, ... ]
+      }
+
+    The '_meta' key is injected at any level that has a metadata.json file
+    (conventionally the course-level folder, e.g. CHEM100/).  Frontend code
+    reads _meta.folder_key to resolve entitlement checks without extra API calls.
+
+    The '_files' and '_meta' key names are prefixed with '_' to distinguish them
+    from folder children (the same convention used by the existing '_files' key).
+    """
+    tree: dict = {}
+
+    # Inject metadata.json if present at this directory level.
+    meta_file = os.path.join(current_path, "metadata.json")
+    if os.path.isfile(meta_file):
+        try:
+            with open(meta_file, "r", encoding="utf-8") as fh:
+                tree["_meta"] = json.load(fh)
+        except Exception as exc:
+            log.warning(
+                "[ext_syllabus] Failed to read metadata.json at %s: %s",
+                current_path, exc,
+            )
+
+    # Subdirectories — sorted so ordering is deterministic across OSes.
+    dirs = sorted(
+        d for d in os.listdir(current_path)
+        if os.path.isdir(os.path.join(current_path, d))
+    )
+    for d in dirs:
+        subtree = build_tree(os.path.join(current_path, d))
+        # Include non-empty subtrees AND leaf dirs that contain HTML files.
+        if subtree or any(
+            f.endswith(".html")
+            for f in os.listdir(os.path.join(current_path, d))
+        ):
+            tree[d] = subtree
+
+    # HTML files at this level — core_ first, then related_, then others.
+    def _file_sort_key(fname: str) -> tuple:
+        if fname.startswith("core_"):
+            return (0, fname)
+        if fname.startswith("related_"):
+            return (1, fname)
+        return (2, fname)
+
+    html_files = sorted(
+        (
+            f for f in os.listdir(current_path)
+            if os.path.isfile(os.path.join(current_path, f)) and f.endswith(".html")
+        ),
+        key=_file_sort_key,
+    )
+    if html_files:
+        tree["_files"] = [
+            parse_html_file(os.path.join(current_path, f)) for f in html_files
+        ]
+
+    return tree
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Routes
+# ══════════════════════════════════════════════════════════════════════════════
+
 @router.get("/prompts/{function_name}")
 async def get_prompt_template(function_name: str, exam: str = ""):
     """
-    Returns a prompt template for the given function_name.
+    Returns a prompt template for function_name.
 
     Resolution order:
-    1. Per-exam override: SYLLABUS_DIR/{exam}/prompts/{function_name}.txt
-    2. Global default:   PROMPTS_DIR/{function_name}.txt
-    3. Hardcoded minimal fallback (signals "template missing")
-
-    Both `exam` and `function_name` are validated against an allow-list and
-    the resolved path is asserted to stay under its respective base directory
-    to prevent path traversal (e.g. `../../etc/passwd`).
+      1. Per-exam override: SYLLABUS_DIR/{exam}/prompts/{function_name}.txt
+      2. Global default:    PROMPTS_DIR/{function_name}.txt
+      3. Hardcoded minimal fallback (signals 'template missing')
     """
     started = time.monotonic()
     if not _is_safe_id(function_name):
@@ -113,9 +344,6 @@ async def get_prompt_template(function_name: str, exam: str = ""):
     headers = {"Cache-Control": _SYLLABUS_CACHE_CONTROL}
 
     def _emit(status: str) -> None:
-        # This route is intentionally unauthenticated (static-ish content), so
-        # user_id is recorded as 'anonymous' to satisfy the NOT NULL constraint.
-        # We log resolution status only — never prompt body, never PII.
         _audit(
             user_id="anonymous",
             endpoint_type="prompt_template_fetched",
@@ -125,7 +353,6 @@ async def get_prompt_template(function_name: str, exam: str = ""):
             status=status,
         )
 
-    # 1. Per-exam override
     if exam:
         if not _is_safe_id(exam):
             raise HTTPException(status_code=400, detail="Invalid exam identifier")
@@ -138,7 +365,6 @@ async def get_prompt_template(function_name: str, exam: str = ""):
                 exam_prompt.read_text(encoding="utf-8"), headers=headers
             )
 
-    # 2. Global default
     global_prompt = _resolve_within(Path(PROMPTS_DIR), f"{function_name}.txt")
     if global_prompt and global_prompt.is_file():
         _emit("hit_global")
@@ -146,7 +372,6 @@ async def get_prompt_template(function_name: str, exam: str = ""):
             global_prompt.read_text(encoding="utf-8"), headers=headers
         )
 
-    # 3. Hardcoded fallback
     fallback = _FALLBACK_PROMPTS.get(function_name)
     if fallback:
         _emit("fallback")
@@ -159,133 +384,127 @@ async def get_prompt_template(function_name: str, exam: str = ""):
     )
 
 
-def parse_html_file(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-    except Exception as e:
-        return {"filename": os.path.basename(file_path), "error": str(e)}
-
-    soup = BeautifulSoup(content, 'html.parser')
-    links = []
-    metadata = {}
-
-    a_tags = soup.find_all('a')
-    for idx, a in enumerate(a_tags):
-        # Extract data attributes
-        data_attrs = {k.replace('data-', ''): v for k, v in a.attrs.items() if k.startswith('data-')}
-
-        # Populate metadata once from the first link (as they share lesson/core/agent-text)
-        if not metadata and data_attrs:
-            metadata = {
-                "lesson": data_attrs.get("lesson", ""),
-                "concept": data_attrs.get("core", ""),
-                "clarification": data_attrs.get("agent-text", "")
-            }
-        elif metadata and data_attrs:
-            # LOW-8: Warn if a subsequent anchor disagrees with the first
-            # anchor's lesson / core / agent-text. Authors occasionally
-            # duplicate anchors with slightly drifted metadata; we want to
-            # surface that during dev without breaking the parse.
-            for src_key, meta_key in (
-                ("lesson", "lesson"),
-                ("core", "concept"),
-                ("agent-text", "clarification"),
-            ):
-                if src_key in data_attrs and data_attrs[src_key] != metadata.get(meta_key, ""):
-                    log.warning(
-                        "[ext_syllabus] %s: anchor #%d data-%s=%r disagrees with first-link metadata %r",
-                        os.path.basename(file_path), idx, src_key,
-                        data_attrs[src_key], metadata.get(meta_key, ""),
-                    )
-
-        # LOW-9: For mcq_widget anchors, data-level and data-number are part
-        # of the Smart Router cache identity; missing them collapses distinct
-        # difficulty/quantity variants into the same key. Warn but accept.
-        if data_attrs.get("function") == "mcq_widget":
-            missing = [k for k in ("level", "number") if not data_attrs.get(k)]
-            if missing:
-                log.warning(
-                    "[ext_syllabus] %s: anchor #%d mcq_widget missing required data-%s",
-                    os.path.basename(file_path), idx, ", data-".join(missing),
-                )
-
-        links.append({
-            "label": a.text.strip(),
-            "data": data_attrs
-        })
-
-    return {
-        "filename": os.path.basename(file_path),
-        "metadata": metadata,
-        "links": links
-    }
-
 @router.get("/index")
 async def get_syllabus_index():
     """
-    Recursively scans the syllabus directory, parses HTML files, and builds a strict-sorted JSON tree.
+    Recursively scans the syllabus directory and returns the full content tree.
+
+    Each node that has a metadata.json will include a '_meta' key so the
+    frontend can resolve folder_key → entitlement without additional API calls.
     """
+    _validate_content_integrity()
+
     base_path = Path(SYLLABUS_DIR)
     if not base_path.exists():
         return JSONResponse({"error": "Data directory not found."})
 
-    def build_tree(current_path):
-        tree = {}
-
-        # Get directories and sort them alphabetically
-        dirs = [d for d in os.listdir(current_path) if os.path.isdir(os.path.join(current_path, d))]
-        dirs.sort() # Enforces 01_unit, 02_unit order
-
-        for d in dirs:
-            subtree = build_tree(os.path.join(current_path, d))
-            # Only add to tree if it's not empty or if it's a leaf
-            if subtree or any(f.endswith('.html') for f in os.listdir(os.path.join(current_path, d))):
-                tree[d] = subtree
-
-        # Get HTML files
-        files = [f for f in os.listdir(current_path) if os.path.isfile(os.path.join(current_path, f)) and f.endswith('.html')]
-
-        # Sort files: core_ first, then related_, then others alphabetically
-        def file_sort_key(f):
-            if f.startswith('core_'):
-                return (0, f)
-            elif f.startswith('related_'):
-                return (1, f)
-            return (2, f)
-
-        files.sort(key=file_sort_key)
-
-        if files:
-            parsed_files = []
-            for f in files:
-                parsed = parse_html_file(os.path.join(current_path, f))
-                parsed_files.append(parsed)
-            tree["_files"] = parsed_files
-
-        return tree
-
     return JSONResponse(
-        build_tree(base_path),
+        build_tree(str(base_path)),
         headers={"Cache-Control": _SYLLABUS_CACHE_CONTROL},
     )
+
+
+@router.get("/trial-index")
+async def get_trial_index():
+    """
+    Returns the syllabus tree filtered to folders belonging to always_active
+    plans.  No authentication required — Trial content is freely accessible.
+
+    Resolution:
+      1. Read content_manifest.json → folder_key → relative path map
+      2. Query ext_plans WHERE always_active = true → get folder_keys JSONB array
+      3. For each qualifying folder_key, build the subtree and nest it under the
+         original exam/course hierarchy so the sidebar renders correctly.
+
+    Falls back to an empty tree (not an error) when:
+      - content_manifest.json is missing
+      - Database is unavailable
+      - No always_active plans exist yet
+    """
+    _validate_content_integrity()
+
+    base_path = Path(SYLLABUS_DIR)
+    if not base_path.exists():
+        return JSONResponse({})
+
+    # Load manifest.
+    manifest_path = base_path / "content_manifest.json"
+    if not manifest_path.is_file():
+        log.warning(
+            "[ext_syllabus] trial-index: content_manifest.json not found — "
+            "run scripts/generate_manifest.py"
+        )
+        return JSONResponse({}, headers={"Cache-Control": _SYLLABUS_CACHE_CONTROL})
+
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        folders_map: dict[str, str] = manifest.get("folders", {})
+    except Exception as exc:
+        log.error("[ext_syllabus] trial-index: cannot parse manifest: %s", exc)
+        return JSONResponse({})
+
+    # Determine which folder_keys belong to always_active plans.
+    always_active_keys: set[str] = set()
+    if _db_engine:
+        try:
+            with _db_engine.connect() as conn:
+                rows = conn.execute(
+                    text("SELECT folder_keys FROM ext_plans WHERE always_active = true")
+                ).fetchall()
+            for row in rows:
+                raw = row[0]
+                if isinstance(raw, list):
+                    always_active_keys.update(raw)
+                else:
+                    try:
+                        always_active_keys.update(json.loads(raw or "[]"))
+                    except Exception:
+                        pass
+        except Exception as exc:
+            log.error("[ext_syllabus] trial-index: DB query failed: %s", exc)
+    else:
+        log.warning("[ext_syllabus] trial-index: DB unavailable, returning empty tree")
+
+    if not always_active_keys:
+        return JSONResponse({}, headers={"Cache-Control": _SYLLABUS_CACHE_CONTROL})
+
+    # Build filtered tree preserving the full exam/course hierarchy so the
+    # sidebar SyllabusNode renders the same nested structure as /index.
+    tree: dict = {}
+    for folder_key in sorted(always_active_keys):
+        rel_path = folders_map.get(folder_key)
+        if not rel_path:
+            log.warning(
+                "[ext_syllabus] trial-index: folder_key '%s' not in manifest",
+                folder_key,
+            )
+            continue
+
+        phys_path = base_path / rel_path
+        if not phys_path.is_dir():
+            log.warning(
+                "[ext_syllabus] trial-index: path '%s' not found for '%s'",
+                rel_path, folder_key,
+            )
+            continue
+
+        # Navigate / create the nesting levels in tree to match the physical path.
+        # e.g. rel_path = "Trial/trial_chemistry" → tree["Trial"]["trial_chemistry"]
+        parts = rel_path.replace("\\", "/").split("/")
+        cursor = tree
+        for part in parts[:-1]:
+            cursor = cursor.setdefault(part, {})
+        last_part = parts[-1]
+        cursor[last_part] = build_tree(str(phys_path))
+
+    return JSONResponse(tree, headers={"Cache-Control": _SYLLABUS_CACHE_CONTROL})
 
 
 @router.get("/meta")
 async def get_syllabus_meta():
     """
     Auto-discovers all syllabus.json files under SYLLABUS_DIR.
-    Infers exam/course context from the directory path.
-    Returns an array of all discovered syllabi for the History filter tree.
-
-    Expected structure:
-      SYLLABUS_DIR/
-        CSIR_Physical_Sciences/   ← top-level folder (exam context)
-          phys100/                ← course folder
-            syllabus.json         ← discovered here
-            unit_01/
-              unit_1A/
-                core_xxx.html
+    Used by CategorizedHistory to build the history filter tree.
     """
     base_path = Path(SYLLABUS_DIR)
     if not base_path.exists():
@@ -294,24 +513,20 @@ async def get_syllabus_meta():
     result = []
     for syllabus_file in base_path.rglob("syllabus.json"):
         try:
-            with open(syllabus_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            with open(syllabus_file, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
 
-            # Infer context from directory path
-            # e.g., CSIR_Physical_Sciences/phys100/syllabus.json
             rel_path = syllabus_file.relative_to(base_path)
-            parts = rel_path.parts[:-1]  # Remove 'syllabus.json' itself
+            parts = rel_path.parts[:-1]
 
-            # First part = exam/program folder, rest = course context
-            data["_exam_folder"] = parts[0].replace('_', ' ') if len(parts) > 0 else "General"
+            data["_exam_folder"] = (
+                parts[0].replace("_", " ") if len(parts) > 0 else "General"
+            )
             data["_course_folder"] = parts[1] if len(parts) > 1 else ""
             data["_path"] = "/".join(parts)
 
             result.append(data)
-        except Exception as e:
-            result.append({
-                "error": str(e),
-                "path": str(syllabus_file)
-            })
+        except Exception as exc:
+            result.append({"error": str(exc), "path": str(syllabus_file)})
 
     return JSONResponse(result, headers={"Cache-Control": _SYLLABUS_CACHE_CONTROL})
